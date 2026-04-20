@@ -1,0 +1,235 @@
+<!-- ═══ NAVBAR ═══ -->
+<nav [class.scrolled]="isScrolled">
+  <div class="nav-inner">
+    <div class="logo" (click)="scrollTo('hero')">
+      <div class="logo-mark">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="brand">AirGlo</span>
+        <span class="sub">Luxury Collection</span>
+      </div>
+    </div>
+
+    <ul class="nav-links" [class.open]="isMenuOpen">
+      <li><a (click)="scrollTo('hero')">Home</a></li>
+      <li><a routerLink="/rooms">Rooms</a></li>
+      <li><a routerLink="/hotels">Hotels</a></li>
+      <li><a routerLink="/book-rooms">Booked Rooms</a></li>
+      <li><button class="btn-book" (click)="scrollTo('rooms')">Book Now</button></li>
+    </ul>
+
+    <button class="hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-image"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10">
+        <polygon
+          points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+        />
+      </svg>
+      Five Star Certified
+    </div>
+    <div class="stars">
+      <span *ngFor="let s of [1, 2, 3, 4, 5]">★</span>
+    </div>
+    <h1>Where <em>Luxury</em><br />Feels Like Home</h1>
+    <p>
+      From Tbilisi to the world's most sought-after destinations — AirGlo redefines what it means to
+      truly arrive.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary" (click)="scrollTo('rooms')">Explore Rooms</button>
+      <button class="btn-ghost" (click)="scrollTo('history')">Our Story</button>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat" *ngFor="let s of heroStats">
+      <span class="stat-num">{{ s.num }}</span>
+      <span class="stat-label">{{ s.label }}</span>
+    </div>
+  </div>
+</section>
+
+<section class="rooms-section" id="rooms">
+  <div class="section-header">
+    <span class="section-label">Guest Favorites</span>
+    <h2 class="section-title">Rooms Our Guests Love</h2>
+    <div class="section-rule"></div>
+    <p class="section-desc">
+      Handpicked by thousands of returning guests — these rooms represent the pinnacle of our
+      collection.
+    </p>
+  </div>
+
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading available rooms…</p>
+  </div>
+
+  <div class="rooms-grid" *ngIf="!isLoading">
+    <div class="room-card" *ngFor="let room of rooms">
+      <div class="room-image" [style.background-image]="'url(' + getImage(room.imgIndex) + ')'">
+        <span class="room-badge">★ Featured</span>
+      </div>
+      <div class="room-body">
+        <div class="room-type">{{ room.type }}</div>
+        <div class="room-name">{{ room.name }}</div>
+        <div class="room-amenities">
+          <span class="amenity-tag" *ngFor="let a of room.amenities">{{ a }}</span>
+        </div>
+        <div class="room-footer">
+          <div class="room-price">${{ room.price }} <span>/ night</span></div>
+          <button class="room-btn" routerLink="/rooms">Reserve</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="usp-section" id="usp">
+  <div class="section-header centered">
+    <span class="section-label">Why AirGlo</span>
+    <h2 class="section-title light">Every Comfort, Considered</h2>
+    <div class="section-rule centered-rule"></div>
+    <p class="section-desc light">We sweat the details so you never have to think about them.</p>
+  </div>
+
+  <div class="usp-grid">
+    <div class="usp-card" *ngFor="let item of uspItems">
+      <div class="usp-icon">
+        <svg
+          *ngIf="item.icon === 'beverage'"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M17 8h1a4 4 0 010 8h-1" />
+          <path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z" />
+          <line x1="6" y1="1" x2="6" y2="4" />
+          <line x1="10" y1="1" x2="10" y2="4" />
+          <line x1="14" y1="1" x2="14" y2="4" />
+        </svg>
+        <svg
+          *ngIf="item.icon === 'card'"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="1" y="4" width="22" height="16" rx="2" />
+          <line x1="1" y1="10" x2="23" y2="10" />
+        </svg>
+        <svg
+          *ngIf="item.icon === 'restaurant'"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M18 8h1a4 4 0 010 8h-1" />
+          <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
+          <line x1="6" y1="1" x2="6" y2="4" />
+          <line x1="10" y1="1" x2="10" y2="4" />
+          <line x1="14" y1="1" x2="14" y2="4" />
+        </svg>
+        <svg
+          *ngIf="item.icon === 'spa'"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+      </div>
+      <h3 class="usp-title">{{ item.title }}</h3>
+      <p class="usp-desc">{{ item.desc }}</p>
+      <span class="usp-link">Discover more →</span>
+    </div>
+  </div>
+</section>
+
+<section class="history-section" id="history">
+  <div class="history-layout">
+    <div class="history-visual">
+      <div class="history-image"></div>
+      <div class="history-accent"></div>
+      <div class="year-badge">
+        <span class="yr">2009</span>
+        <span class="yr-label">Est. Tbilisi</span>
+      </div>
+    </div>
+
+    <div class="history-content">
+      <span class="section-label">Our Heritage</span>
+      <h2 class="section-title">A Story Woven<br />in Hospitality</h2>
+      <div class="section-rule"></div>
+      <p class="intro-text">
+        AirGlo was born in 2009 from a single belief: that every guest deserves to feel like the
+        only guest. What started as a boutique guesthouse on the cobbled streets of old Tbilisi has
+        grown into a curated collection of properties spanning three continents.
+      </p>
+      <p class="intro-text">
+        Our founders — two architects with a passion for Georgian hospitality — designed each
+        property not as a hotel, but as a home that happens to be extraordinary.
+      </p>
+
+      <div class="timeline">
+        <div class="timeline-item" *ngFor="let item of timeline; last as isLast">
+          <div class="tl-left">
+            <div class="tl-dot"></div>
+            <div class="tl-line" *ngIf="!isLast"></div>
+          </div>
+          <div class="tl-content">
+            <span class="tl-year">{{ item.year }}</span>
+            <p class="tl-text">{{ item.text }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Air<span>Glo</span></div>
+  <p class="footer-tagline">Redefining luxury hospitality since 2009</p>
+  <div class="footer-links">
+    <a (click)="scrollTo('hero')">Home</a>
+    <a routerLink="/rooms">Rooms</a>
+    <a routerLink="/hotels">Hotels</a>
+    <a routerLink="/book-rooms">Booked Rooms</a>
+    <a (click)="scrollTo('history')">Our Story</a>
+  </div>
+  <p class="footer-copy">© 2025 AirGlo Luxury Collection. All Rights Reserved.</p>
+</footer>

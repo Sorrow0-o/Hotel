@@ -1,0 +1,125 @@
+<!-- ═══ NAVBAR ═══ -->
+<nav class="hotels-nav">
+  <div class="nav-inner">
+    <div class="logo" routerLink="/">
+      <div class="logo-mark">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="brand">AirGlo</span>
+        <span class="sub">Luxury Collection</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/rooms">Rooms</a></li>
+      <li><a routerLink="/hotels" class="active">Hotels</a></li>
+      <li><a routerLink="/book-rooms">Booked Rooms</a></li>
+      <li><a routerLink="/rooms" class="btn-book">Book Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══ PAGE HEADER ═══ -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <span class="section-label">Our Properties</span>
+    <h1 class="page-title">Luxury Hotels<br /><em>Around the World</em></h1>
+    <p class="page-desc">
+      From Tbilisi to the world's most coveted destinations — discover every AirGlo property.
+    </p>
+  </div>
+</section>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<section class="hotels-section">
+  <!-- City filter buttons -->
+  <div class="filter-bar" *ngIf="cities.length > 0">
+    <span class="filter-label">Filter by city</span>
+    <div class="filter-buttons">
+      <button
+        class="filter-btn"
+        [class.active]="selectedCity === null"
+        (click)="onCityClick(selectedCity || '')"
+      >
+        All
+      </button>
+      <button
+        class="filter-btn"
+        *ngFor="let city of cities"
+        [class.active]="
+          selectedCity === city || selectedCity === city.name || selectedCity === city.cityName
+        "
+        (click)="onCityClick(city.name || city.cityName || city)"
+      >
+        {{ city.name || city.cityName || city }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading hotels…</p>
+  </div>
+
+  <!-- Hotels grid -->
+  <div class="hotels-grid" *ngIf="!isLoading">
+    <!-- Empty state -->
+    <div class="empty-state" *ngIf="getFilteredHotels().length === 0">
+      <p>No hotels found for this city.</p>
+    </div>
+
+    <div class="hotel-card" *ngFor="let hotel of getFilteredHotels()">
+      <div class="hotel-image">
+        <img [src]="getHotelImage(hotel)" [alt]="getHotelName(hotel)" />
+        <span class="hotel-badge">★ AirGlo Property</span>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-city" *ngIf="getHotelCity(hotel)">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            width="12"
+            height="12"
+          >
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          {{ getHotelCity(hotel) }}
+        </div>
+        <div class="hotel-name">{{ getHotelName(hotel) }}</div>
+        <div class="hotel-stars">★★★★★</div>
+        <div class="hotel-footer">
+          <a routerLink="/rooms" class="hotel-btn">View Rooms</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-logo">Air<span>Glo</span></div>
+  <p class="footer-tagline">Redefining luxury hospitality since 2009</p>
+  <div class="footer-links">
+    <a routerLink="/">Home</a>
+    <a routerLink="/rooms">Rooms</a>
+    <a routerLink="/hotels">Hotels</a>
+    <a routerLink="/book-rooms">Booked Rooms</a>
+  </div>
+  <p class="footer-copy">© 2025 AirGlo Luxury Collection. All Rights Reserved.</p>
+</footer>
