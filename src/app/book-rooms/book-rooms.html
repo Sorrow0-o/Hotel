@@ -1,4 +1,3 @@
-<!-- ═══ NAVBAR ═══ -->
 <nav
   [class.scrolled]="isScrolled"
   style="background: rgba(13, 13, 13, 0.95); backdrop-filter: blur(12px)"
@@ -38,7 +37,6 @@
   </div>
 </nav>
 
-<!-- ═══ PAGE HERO ═══ -->
 <section class="br-hero">
   <div class="br-hero-bg"></div>
   <div class="br-hero-overlay"></div>
@@ -53,9 +51,7 @@
   </div>
 </section>
 
-<!-- ═══ MAIN ═══ -->
 <main class="br-main">
-  <!-- City filter -->
   <div class="city-filter" *ngIf="cities.length > 0">
     <span class="cf-label">Filter by city</span>
     <div class="cf-pills">
@@ -73,13 +69,11 @@
     </div>
   </div>
 
-  <!-- Loading -->
   <div class="loading" *ngIf="isLoading">
     <div class="spinner"></div>
     <p>Fetching your reservations…</p>
   </div>
 
-  <!-- Success toast -->
   <div class="toast-success" *ngIf="cancelSuccess">
     <svg
       viewBox="0 0 24 24"
@@ -96,7 +90,6 @@
     Booking cancelled successfully.
   </div>
 
-  <!-- Empty state -->
   <div class="empty-state" *ngIf="!isLoading && displayedBookings.length === 0">
     <div class="empty-icon">
       <svg
@@ -118,7 +111,6 @@
     <button class="btn-explore" routerLink="/rooms">Explore Rooms</button>
   </div>
 
-  <!-- Table -->
   <div class="br-table-wrap" *ngIf="!isLoading && displayedBookings.length > 0">
     <div class="br-table-header">
       <span class="br-count">
@@ -128,7 +120,6 @@
     </div>
 
     <div class="br-table">
-      <!-- Head -->
       <div class="br-head">
         <div class="bh-cell col-hotel">Hotel</div>
         <div class="bh-cell col-room">Room</div>
@@ -140,13 +131,11 @@
         <div class="bh-cell col-actions">Actions</div>
       </div>
 
-      <!-- Rows -->
       <div
         class="br-row"
         *ngFor="let booking of displayedBookings"
         [class.cancelling]="cancellingId === getBookingId(booking)"
       >
-        <!-- Hotel -->
         <div class="br-cell col-hotel">
           <div class="cell-media">
             <div
@@ -157,7 +146,6 @@
           </div>
         </div>
 
-        <!-- Room -->
         <div class="br-cell col-room">
           <div class="cell-media">
             <div
@@ -168,7 +156,6 @@
           </div>
         </div>
 
-        <!-- Customer -->
         <div class="br-cell col-customer">
           <span class="customer-name">{{ getCustomerName(booking) }}</span>
           <span class="customer-phone" *ngIf="getCustomerPhone(booking)">
@@ -176,33 +163,28 @@
           </span>
         </div>
 
-        <!-- Status -->
         <div class="br-cell col-status">
           <span class="status-badge" [class]="'status-' + getStatus(booking).toLowerCase()">
             {{ getStatus(booking) }}
           </span>
         </div>
 
-        <!-- Check-in -->
         <div class="br-cell col-checkin">
           <span class="date-val">{{
             formatDate(booking.checkIn || booking.checkInDate || booking.startDate)
           }}</span>
         </div>
 
-        <!-- Check-out -->
         <div class="br-cell col-checkout">
           <span class="date-val">{{
             formatDate(booking.checkOut || booking.checkOutDate || booking.endDate)
           }}</span>
         </div>
 
-        <!-- Price -->
         <div class="br-cell col-price">
           <span class="price-val">{{ getTotalPrice(booking) }}</span>
         </div>
 
-        <!-- Actions -->
         <div class="br-cell col-actions">
           <button
             class="btn-cancel"
@@ -232,7 +214,6 @@
   </div>
 </main>
 
-<!-- ═══ CONFIRM MODAL ═══ -->
 <div class="modal-backdrop" *ngIf="confirmCancelId !== null" (click)="dismissCancel()">
   <div class="modal" (click)="$event.stopPropagation()">
     <div class="modal-icon">
@@ -260,7 +241,6 @@
   </div>
 </div>
 
-<!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="footer-logo">Air<span>Glo</span></div>
   <p class="footer-tagline">Redefining luxury hospitality since 2009</p>

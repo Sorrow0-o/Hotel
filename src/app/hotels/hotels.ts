@@ -70,11 +70,11 @@ export class Hotels implements OnInit {
   ngOnInit() {
     this.isScrolled = window.scrollY > 40;
 
-    // Abort both requests after 5 seconds
+    
     const controller = new AbortController();
     setTimeout(() => controller.abort(), 5000);
 
-    // Load cities
+   
     fetch('https://hotelbooking.stepprojects.ge/api/Hotels/GetCities', {
       signal: controller.signal,
     })
@@ -92,7 +92,7 @@ export class Hotels implements OnInit {
         this.cities = this.fallbackCities;
       });
 
-    // Load hotels
+    
     fetch('https://hotelbooking.stepprojects.ge/api/Hotels/GetAll', { signal: controller.signal })
       .then((res) => res.json())
       .then((data) => {

@@ -1,4 +1,4 @@
-<!-- ═══ NAVBAR ═══ -->
+
 <nav
   [class.scrolled]="isScrolled"
   style="background: rgba(13, 13, 13, 0.92); backdrop-filter: blur(12px)"
@@ -40,7 +40,7 @@
   </div>
 </nav>
 
-<!-- ═══ PAGE HERO ═══ -->
+
 <section class="rooms-hero">
   <div class="rooms-hero-bg"></div>
   <div class="rooms-hero-overlay"></div>
@@ -56,9 +56,9 @@
   </div>
 </section>
 
-<!-- ═══ MAIN CONTENT ═══ -->
+
 <main class="rooms-main">
-  <!-- ── TYPE TABS ── -->
+  
   <div class="type-tabs">
     <button class="type-tab" [class.active]="activeType === 'All'" (click)="setActiveType('All')">
       All Rooms
@@ -73,10 +73,10 @@
     </button>
   </div>
 
-  <!-- ── FILTER PANEL ── -->
+ 
   <div class="filter-panel">
     <div class="filter-grid">
-      <!-- Price Range -->
+    
       <div class="filter-group">
         <label class="filter-label">
           <svg
@@ -121,7 +121,7 @@
         </div>
       </div>
 
-      <!-- Room Type -->
+     
       <div class="filter-group">
         <label class="filter-label">
           <svg
@@ -157,7 +157,7 @@
         </div>
       </div>
 
-      <!-- Check-in -->
+     
       <div class="filter-group">
         <label class="filter-label">
           <svg
@@ -180,7 +180,7 @@
         <input type="date" [(ngModel)]="checkIn" class="filter-date" />
       </div>
 
-      <!-- Check-out -->
+     
       <div class="filter-group">
         <label class="filter-label">
           <svg
@@ -203,7 +203,7 @@
         <input type="date" [(ngModel)]="checkOut" class="filter-date" />
       </div>
 
-      <!-- Guests -->
+      
       <div class="filter-group">
         <label class="filter-label">
           <svg
@@ -253,7 +253,6 @@
     </div>
   </div>
 
-  <!-- ── RESULTS INFO ── -->
   <div class="results-bar" *ngIf="!isLoading">
     <span class="results-count">
       <strong>{{ displayedRooms.length }}</strong> room{{ displayedRooms.length !== 1 ? 's' : '' }}
@@ -265,13 +264,13 @@
     </div>
   </div>
 
-  <!-- ── LOADING ── -->
+ 
   <div class="loading" *ngIf="isLoading">
     <div class="spinner"></div>
     <p>Curating your collection…</p>
   </div>
 
-  <!-- ── EMPTY STATE ── -->
+ 
   <div class="empty-state" *ngIf="!isLoading && displayedRooms.length === 0">
     <div class="empty-icon">
       <svg
@@ -291,7 +290,7 @@
     <button class="btn-apply" (click)="resetFilter()">Clear Filters</button>
   </div>
 
-  <!-- ── ROOMS GRID ── -->
+ 
   <div class="rooms-grid-page" *ngIf="!isLoading && displayedRooms.length > 0">
     <div class="room-card-page" *ngFor="let room of displayedRooms">
       <div class="rcp-image" [style.background-image]="'url(' + room.image + ')'">
@@ -346,7 +345,7 @@
   </div>
 </main>
 
-<!-- ═══ FOOTER ═══ -->
+
 <footer>
   <div class="footer-logo">Air<span>Glo</span></div>
   <p class="footer-tagline">Redefining luxury hospitality since 2009</p>

@@ -1,4 +1,4 @@
-// ── Variables ──────────────────────────────────────────
+
 $gold: #c9a96e;
 $gold-light: #e8d5a3;
 $dark: #0d0d0d;
@@ -9,7 +9,7 @@ $teal: #1d7d6e;
 $serif: 'Playfair Display', Georgia, serif;
 $sans: 'DM Sans', sans-serif;
 
-// ── Reuse nav/footer from rooms.scss (same class names) ──
+
 nav:not(.footer-links) {
   position: fixed;
   top: 0;
@@ -144,7 +144,7 @@ nav:not(.footer-links) {
   }
 }
 
-// ── Loading ────────────────────────────────────────────
+
 .rd-loading {
   min-height: 100vh;
   display: flex;
@@ -193,7 +193,7 @@ nav:not(.footer-links) {
   }
 }
 
-// ── Page wrapper ───────────────────────────────────────
+
 .rd-page {
   padding-top: 72px;
   max-width: 1280px;
@@ -203,7 +203,6 @@ nav:not(.footer-links) {
   padding-bottom: 6rem;
 }
 
-// ── Breadcrumb ─────────────────────────────────────────
 .rd-breadcrumb {
   display: flex;
   align-items: center;
@@ -224,7 +223,7 @@ nav:not(.footer-links) {
   }
 }
 
-// ── Top section: carousel + reservation ───────────────
+
 .rd-top {
   display: grid;
   grid-template-columns: 1fr 380px;
@@ -233,7 +232,7 @@ nav:not(.footer-links) {
   align-items: start;
 }
 
-// ── Carousel ───────────────────────────────────────────
+
 .rd-carousel {
   position: relative;
   border-radius: 16px;
@@ -313,7 +312,7 @@ nav:not(.footer-links) {
   }
 }
 
-// ── Reservation card ───────────────────────────────────
+
 .rd-reservation {
   background: #fff;
   border-radius: 16px;
@@ -463,7 +462,7 @@ nav:not(.footer-links) {
   }
 }
 
-// ── Details + Overview row ─────────────────────────────
+
 .rd-details-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -528,7 +527,7 @@ nav:not(.footer-links) {
   line-height: 1.8;
 }
 
-// ── Tabs ───────────────────────────────────────────────
+
 .rd-tabs {
   display: flex;
   gap: 0;
@@ -566,7 +565,7 @@ nav:not(.footer-links) {
   }
 }
 
-// ── Other Rooms ────────────────────────────────────────
+
 .rd-other-rooms {
   border-top: 1px solid #e8e4dc;
   padding-top: 2.5rem;
@@ -643,7 +642,7 @@ nav:not(.footer-links) {
   }
 }
 
-// ── Footer ─────────────────────────────────────────────
+
 footer {
   background: $dark;
   padding: 3.5rem 3rem;
@@ -688,14 +687,14 @@ footer {
   color: rgba($cream, 0.3);
 }
 
-// ── Keyframes ──────────────────────────────────────────
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-// ── Responsive ─────────────────────────────────────────
+
 @media (max-width: 1100px) {
   .rd-top {
     grid-template-columns: 1fr;

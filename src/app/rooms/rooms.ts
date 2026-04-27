@@ -10,7 +10,7 @@ const AVAILABLE_URL = 'https://hotelbooking.stepprojects.ge/api/Rooms/GetAvailab
 const FILTERED_URL = 'https://hotelbooking.stepprojects.ge/api/Rooms/GetFiltered';
 const ROOM_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-// Type map populated from API: { 1: 'Single Room', 2: 'Double Room', 3: 'Deluxe Room' }
+
 type RoomTypeMap = Record<number, string>;
 
 @Component({
@@ -59,7 +59,7 @@ export class Rooms implements OnInit {
 
   ngOnInit() {
     this.isScrolled = window.scrollY > 40;
-    // Load types first so rooms get correct names
+    
     this.loadRoomTypes().then(() => this.loadRooms());
   }
 
@@ -79,7 +79,7 @@ export class Rooms implements OnInit {
         .map((result, i) => {
           if (result.status === 'fulfilled') {
             const r = result.value;
-            // Resolve type name: use typeMap from API, fallback to raw field
+           
             const typeId = r.roomTypeId ?? r.typeId ?? null;
             const typeName =
               typeId && this.typeMap[typeId]
@@ -102,7 +102,7 @@ export class Rooms implements OnInit {
         .filter(Boolean);
 
       this.allRooms = rooms;
-      // Only fall back to extracting from rooms if API types weren't loaded
+     
       if (!this.roomTypes.length) this.extractTypes();
       this.displayedRooms = [...this.allRooms];
     } catch {
@@ -119,11 +119,11 @@ export class Rooms implements OnInit {
       if (res.ok) {
         const data: { id: number; name: string }[] = await res.json();
         if (Array.isArray(data) && data.length) {
-          // Build lookup map: { 1: 'Single Room', 2: 'Double Room', 3: 'Deluxe Room' }
+          
           data.forEach((t) => {
             this.typeMap[t.id] = t.name;
           });
-          // Always show all types in filter, regardless of fetched rooms
+         
           this.roomTypes = data;
         }
       }
@@ -150,19 +150,19 @@ export class Rooms implements OnInit {
   }
 
   async applyFilter() {
-    // If both dates are set → ask the API for available rooms in that window
+   
     if (this.checkIn && this.checkOut) {
       await this.applyDateFilter();
       return;
     }
-    // Otherwise filter locally
+  
     this.applyLocalFilter(this.allRooms);
   }
 
   private async applyDateFilter() {
     this.isLoading = true;
     try {
-      // Try POST /GetFiltered first
+     
       const body = {
         checkIn: this.checkIn,
         checkOut: this.checkOut,
@@ -189,7 +189,7 @@ export class Rooms implements OnInit {
         }
       }
 
-      // Fallback: GET /GetAvailableRooms with query params
+      
       if (!availableIds) {
         const params = new URLSearchParams({
           checkIn: this.checkIn,
@@ -207,14 +207,14 @@ export class Rooms implements OnInit {
         }
       }
 
-      // Filter our locally cached rooms by available IDs from API
+     
       const base = availableIds
         ? this.allRooms.filter((r) => availableIds!.has(r.id))
-        : this.allRooms; // API gave nothing useful → show all
+        : this.allRooms; 
 
       this.applyLocalFilter(base);
     } catch {
-      // Network error — fall back to local filter silently
+      
       this.applyLocalFilter(this.allRooms);
     } finally {
       this.isLoading = false;

@@ -45,7 +45,7 @@ export class BookRooms implements OnInit {
   private async loadAll() {
     this.isLoading = true;
     try {
-      // Load bookings + hotels in parallel
+     
       const [bookingsRes, hotelsRes] = await Promise.all([fetch(BOOKING_API), fetch(HOTELS_API)]);
 
       let bookings: any[] = [];
@@ -63,8 +63,7 @@ export class BookRooms implements OnInit {
         });
       }
 
-      // Extract unique hotel ids referenced by bookings to pre-load rooms if needed
-      // Also gather cities from hotels
+     
       const citySet = new Set<string>();
       Object.values(this.hotelMap).forEach((h: any) => {
         const city = h.city || h.cityName || h.location;
@@ -72,7 +71,7 @@ export class BookRooms implements OnInit {
       });
       this.cities = Array.from(citySet);
 
-      // Pre-fetch room details referenced by bookings
+     
       const roomIds = [
         ...new Set(bookings.map((b: any) => b.roomId || b.room?.id).filter(Boolean)),
       ];

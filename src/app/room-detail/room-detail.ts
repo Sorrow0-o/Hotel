@@ -37,7 +37,7 @@ const ROOM_IMAGES = [
   'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900&auto=format&fit=crop',
 ];
 
-// Extra carousel images per room slot
+
 const EXTRA_IMAGES = [
   'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=900&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=900&auto=format&fit=crop',
@@ -61,7 +61,7 @@ export class RoomDetail implements OnInit {
   carouselImages: string[] = [];
   activeSlide = 0;
 
-  // Reservation form
+ 
   checkIn = '';
   checkOut = '';
   customerName = '';
@@ -69,7 +69,7 @@ export class RoomDetail implements OnInit {
   bookingStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
   bookingMessage = '';
 
-  // Overview tabs
+ 
   activeTab: 'overview' | 'facilities' | 'extra' = 'overview';
 
   @HostListener('window:scroll')
@@ -112,7 +112,7 @@ export class RoomDetail implements OnInit {
         image: ROOM_IMAGES[imgIndex],
       };
 
-      // Build carousel: main image + 2 extras
+     
       this.carouselImages = [
         ROOM_IMAGES[imgIndex],
         EXTRA_IMAGES[imgIndex % EXTRA_IMAGES.length],
@@ -120,7 +120,7 @@ export class RoomDetail implements OnInit {
         EXTRA_IMAGES[(imgIndex + 2) % EXTRA_IMAGES.length],
       ];
 
-      // Load 3 other rooms (neighbouring IDs, skip current)
+      
       const otherIds = [1, 2, 3, 4, 5, 6, 7, 8].filter((i) => i !== id).slice(0, 3);
 
       const others = await Promise.allSettled(

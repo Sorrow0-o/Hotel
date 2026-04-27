@@ -1,4 +1,4 @@
-<!-- ═══ NAVBAR ═══ -->
+
 <nav class="hotels-nav" [class.scrolled]="isScrolled">
   <div class="nav-inner">
     <div class="logo" routerLink="/">
@@ -31,7 +31,7 @@
   </div>
 </nav>
 
-<!-- ═══ PAGE HEADER ═══ -->
+
 <section class="page-hero">
   <div class="page-hero-content">
     <span class="section-label">Our Properties</span>
@@ -42,9 +42,9 @@
   </div>
 </section>
 
-<!-- ═══ MAIN CONTENT ═══ -->
+
 <section class="hotels-section">
-  <!-- City filter buttons -->
+ 
   <div class="filter-bar" *ngIf="cities.length > 0">
     <span class="filter-label">Filter by city</span>
     <div class="filter-buttons">
@@ -68,15 +68,15 @@
     </div>
   </div>
 
-  <!-- Loading state -->
+ 
   <div class="loading" *ngIf="isLoading">
     <div class="spinner"></div>
     <p>Loading hotels…</p>
   </div>
 
-  <!-- Hotels grid -->
+
   <div class="hotels-grid" *ngIf="!isLoading">
-    <!-- Empty state -->
+    
     <div class="empty-state" *ngIf="getFilteredHotels().length === 0">
       <p>No hotels found for this city.</p>
     </div>
@@ -111,7 +111,7 @@
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
+
 <footer>
   <div class="footer-logo">Air<span>Glo</span></div>
   <p class="footer-tagline">Redefining luxury hospitality since 2009</p>

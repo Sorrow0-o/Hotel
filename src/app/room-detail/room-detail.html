@@ -1,4 +1,4 @@
-<!-- ═══ NAVBAR ═══ -->
+
 <nav
   [class.scrolled]="isScrolled"
   style="background: rgba(13, 13, 13, 0.92); backdrop-filter: blur(12px)"
@@ -36,21 +36,21 @@
   </div>
 </nav>
 
-<!-- ═══ LOADING ═══ -->
+
 <div class="rd-loading" *ngIf="isLoading">
   <div class="spinner"></div>
   <p>Loading room details…</p>
 </div>
 
-<!-- ═══ NOT FOUND ═══ -->
+
 <div class="rd-not-found" *ngIf="!isLoading && !room">
   <h2>Room not found</h2>
   <a routerLink="/rooms" class="rd-back-btn">← Back to Rooms</a>
 </div>
 
-<!-- ═══ DETAIL PAGE ═══ -->
+
 <div class="rd-page" *ngIf="!isLoading && room">
-  <!-- Breadcrumb -->
+ 
   <div class="rd-breadcrumb">
     <a routerLink="/">Home</a>
     <span>/</span>
@@ -59,9 +59,9 @@
     <span class="crumb-active">{{ room.name }}</span>
   </div>
 
-  <!-- ── TOP SECTION: Carousel + Reservation ── -->
+ 
   <div class="rd-top">
-    <!-- Carousel -->
+  
     <div class="rd-carousel">
       <div class="rd-carousel-track">
         <div
@@ -107,7 +107,7 @@
       </div>
     </div>
 
-    <!-- Reservation Card -->
+    
     <div class="rd-reservation">
       <div class="rd-res-header">
         <h3>Reservation</h3>
@@ -117,7 +117,7 @@
         </div>
       </div>
 
-      <!-- Success / Error messages -->
+     
       <div class="rd-booking-success" *ngIf="bookingStatus === 'success'">
         <svg
           viewBox="0 0 24 24"
@@ -228,9 +228,9 @@
     </div>
   </div>
 
-  <!-- ── DETAILS + OVERVIEW ── -->
+  
   <div class="rd-details-row">
-    <!-- Room Details -->
+   
     <div class="rd-details-col">
       <h2 class="rd-section-title">Room Details</h2>
       <h4 class="rd-table-label">Table overview</h4>
@@ -253,7 +253,7 @@
       <p class="rd-description">{{ room.description }}</p>
     </div>
 
-    <!-- Overview tabs -->
+   
     <div class="rd-overview-col">
       <h2 class="rd-section-title">Overview</h2>
       <div class="rd-tabs">
@@ -315,7 +315,7 @@
     </div>
   </div>
 
-  <!-- ── OTHER ROOMS ── -->
+ 
   <div class="rd-other-rooms" *ngIf="otherRooms.length > 0">
     <h2 class="rd-other-title">Other rooms</h2>
     <div class="rd-other-grid">
@@ -334,7 +334,7 @@
   </div>
 </div>
 
-<!-- ═══ FOOTER ═══ -->
+
 <footer>
   <div class="footer-logo">Air<span>Glo</span></div>
   <p class="footer-tagline">Redefining luxury hospitality since 2009</p>

@@ -1,4 +1,4 @@
-// ── AirGlo design tokens ──────────────────────────────
+
 $gold: #c9a96e;
 $gold-light: #e8d5a3;
 $dark: #0d0d0d;
@@ -10,7 +10,7 @@ $teal: #1d7d6e;
 $serif: 'Playfair Display', Georgia, serif;
 $sans: 'DM Sans', sans-serif;
 
-// ── Navbar ────────────────────────────────────────────
+
 .hotels-nav {
   position: fixed;
   top: 0;
@@ -142,14 +142,14 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ── Page hero banner ──────────────────────────────────
+
 .page-hero {
   background: linear-gradient(135deg, $dark 0%, #1a2a2a 60%, #0d1f1a 100%);
   padding: 9rem 3rem 5rem;
   position: relative;
   overflow: hidden;
 
-  // Subtle grid pattern
+  
   &::before {
     content: '';
     position: absolute;
@@ -208,14 +208,14 @@ $sans: 'DM Sans', sans-serif;
   max-width: 480px;
 }
 
-// ── Hotels section ────────────────────────────────────
+
 .hotels-section {
   padding: 4rem 3rem 6rem;
   max-width: 1280px;
   margin: 0 auto;
 }
 
-// ── City filter bar ───────────────────────────────────
+
 .filter-bar {
   display: flex;
   align-items: center;
@@ -265,7 +265,7 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ── Loading spinner ───────────────────────────────────
+
 .loading {
   display: flex;
   flex-direction: column;
@@ -289,7 +289,7 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ── Error / empty states ──────────────────────────────
+
 .error-state,
 .empty-state {
   text-align: center;
@@ -299,14 +299,14 @@ $sans: 'DM Sans', sans-serif;
   grid-column: 1 / -1;
 }
 
-// ── Hotels grid ───────────────────────────────────────
+
 .hotels-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem;
 }
 
-// ── Hotel card ────────────────────────────────────────
+
 .hotel-card {
   border-radius: 16px;
   overflow: hidden;
@@ -409,7 +409,7 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ── Footer ────────────────────────────────────────────
+
 footer {
   background: $dark;
   padding: 3.5rem 3rem;
@@ -459,14 +459,14 @@ footer {
   color: rgba($cream, 0.3);
 }
 
-// ── Animations ────────────────────────────────────────
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-// ── Responsive ────────────────────────────────────────
+
 @media (max-width: 768px) {
   .nav-inner {
     padding: 0 1.5rem;

@@ -163,7 +163,6 @@ export class Home implements OnInit {
 
   private async loadRoomsById(): Promise<void> {
     try {
-      // Fetch all 6 rooms in parallel
       const requests = ROOM_IDS.map((id) =>
         fetch(`${BASE_URL}/${id}`).then((res) => {
           if (!res.ok) throw new Error(`Room ${id} not found`);
@@ -171,7 +170,6 @@ export class Home implements OnInit {
         }),
       );
 
-      // Wait for all — settle individually so one failure doesn't break the rest
       const results = await Promise.allSettled(requests);
 
       const fetchedRooms = results
