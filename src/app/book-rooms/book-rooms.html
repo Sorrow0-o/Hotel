@@ -1,1 +1,274 @@
-<p>book-rooms works!</p>
+<!-- ═══ NAVBAR ═══ -->
+<nav
+  [class.scrolled]="isScrolled"
+  style="background: rgba(13, 13, 13, 0.95); backdrop-filter: blur(12px)"
+>
+  <div class="nav-inner">
+    <div class="logo" routerLink="/">
+      <div class="logo-mark">
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="brand">AirGlo</span>
+        <span class="sub">Luxury Collection</span>
+      </div>
+    </div>
+    <ul class="nav-links" [class.open]="isMenuOpen">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/rooms">Rooms</a></li>
+      <li><a routerLink="/hotels">Hotels</a></li>
+      <li><a routerLink="/book-rooms" class="active">Booked Rooms</a></li>
+      <li><button class="btn-book" routerLink="/rooms">Book Now</button></li>
+    </ul>
+    <button class="hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ PAGE HERO ═══ -->
+<section class="br-hero">
+  <div class="br-hero-bg"></div>
+  <div class="br-hero-overlay"></div>
+  <div class="br-hero-content">
+    <span class="hero-eyebrow">Manage Reservations</span>
+    <h1>Your Booked Rooms</h1>
+    <p>Review, track and manage all your AirGlo reservations in one place.</p>
+  </div>
+  <div class="hero-breadcrumb">
+    <a routerLink="/">Home</a><span>/</span>
+    <span class="crumb-active">Booked Rooms</span>
+  </div>
+</section>
+
+<!-- ═══ MAIN ═══ -->
+<main class="br-main">
+  <!-- City filter -->
+  <div class="city-filter" *ngIf="cities.length > 0">
+    <span class="cf-label">Filter by city</span>
+    <div class="cf-pills">
+      <button class="cf-pill" [class.active]="selectedCity === null" (click)="filterByCity(null)">
+        All
+      </button>
+      <button
+        class="cf-pill"
+        *ngFor="let city of cities"
+        [class.active]="selectedCity === city"
+        (click)="filterByCity(city)"
+      >
+        {{ city }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Fetching your reservations…</p>
+  </div>
+
+  <!-- Success toast -->
+  <div class="toast-success" *ngIf="cancelSuccess">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      width="18"
+      height="18"
+    >
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+    Booking cancelled successfully.
+  </div>
+
+  <!-- Empty state -->
+  <div class="empty-state" *ngIf="!isLoading && displayedBookings.length === 0">
+    <div class="empty-icon">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="3" y="4" width="18" height="18" rx="2" />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+      </svg>
+    </div>
+    <h3>No bookings found</h3>
+    <p>You haven't made any reservations yet.</p>
+    <button class="btn-explore" routerLink="/rooms">Explore Rooms</button>
+  </div>
+
+  <!-- Table -->
+  <div class="br-table-wrap" *ngIf="!isLoading && displayedBookings.length > 0">
+    <div class="br-table-header">
+      <span class="br-count">
+        <strong>{{ displayedBookings.length }}</strong>
+        reservation{{ displayedBookings.length !== 1 ? 's' : '' }}
+      </span>
+    </div>
+
+    <div class="br-table">
+      <!-- Head -->
+      <div class="br-head">
+        <div class="bh-cell col-hotel">Hotel</div>
+        <div class="bh-cell col-room">Room</div>
+        <div class="bh-cell col-customer">Customer</div>
+        <div class="bh-cell col-status">Status</div>
+        <div class="bh-cell col-checkin">Check-in</div>
+        <div class="bh-cell col-checkout">Check-out</div>
+        <div class="bh-cell col-price">Total Price</div>
+        <div class="bh-cell col-actions">Actions</div>
+      </div>
+
+      <!-- Rows -->
+      <div
+        class="br-row"
+        *ngFor="let booking of displayedBookings"
+        [class.cancelling]="cancellingId === getBookingId(booking)"
+      >
+        <!-- Hotel -->
+        <div class="br-cell col-hotel">
+          <div class="cell-media">
+            <div
+              class="cell-thumb"
+              [style.background-image]="'url(' + getHotelImage(booking) + ')'"
+            ></div>
+            <span class="cell-name">{{ getHotelName(booking) }}</span>
+          </div>
+        </div>
+
+        <!-- Room -->
+        <div class="br-cell col-room">
+          <div class="cell-media">
+            <div
+              class="cell-thumb"
+              [style.background-image]="'url(' + getRoomImage(booking) + ')'"
+            ></div>
+            <span class="cell-name">{{ getRoomName(booking) }}</span>
+          </div>
+        </div>
+
+        <!-- Customer -->
+        <div class="br-cell col-customer">
+          <span class="customer-name">{{ getCustomerName(booking) }}</span>
+          <span class="customer-phone" *ngIf="getCustomerPhone(booking)">
+            {{ getCustomerPhone(booking) }}
+          </span>
+        </div>
+
+        <!-- Status -->
+        <div class="br-cell col-status">
+          <span class="status-badge" [class]="'status-' + getStatus(booking).toLowerCase()">
+            {{ getStatus(booking) }}
+          </span>
+        </div>
+
+        <!-- Check-in -->
+        <div class="br-cell col-checkin">
+          <span class="date-val">{{
+            formatDate(booking.checkIn || booking.checkInDate || booking.startDate)
+          }}</span>
+        </div>
+
+        <!-- Check-out -->
+        <div class="br-cell col-checkout">
+          <span class="date-val">{{
+            formatDate(booking.checkOut || booking.checkOutDate || booking.endDate)
+          }}</span>
+        </div>
+
+        <!-- Price -->
+        <div class="br-cell col-price">
+          <span class="price-val">{{ getTotalPrice(booking) }}</span>
+        </div>
+
+        <!-- Actions -->
+        <div class="br-cell col-actions">
+          <button
+            class="btn-cancel"
+            [class.loading]="cancellingId === getBookingId(booking)"
+            (click)="requestCancel(getBookingId(booking))"
+          >
+            <svg
+              *ngIf="cancellingId !== getBookingId(booking)"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              width="13"
+              height="13"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+            <span class="btn-cancel-spinner" *ngIf="cancellingId === getBookingId(booking)"></span>
+            {{ cancellingId === getBookingId(booking) ? 'Cancelling…' : 'Cancel Booking' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══ CONFIRM MODAL ═══ -->
+<div class="modal-backdrop" *ngIf="confirmCancelId !== null" (click)="dismissCancel()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="modal-icon">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="12" />
+        <line x1="12" y1="16" x2="12.01" y2="16" />
+      </svg>
+    </div>
+    <h3 class="modal-title">Cancel Booking?</h3>
+    <p class="modal-desc">
+      This action cannot be undone. Your reservation will be permanently cancelled.
+    </p>
+    <div class="modal-actions">
+      <button class="modal-btn-ghost" (click)="dismissCancel()">Keep Booking</button>
+      <button class="modal-btn-danger" (click)="confirmCancel()">Yes, Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-logo">Air<span>Glo</span></div>
+  <p class="footer-tagline">Redefining luxury hospitality since 2009</p>
+  <div class="footer-links">
+    <a routerLink="/">Home</a>
+    <a routerLink="/rooms">Rooms</a>
+    <a routerLink="/hotels">Hotels</a>
+    <a routerLink="/book-rooms">Booked Rooms</a>
+  </div>
+  <p class="footer-copy">© 2025 AirGlo Luxury Collection. All Rights Reserved.</p>
+</footer>

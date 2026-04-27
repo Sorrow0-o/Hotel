@@ -1,0 +1,348 @@
+<!-- ═══ NAVBAR ═══ -->
+<nav
+  [class.scrolled]="isScrolled"
+  style="background: rgba(13, 13, 13, 0.92); backdrop-filter: blur(12px)"
+>
+  <div class="nav-inner">
+    <div class="logo" routerLink="/">
+      <div class="logo-mark">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="brand">AirGlo</span>
+        <span class="sub">Luxury Collection</span>
+      </div>
+    </div>
+    <ul class="nav-links" [class.open]="isMenuOpen">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/rooms" class="active">Rooms</a></li>
+      <li><a routerLink="/hotels">Hotels</a></li>
+      <li><a routerLink="/book-rooms">Booked Rooms</a></li>
+      <li><button class="btn-book" routerLink="/rooms">Book Now</button></li>
+    </ul>
+    <button class="hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ LOADING ═══ -->
+<div class="rd-loading" *ngIf="isLoading">
+  <div class="spinner"></div>
+  <p>Loading room details…</p>
+</div>
+
+<!-- ═══ NOT FOUND ═══ -->
+<div class="rd-not-found" *ngIf="!isLoading && !room">
+  <h2>Room not found</h2>
+  <a routerLink="/rooms" class="rd-back-btn">← Back to Rooms</a>
+</div>
+
+<!-- ═══ DETAIL PAGE ═══ -->
+<div class="rd-page" *ngIf="!isLoading && room">
+  <!-- Breadcrumb -->
+  <div class="rd-breadcrumb">
+    <a routerLink="/">Home</a>
+    <span>/</span>
+    <a routerLink="/rooms">Rooms</a>
+    <span>/</span>
+    <span class="crumb-active">{{ room.name }}</span>
+  </div>
+
+  <!-- ── TOP SECTION: Carousel + Reservation ── -->
+  <div class="rd-top">
+    <!-- Carousel -->
+    <div class="rd-carousel">
+      <div class="rd-carousel-track">
+        <div
+          class="rd-slide"
+          *ngFor="let img of carouselImages; let i = index"
+          [class.active]="i === activeSlide"
+          [style.background-image]="'url(' + img + ')'"
+        ></div>
+      </div>
+
+      <button class="rd-arrow rd-arrow-prev" (click)="prevSlide()">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          width="18"
+          height="18"
+        >
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+      <button class="rd-arrow rd-arrow-next" (click)="nextSlide()">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          width="18"
+          height="18"
+        >
+          <polyline points="9 6 15 12 9 18" />
+        </svg>
+      </button>
+
+      <div class="rd-dots">
+        <button
+          class="rd-dot"
+          *ngFor="let img of carouselImages; let i = index"
+          [class.active]="i === activeSlide"
+          (click)="goToSlide(i)"
+        ></button>
+      </div>
+    </div>
+
+    <!-- Reservation Card -->
+    <div class="rd-reservation">
+      <div class="rd-res-header">
+        <h3>Reservation</h3>
+        <div class="rd-res-price">
+          <span class="rd-res-name">{{ room.name }}</span>
+          <span class="rd-res-amount">${{ room.price }}<em>/ night</em></span>
+        </div>
+      </div>
+
+      <!-- Success / Error messages -->
+      <div class="rd-booking-success" *ngIf="bookingStatus === 'success'">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          width="20"
+          height="20"
+        >
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+        {{ bookingMessage }}
+      </div>
+      <div class="rd-booking-error" *ngIf="bookingStatus === 'error'">
+        {{ bookingMessage }}
+      </div>
+
+      <div class="rd-res-fields">
+        <div class="rd-field">
+          <label>Check-in</label>
+          <div class="rd-input-wrap">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              width="15"
+              height="15"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            <input type="date" [(ngModel)]="checkIn" class="rd-input" />
+          </div>
+        </div>
+        <div class="rd-field">
+          <label>Check-out</label>
+          <div class="rd-input-wrap">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              width="15"
+              height="15"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            <input type="date" [(ngModel)]="checkOut" class="rd-input" />
+          </div>
+        </div>
+        <div class="rd-field">
+          <label>Customer Name</label>
+          <div class="rd-input-wrap">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              width="15"
+              height="15"
+            >
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <input
+              type="text"
+              [(ngModel)]="customerName"
+              placeholder="Please enter your name"
+              class="rd-input"
+            />
+          </div>
+        </div>
+        <div class="rd-field">
+          <label>Customer Tel:Phone</label>
+          <div class="rd-input-wrap">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              width="15"
+              height="15"
+            >
+              <path
+                d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+              />
+            </svg>
+            <input
+              type="tel"
+              [(ngModel)]="customerPhone"
+              placeholder="Please enter your phone number"
+              class="rd-input"
+            />
+          </div>
+        </div>
+      </div>
+
+      <button class="rd-book-btn" (click)="bookNow()" [disabled]="bookingStatus === 'loading'">
+        <span *ngIf="bookingStatus !== 'loading'">BOOK NOW</span>
+        <span *ngIf="bookingStatus === 'loading'">Booking…</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── DETAILS + OVERVIEW ── -->
+  <div class="rd-details-row">
+    <!-- Room Details -->
+    <div class="rd-details-col">
+      <h2 class="rd-section-title">Room Details</h2>
+      <h4 class="rd-table-label">Table overview</h4>
+      <div class="rd-amenities-table">
+        <div class="rd-amenity-item" *ngFor="let a of room.amenities">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            width="14"
+            height="14"
+            stroke-linecap="round"
+          >
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          {{ a }}
+        </div>
+      </div>
+      <p class="rd-description">{{ room.description }}</p>
+    </div>
+
+    <!-- Overview tabs -->
+    <div class="rd-overview-col">
+      <h2 class="rd-section-title">Overview</h2>
+      <div class="rd-tabs">
+        <button
+          class="rd-tab"
+          [class.active]="activeTab === 'overview'"
+          (click)="activeTab = 'overview'"
+        >
+          Overview
+        </button>
+        <button
+          class="rd-tab"
+          [class.active]="activeTab === 'facilities'"
+          (click)="activeTab = 'facilities'"
+        >
+          Facilities
+        </button>
+        <button class="rd-tab" [class.active]="activeTab === 'extra'" (click)="activeTab = 'extra'">
+          Extra
+        </button>
+      </div>
+
+      <div class="rd-tab-content" *ngIf="activeTab === 'overview'">
+        <p>
+          Experience unmatched comfort in the {{ room.name }}. This room accommodates up to
+          {{ room.maxGuests }} guests and features carefully curated luxury amenities to make your
+          stay truly memorable. Every corner is designed with elegance and functionality in mind.
+        </p>
+        <p>
+          Our dedicated team is available around the clock to ensure your experience exceeds
+          expectations. From bespoke concierge services to in-room dining, every detail is managed
+          to perfection.
+        </p>
+      </div>
+
+      <div class="rd-tab-content" *ngIf="activeTab === 'facilities'">
+        <p>
+          The {{ room.type }} category includes access to our full wellness suite, complimentary
+          breakfast, high-speed Wi-Fi, and 24-hour room service. Premium minibars are stocked daily
+          with curated selections.
+        </p>
+        <p>
+          Guests also enjoy priority access to the rooftop pool, spa facilities, and our signature
+          restaurant — all included with every stay.
+        </p>
+      </div>
+
+      <div class="rd-tab-content" *ngIf="activeTab === 'extra'">
+        <p>
+          Enhance your stay with our exclusive extras: airport transfer, private chef experience,
+          guided city tours, or a bespoke romantic setup. Contact our concierge team for
+          personalised arrangements.
+        </p>
+        <p>
+          Early check-in and late check-out options are available upon request, subject to
+          availability at no additional charge for loyalty members.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OTHER ROOMS ── -->
+  <div class="rd-other-rooms" *ngIf="otherRooms.length > 0">
+    <h2 class="rd-other-title">Other rooms</h2>
+    <div class="rd-other-grid">
+      <div
+        class="rd-other-card"
+        *ngFor="let other of otherRooms"
+        (click)="navigateToRoom(other.id)"
+      >
+        <div class="rd-other-image" [style.background-image]="'url(' + other.image + ')'"></div>
+        <div class="rd-other-body">
+          <span class="rd-other-name">{{ other.name }}</span>
+          <span class="rd-other-price">${{ other.price }}<em> / night</em></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-logo">Air<span>Glo</span></div>
+  <p class="footer-tagline">Redefining luxury hospitality since 2009</p>
+  <div class="footer-links">
+    <a routerLink="/">Home</a>
+    <a routerLink="/rooms">Rooms</a>
+    <a routerLink="/hotels">Hotels</a>
+    <a routerLink="/book-rooms">Booked Rooms</a>
+  </div>
+  <p class="footer-copy">© 2025 AirGlo Luxury Collection. All Rights Reserved.</p>
+</footer>

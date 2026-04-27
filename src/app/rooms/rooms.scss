@@ -1,0 +1,908 @@
+// ── Variables (mirror home.scss) ──────────────────────────────────────────────
+$gold: #c9a96e;
+$gold-light: #e8d5a3;
+$dark: #0d0d0d;
+$cream: #faf8f3;
+$muted: #6b6560;
+$teal-light: #e1f5f0;
+$teal: #1d7d6e;
+$serif: 'Playfair Display', Georgia, serif;
+$sans: 'DM Sans', sans-serif;
+
+// ── Navbar (self-contained so rooms route works without visiting home first) ──
+nav:not(.footer-links) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1.4rem 0;
+  transition: all 0.3s ease;
+  background: transparent;
+
+  &.scrolled {
+    background: rgba($dark, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 0.85rem 0;
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.4);
+
+    .logo .brand {
+      color: $cream;
+    }
+    .nav-links li a {
+      color: rgba($cream, 0.72);
+      &:hover {
+        color: $cream;
+      }
+    }
+  }
+}
+
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-decoration: none;
+
+  .logo-mark {
+    width: 40px;
+    height: 40px;
+    background: $dark;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+      width: 22px !important;
+      height: 22px !important;
+      stroke: $gold;
+    }
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+
+    .brand {
+      font-family: $serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: $cream;
+      line-height: 1;
+      transition: color 0.3s;
+    }
+    .sub {
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: $gold;
+      margin-top: 3px;
+    }
+  }
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  margin: 0;
+  padding: 0;
+
+  li a {
+    font-size: 0.82rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: rgba($cream, 0.72);
+    cursor: pointer;
+    transition: color 0.2s;
+    font-weight: 500;
+    text-decoration: none;
+    &:hover {
+      color: $cream;
+    }
+    &.active {
+      color: $gold;
+    }
+  }
+}
+
+.btn-book {
+  background: $gold;
+  color: $dark;
+  border: none;
+  padding: 0.58rem 1.5rem;
+  border-radius: 8px;
+  font-family: $sans;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    background: $gold-light;
+    transform: translateY(-1px);
+  }
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+
+  span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: $cream;
+    transition: all 0.3s;
+  }
+
+  &.open {
+    span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+  }
+}
+
+// Footer (shared)
+footer {
+  background: $dark;
+  padding: 3.5rem 3rem;
+  text-align: center;
+  border-top: 1px solid rgba($gold, 0.12);
+}
+.footer-logo {
+  font-family: $serif;
+  font-size: 1.8rem;
+  color: $cream;
+  margin-bottom: 0.4rem;
+  span {
+    color: $gold;
+  }
+}
+.footer-tagline {
+  font-size: 0.82rem;
+  color: rgba($cream, 0.35);
+  margin-bottom: 1.5rem;
+}
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  a {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba($cream, 0.4);
+    cursor: pointer;
+    transition: color 0.2s;
+    text-decoration: none;
+    &:hover {
+      color: $gold;
+    }
+  }
+}
+.footer-copy {
+  font-size: 0.78rem;
+  color: rgba($cream, 0.3);
+}
+
+// ── Page Hero ─────────────────────────────────────────────────────────────────
+.rooms-hero {
+  position: relative;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  padding: 80px 3rem 0;
+  overflow: hidden;
+}
+
+.rooms-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1600&auto=format&fit=crop')
+    center / cover;
+}
+
+.rooms-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba($dark, 0.88) 0%, rgba(#1a2a2a, 0.7) 100%);
+}
+
+.rooms-hero-content {
+  position: relative;
+  z-index: 2;
+  animation: fadeUp 0.85s ease both;
+
+  .hero-eyebrow {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: $gold;
+    margin-bottom: 0.85rem;
+  }
+
+  h1 {
+    font-family: $serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    color: $cream;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 0.85rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: rgba($cream, 0.6);
+    font-weight: 300;
+    max-width: 380px;
+  }
+}
+
+.hero-breadcrumb {
+  position: absolute;
+  bottom: 2rem;
+  left: 3rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.74rem;
+  color: rgba($cream, 0.45);
+
+  a {
+    color: rgba($cream, 0.45);
+    cursor: pointer;
+    transition: color 0.2s;
+    &:hover {
+      color: $gold;
+    }
+  }
+
+  .crumb-active {
+    color: $gold;
+  }
+
+  span {
+    line-height: 1;
+  }
+}
+
+// ── Main Layout ───────────────────────────────────────────────────────────────
+.rooms-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 3rem 3rem 6rem;
+}
+
+// ── Type Tabs ─────────────────────────────────────────────────────────────────
+.type-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.type-tab {
+  padding: 0.55rem 1.4rem;
+  border-radius: 100px;
+  border: 1.5px solid #e0dbd2;
+  background: transparent;
+  font-family: $sans;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: $muted;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.03em;
+
+  &:hover {
+    border-color: $gold;
+    color: darken($gold, 10%);
+  }
+
+  &.active {
+    background: $dark;
+    border-color: $dark;
+    color: $gold;
+  }
+}
+
+// ── Filter Panel ──────────────────────────────────────────────────────────────
+.filter-panel {
+  background: $dark;
+  border-radius: 16px;
+  padding: 2rem 2.25rem;
+  margin-bottom: 2.5rem;
+  border: 1px solid rgba($gold, 0.14);
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.25rem;
+  flex: 1;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.filter-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba($cream, 0.45);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  svg {
+    stroke: $gold;
+    flex-shrink: 0;
+  }
+}
+
+// Price inputs
+.price-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-input-wrap {
+  display: flex;
+  align-items: center;
+  background: rgba($cream, 0.06);
+  border: 1px solid rgba($gold, 0.2);
+  border-radius: 8px;
+  padding: 0 0.65rem;
+  flex: 1;
+
+  .currency {
+    font-size: 0.78rem;
+    color: $gold;
+    flex-shrink: 0;
+  }
+
+  .price-in {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: $cream;
+    font-family: $sans;
+    font-size: 0.85rem;
+    width: 100%;
+    padding: 0.55rem 0.3rem;
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  }
+}
+
+.price-sep {
+  color: rgba($cream, 0.3);
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+// Select
+.select-wrap {
+  position: relative;
+
+  .filter-select {
+    width: 100%;
+    appearance: none;
+    background: rgba($cream, 0.06);
+    border: 1px solid rgba($gold, 0.2);
+    border-radius: 8px;
+    padding: 0.6rem 2rem 0.6rem 0.9rem;
+    color: rgba($cream, 0.8);
+    font-family: $sans;
+    font-size: 0.85rem;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+
+    option {
+      background: #1a1a1a;
+      color: $cream;
+    }
+
+    &:focus {
+      border-color: rgba($gold, 0.55);
+    }
+  }
+
+  .select-arrow {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    stroke: $gold;
+  }
+}
+
+// Date input
+.filter-date {
+  background: rgba($cream, 0.06);
+  border: 1px solid rgba($gold, 0.2);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  color: rgba($cream, 0.8);
+  font-family: $sans;
+  font-size: 0.85rem;
+  outline: none;
+  width: 100%;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  color-scheme: dark;
+
+  &:focus {
+    border-color: rgba($gold, 0.55);
+  }
+}
+
+// Guest counter
+.guest-counter {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: rgba($cream, 0.06);
+  border: 1px solid rgba($gold, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  height: 38px;
+}
+
+.guest-btn {
+  background: transparent;
+  border: none;
+  color: $gold;
+  font-size: 1.2rem;
+  width: 36px;
+  height: 100%;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  &:hover {
+    background: rgba($gold, 0.1);
+  }
+}
+
+.guest-num {
+  flex: 1;
+  text-align: center;
+  color: $cream;
+  font-family: $sans;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+// Filter action buttons
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.btn-apply {
+  background: $gold;
+  color: $dark;
+  border: none;
+  padding: 0.7rem 1.6rem;
+  border-radius: 9px;
+  font-family: $sans;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    background: $gold-light;
+    transform: translateY(-1px);
+  }
+}
+
+.btn-reset {
+  background: transparent;
+  color: rgba($cream, 0.45);
+  border: 1px solid rgba($cream, 0.12);
+  padding: 0.65rem 1.6rem;
+  border-radius: 9px;
+  font-family: $sans;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  text-align: center;
+
+  &:hover {
+    border-color: rgba($cream, 0.3);
+    color: rgba($cream, 0.7);
+  }
+}
+
+// ── Results Bar ───────────────────────────────────────────────────────────────
+.results-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  .results-count {
+    font-size: 0.85rem;
+    color: $muted;
+    strong {
+      color: #1a1a1a;
+    }
+  }
+}
+
+.active-filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba($gold, 0.1);
+  border: 1px solid rgba($gold, 0.3);
+  border-radius: 100px;
+  padding: 0.25rem 0.65rem 0.25rem 0.85rem;
+  font-size: 0.73rem;
+  color: darken($gold, 5%);
+
+  button {
+    background: none;
+    border: none;
+    color: $gold;
+    font-size: 1rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+}
+
+// ── Loading ───────────────────────────────────────────────────────────────────
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 0;
+  color: $muted;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba($gold, 0.2);
+    border-top-color: $gold;
+    border-radius: 50%;
+    animation: spin 0.85s linear infinite;
+    margin-bottom: 1.2rem;
+  }
+
+  p {
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+}
+
+// ── Empty State ───────────────────────────────────────────────────────────────
+.empty-state {
+  text-align: center;
+  padding: 5rem 2rem;
+
+  .empty-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 1.5px solid rgba($gold, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    svg {
+      stroke: $gold;
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  h3 {
+    font-family: $serif;
+    font-size: 1.6rem;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: $muted;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+// ── Rooms Grid ────────────────────────────────────────────────────────────────
+.rooms-grid-page {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+// ── Room Card ─────────────────────────────────────────────────────────────────
+.room-card-page {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #eeebe4;
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+
+    .rcp-image {
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.rcp-image {
+  height: 240px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba($dark, 0.35) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .rcp-type-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 1;
+    background: $dark;
+    color: $gold;
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    font-weight: 600;
+  }
+}
+
+.rcp-body {
+  padding: 1.5rem;
+}
+
+.rcp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.rcp-name {
+  font-family: $serif;
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
+}
+
+.rcp-guests {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: $muted;
+  svg {
+    stroke: $muted;
+  }
+}
+
+.rcp-price-block {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.rcp-price {
+  display: block;
+  font-family: $serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: $dark;
+  line-height: 1;
+}
+
+.rcp-night {
+  font-size: 0.7rem;
+  color: $muted;
+}
+
+.rcp-amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 1.25rem;
+}
+
+.rcp-amenity {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.67rem;
+  background: $teal-light;
+  color: $teal;
+  padding: 4px 10px;
+  border-radius: 100px;
+  svg {
+    fill: $teal;
+  }
+}
+
+.rcp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid #f0ece4;
+}
+
+.rcp-stars {
+  color: $gold;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+}
+
+.rcp-btn {
+  background: $dark;
+  color: $cream;
+  border: none;
+  padding: 0.55rem 1.25rem;
+  border-radius: 8px;
+  font-family: $sans;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: all 0.2s;
+
+  &:hover {
+    background: $gold;
+    color: $dark;
+    transform: translateY(-1px);
+  }
+}
+
+// ── Keyframes ─────────────────────────────────────────────────────────────────
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+@media (max-width: 1100px) {
+  .rooms-grid-page {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filter-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .rooms-hero {
+    height: 320px;
+    padding: 0 1.5rem;
+  }
+
+  .hero-breadcrumb {
+    left: 1.5rem;
+  }
+
+  .rooms-main {
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .filter-panel {
+    padding: 1.5rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .filter-actions {
+    flex-direction: row;
+  }
+
+  .rooms-grid-page {
+    grid-template-columns: 1fr;
+  }
+
+  .rcp-image {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+}

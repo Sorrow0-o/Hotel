@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -8,12 +8,14 @@ import { RouterLink } from '@angular/router';
   imports: [CommonModule, RouterLink],
   templateUrl: './hotels.html',
   styleUrl: './hotels.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Hotels implements OnInit {
   hotels: any[] = [];
   cities: any[] = [];
   selectedCity: string | null = null;
   isLoading = true;
+  isScrolled = false;
 
   fallbackHotels = [
     {
@@ -60,7 +62,14 @@ export class Hotels implements OnInit {
 
   fallbackCities = ['Tbilisi'];
 
+  @HostListener('window:scroll')
+  onScroll() {
+    this.isScrolled = window.scrollY > 40;
+  }
+
   ngOnInit() {
+    this.isScrolled = window.scrollY > 40;
+
     // Abort both requests after 5 seconds
     const controller = new AbortController();
     setTimeout(() => controller.abort(), 5000);

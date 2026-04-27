@@ -12,14 +12,40 @@ $sans: 'DM Sans', sans-serif;
 
 // ── Navbar ────────────────────────────────────────────
 .hotels-nav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
-  background: rgba($cream, 0.97);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba($gold, 0.2);
-  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.06);
-  padding: 0.85rem 0;
+  padding: 1.4rem 0;
+  background: transparent;
+  transition:
+    background 0.35s ease,
+    padding 0.35s ease,
+    box-shadow 0.35s ease;
+
+  &.scrolled {
+    background: rgba($dark, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 0.75rem 0;
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.4);
+
+    .logo .brand {
+      color: $cream;
+    }
+
+    .nav-links li a {
+      color: rgba($cream, 0.72);
+      &:hover {
+        color: $cream;
+      }
+      &.active {
+        color: $cream;
+        font-weight: 700;
+      }
+    }
+  }
 }
 
 .nav-inner {
@@ -60,8 +86,9 @@ $sans: 'DM Sans', sans-serif;
       font-family: $serif;
       font-size: 1.45rem;
       font-weight: 700;
-      color: $dark;
+      color: $cream;
       line-height: 1;
+      transition: color 0.3s;
     }
     .sub {
       font-size: 0.58rem;
@@ -85,17 +112,17 @@ $sans: 'DM Sans', sans-serif;
     font-size: 0.82rem;
     letter-spacing: 0.07em;
     text-transform: uppercase;
-    color: $muted;
+    color: rgba($cream, 0.72);
     text-decoration: none;
     cursor: pointer;
     transition: color 0.2s;
     font-weight: 500;
 
     &:hover {
-      color: $dark;
+      color: $cream;
     }
     &.active {
-      color: $dark;
+      color: $cream;
       font-weight: 700;
     }
   }
@@ -118,7 +145,7 @@ $sans: 'DM Sans', sans-serif;
 // ── Page hero banner ──────────────────────────────────
 .page-hero {
   background: linear-gradient(135deg, $dark 0%, #1a2a2a 60%, #0d1f1a 100%);
-  padding: 6rem 3rem 5rem;
+  padding: 9rem 3rem 5rem;
   position: relative;
   overflow: hidden;
 

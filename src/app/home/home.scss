@@ -20,19 +20,19 @@ nav:not(.footer-links) {
   background: transparent;
 
   &.scrolled {
-    background: rgba($cream, 0.95);
-    backdrop-filter: blur(16px);
+    background: rgba($dark, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 0.85rem 0;
-    border-bottom: 1px solid rgba($gold, 0.2);
-    box-shadow: 0 4px 28px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.4);
 
     .logo .brand {
-      color: $dark;
+      color: $cream;
     }
     .nav-links li a {
-      color: $muted;
+      color: rgba($cream, 0.72);
       &:hover {
-        color: $dark;
+        color: $cream;
       }
     }
   }
@@ -520,10 +520,11 @@ nav:not(.footer-links) {
 
 .usp-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
-  max-width: 1280px;
+  max-width: 1100px;
   margin: 0 auto;
+  justify-content: center;
 }
 
 .usp-card {
@@ -818,6 +819,10 @@ footer {
   .usp-section,
   .history-section {
     padding: 4rem 1.5rem;
+  }
+
+  .usp-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   footer {

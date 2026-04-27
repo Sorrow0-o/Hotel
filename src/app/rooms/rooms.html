@@ -1,1 +1,360 @@
-<p>rooms works!</p>
+<!-- ═══ NAVBAR ═══ -->
+<nav
+  [class.scrolled]="isScrolled"
+  style="background: rgba(13, 13, 13, 0.92); backdrop-filter: blur(12px)"
+>
+  <div class="nav-inner">
+    <div class="logo" routerLink="/">
+      <div class="logo-mark">
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="brand">AirGlo</span>
+        <span class="sub">Luxury Collection</span>
+      </div>
+    </div>
+
+    <ul class="nav-links" [class.open]="isMenuOpen">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/rooms" class="active">Rooms</a></li>
+      <li><a routerLink="/hotels">Hotels</a></li>
+      <li><a routerLink="/book-rooms">Booked Rooms</a></li>
+      <li><button class="btn-book" routerLink="/rooms">Book Now</button></li>
+    </ul>
+
+    <button class="hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ PAGE HERO ═══ -->
+<section class="rooms-hero">
+  <div class="rooms-hero-bg"></div>
+  <div class="rooms-hero-overlay"></div>
+  <div class="rooms-hero-content">
+    <span class="hero-eyebrow">Our Collection</span>
+    <h1>Rooms &amp; Suites</h1>
+    <p>Discover spaces crafted for comfort, designed for wonder.</p>
+  </div>
+  <div class="hero-breadcrumb">
+    <a routerLink="/">Home</a>
+    <span>/</span>
+    <span class="crumb-active">Rooms</span>
+  </div>
+</section>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main class="rooms-main">
+  <!-- ── TYPE TABS ── -->
+  <div class="type-tabs">
+    <button class="type-tab" [class.active]="activeType === 'All'" (click)="setActiveType('All')">
+      All Rooms
+    </button>
+    <button
+      class="type-tab"
+      *ngFor="let t of roomTypes"
+      [class.active]="activeType === t.name"
+      (click)="setActiveType(t.name)"
+    >
+      {{ t.name }}
+    </button>
+  </div>
+
+  <!-- ── FILTER PANEL ── -->
+  <div class="filter-panel">
+    <div class="filter-grid">
+      <!-- Price Range -->
+      <div class="filter-group">
+        <label class="filter-label">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            width="14"
+            height="14"
+          >
+            <line x1="12" y1="1" x2="12" y2="23" />
+            <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
+          </svg>
+          Price Per Night
+        </label>
+        <div class="price-inputs">
+          <div class="price-input-wrap">
+            <span class="currency">$</span>
+            <input
+              type="number"
+              [(ngModel)]="minPrice"
+              min="0"
+              [max]="maxPrice"
+              class="price-in"
+              placeholder="0"
+            />
+          </div>
+          <span class="price-sep">—</span>
+          <div class="price-input-wrap">
+            <span class="currency">$</span>
+            <input
+              type="number"
+              [(ngModel)]="maxPrice"
+              [min]="minPrice"
+              max="5000"
+              class="price-in"
+              placeholder="1000"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Room Type -->
+      <div class="filter-group">
+        <label class="filter-label">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            width="14"
+            height="14"
+          >
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          </svg>
+          Room Type
+        </label>
+        <div class="select-wrap">
+          <select [(ngModel)]="activeType" (change)="applyFilter()" class="filter-select">
+            <option value="All">All Types</option>
+            <option *ngFor="let t of roomTypes" [value]="t.name">{{ t.name }}</option>
+          </select>
+          <svg
+            class="select-arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            width="14"
+            height="14"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Check-in -->
+      <div class="filter-group">
+        <label class="filter-label">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            width="14"
+            height="14"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          Check-in
+        </label>
+        <input type="date" [(ngModel)]="checkIn" class="filter-date" />
+      </div>
+
+      <!-- Check-out -->
+      <div class="filter-group">
+        <label class="filter-label">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            width="14"
+            height="14"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          Check-out
+        </label>
+        <input type="date" [(ngModel)]="checkOut" class="filter-date" />
+      </div>
+
+      <!-- Guests -->
+      <div class="filter-group">
+        <label class="filter-label">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            width="14"
+            height="14"
+          >
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 00-3-3.87" />
+            <path d="M16 3.13a4 4 0 010 7.75" />
+          </svg>
+          Guests
+        </label>
+        <div class="guest-counter">
+          <button class="guest-btn" (click)="guests = guests > 1 ? guests - 1 : 1; applyFilter()">
+            −
+          </button>
+          <span class="guest-num">{{ guests }}</span>
+          <button class="guest-btn" (click)="guests = guests + 1; applyFilter()">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-actions">
+      <button class="btn-apply" (click)="applyFilter()">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          width="15"
+          height="15"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+        </svg>
+        Apply Filter
+      </button>
+      <button class="btn-reset" (click)="resetFilter()">Reset</button>
+    </div>
+  </div>
+
+  <!-- ── RESULTS INFO ── -->
+  <div class="results-bar" *ngIf="!isLoading">
+    <span class="results-count">
+      <strong>{{ displayedRooms.length }}</strong> room{{ displayedRooms.length !== 1 ? 's' : '' }}
+      found
+    </span>
+    <div class="active-filter-tag" *ngIf="activeType !== 'All'">
+      <span>{{ activeType }}</span>
+      <button (click)="setActiveType('All')">×</button>
+    </div>
+  </div>
+
+  <!-- ── LOADING ── -->
+  <div class="loading" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Curating your collection…</p>
+  </div>
+
+  <!-- ── EMPTY STATE ── -->
+  <div class="empty-state" *ngIf="!isLoading && displayedRooms.length === 0">
+    <div class="empty-icon">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+    </div>
+    <h3>No rooms found</h3>
+    <p>Try adjusting your filters to see more options.</p>
+    <button class="btn-apply" (click)="resetFilter()">Clear Filters</button>
+  </div>
+
+  <!-- ── ROOMS GRID ── -->
+  <div class="rooms-grid-page" *ngIf="!isLoading && displayedRooms.length > 0">
+    <div class="room-card-page" *ngFor="let room of displayedRooms">
+      <div class="rcp-image" [style.background-image]="'url(' + room.image + ')'">
+        <span class="rcp-type-badge">{{ room.type }}</span>
+        <div class="rcp-overlay"></div>
+      </div>
+
+      <div class="rcp-body">
+        <div class="rcp-header">
+          <div>
+            <div class="rcp-name">{{ room.name }}</div>
+            <div class="rcp-guests">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                width="12"
+                height="12"
+              >
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+              </svg>
+              Up to {{ room.maxGuests }} guests
+            </div>
+          </div>
+          <div class="rcp-price-block">
+            <span class="rcp-price">${{ room.price }}</span>
+            <span class="rcp-night">/ night</span>
+          </div>
+        </div>
+
+        <div class="rcp-amenities">
+          <span class="rcp-amenity" *ngFor="let a of room.amenities">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="8" height="8">
+              <circle cx="12" cy="12" r="4" />
+            </svg>
+            {{ a }}
+          </span>
+        </div>
+
+        <div class="rcp-footer">
+          <div class="rcp-stars">
+            <span *ngFor="let s of [1, 2, 3, 4, 5]">★</span>
+          </div>
+          <button class="rcp-btn" [routerLink]="['/rooms', room.id]">Reserve Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-logo">Air<span>Glo</span></div>
+  <p class="footer-tagline">Redefining luxury hospitality since 2009</p>
+  <div class="footer-links">
+    <a routerLink="/">Home</a>
+    <a routerLink="/rooms">Rooms</a>
+    <a routerLink="/hotels">Hotels</a>
+    <a routerLink="/book-rooms">Booked Rooms</a>
+  </div>
+  <p class="footer-copy">© 2025 AirGlo Luxury Collection. All Rights Reserved.</p>
+</footer>

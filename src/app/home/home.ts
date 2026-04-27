@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+const BASE_URL = 'https://hotelbooking.stepprojects.ge/api/Rooms/GetRoom';
+const ROOM_IDS = [1, 2, 3, 4, 5, 6, 7, 8];
 
 @Component({
   selector: 'app-home',
   imports: [CommonModule, RouterLink, HttpClientModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Home implements OnInit {
   isScrolled = false;
@@ -116,6 +120,22 @@ export class Home implements OnInit {
       amenities: ['Sky View', 'Rainfall Shower', 'Desk'],
       imgIndex: 5,
     },
+    {
+      id: 7,
+      name: 'Royal Garden Suite',
+      type: 'Suite',
+      price: 510,
+      amenities: ['Garden Terrace', 'King Bed', 'Butler'],
+      imgIndex: 6,
+    },
+    {
+      id: 8,
+      name: 'Horizon Loft Room',
+      type: 'Deluxe',
+      price: 340,
+      amenities: ['Panoramic View', 'Open Bathroom', 'Minibar'],
+      imgIndex: 7,
+    },
   ];
 
   roomImages = [
@@ -125,58 +145,58 @@ export class Home implements OnInit {
     'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=600&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600&auto=format&fit=crop',
   ];
 
   constructor(private http: HttpClient) {}
 
+  @HostListener('window:scroll')
+  onScroll() {
+    this.isScrolled = window.scrollY > 40;
+  }
+
   ngOnInit() {
     this.isScrolled = window.scrollY > 40;
+    this.loadRoomsById();
+  }
 
-    window.addEventListener('scroll', () => {
-      this.isScrolled = window.scrollY > 40;
-    });
+  private async loadRoomsById(): Promise<void> {
+    try {
+      // Fetch all 6 rooms in parallel
+      const requests = ROOM_IDS.map((id) =>
+        fetch(`${BASE_URL}/${id}`).then((res) => {
+          if (!res.ok) throw new Error(`Room ${id} not found`);
+          return res.json();
+        }),
+      );
 
-    // Use AbortController to cancel the request after 5 seconds
-    const controller = new AbortController();
-    const abortTimer = setTimeout(() => controller.abort(), 5000);
+      // Wait for all — settle individually so one failure doesn't break the rest
+      const results = await Promise.allSettled(requests);
 
-    fetch('https://hotelbooking.stepprojects.ge/api/Rooms/GetAll', {
-      signal: controller.signal,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        clearTimeout(abortTimer);
+      const fetchedRooms = results
+        .map((result, index) => {
+          if (result.status === 'fulfilled') {
+            const room = result.value;
+            return {
+              id: room.id ?? ROOM_IDS[index],
+              name: room.roomName || room.name || room.title || 'Luxury Room',
+              type: room.roomTypeName || room.type || 'Deluxe',
+              price: room.price || room.pricePerNight || 250,
+              amenities: this.getAmenities(room),
+              imgIndex: index,
+            };
+          }
+          return null;
+        })
+        .filter(Boolean);
 
-        let rawRooms = [];
-        if (Array.isArray(data)) {
-          rawRooms = data;
-        } else if (data.rooms) {
-          rawRooms = data.rooms;
-        } else if (data.data) {
-          rawRooms = data.data;
-        }
-
-        if (rawRooms.length > 0) {
-          this.rooms = rawRooms.slice(0, 6).map((room: any, index: number) => ({
-            id: room.id,
-            name: room.roomName || room.name || room.title || 'Luxury Room',
-            type: room.roomTypeName || room.type || 'Deluxe',
-            price: room.price || room.pricePerNight || 250,
-            amenities: this.getAmenities(room),
-            imgIndex: index,
-          }));
-        } else {
-          this.rooms = this.fallbackRooms;
-        }
-
-        this.isLoading = false;
-      })
-      .catch(() => {
-        // Request failed or timed out — show fallback rooms immediately
-        clearTimeout(abortTimer);
-        this.rooms = this.fallbackRooms;
-        this.isLoading = false;
-      });
+      this.rooms = fetchedRooms.length > 0 ? fetchedRooms : this.fallbackRooms;
+    } catch {
+      this.rooms = this.fallbackRooms;
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   getImage(index: number): string {
@@ -192,11 +212,7 @@ export class Home implements OnInit {
   }
 
   toggleMenu() {
-    if (this.isMenuOpen) {
-      this.isMenuOpen = false;
-    } else {
-      this.isMenuOpen = true;
-    }
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   getAmenities(room: any): string[] {
