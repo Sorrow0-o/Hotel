@@ -42,11 +42,25 @@ export class BookRooms implements OnInit {
     this.loadAll();
   }
 
+  private getAuthHeaders(): HeadersInit {
+    const token = localStorage.getItem('accessToken');
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return headers;
+  }
+
   private async loadAll() {
     this.isLoading = true;
     try {
-     
-      const [bookingsRes, hotelsRes] = await Promise.all([fetch(BOOKING_API), fetch(HOTELS_API)]);
+      const headers = this.getAuthHeaders();
+      const [bookingsRes, hotelsRes] = await Promise.all([
+        fetch(BOOKING_API, { headers }),
+        fetch(HOTELS_API, { headers }),
+      ]);
 
       let bookings: any[] = [];
       if (bookingsRes.ok) {
@@ -63,7 +77,6 @@ export class BookRooms implements OnInit {
         });
       }
 
-     
       const citySet = new Set<string>();
       Object.values(this.hotelMap).forEach((h: any) => {
         const city = h.city || h.cityName || h.location;
@@ -71,13 +84,12 @@ export class BookRooms implements OnInit {
       });
       this.cities = Array.from(citySet);
 
-     
       const roomIds = [
         ...new Set(bookings.map((b: any) => b.roomId || b.room?.id).filter(Boolean)),
       ];
       await Promise.allSettled(
         roomIds.map((id) =>
-          fetch(`${ROOMS_API}/${id}`)
+          fetch(`${ROOMS_API}/${id}`, { headers })
             .then((r) => (r.ok ? r.json() : null))
             .then((r) => {
               if (r) this.roomMap[id] = r;
@@ -214,7 +226,8 @@ export class BookRooms implements OnInit {
     this.cancellingId = id;
 
     try {
-      const res = await fetch(`${BOOKING_API}/${id}`, { method: 'DELETE' });
+      const headers = this.getAuthHeaders();
+      const res = await fetch(`${BOOKING_API}/${id}`, { method: 'DELETE', headers });
       if (res.ok) {
         this.allBookings = this.allBookings.filter((b) => (b.id || b.bookingId) !== id);
         this.displayedBookings = this.displayedBookings.filter((b) => (b.id || b.bookingId) !== id);

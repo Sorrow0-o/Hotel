@@ -1,0 +1,111 @@
+<nav [class.scrolled]="isScrolled" style="background: rgba(13, 13, 13, 0.92); backdrop-filter: blur(12px)">
+  <div class="nav-inner">
+    <div class="logo" routerLink="/">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="brand">AirGlo</span>
+        <span class="sub">Luxury Collection</span>
+      </div>
+    </div>
+
+    <ul class="nav-links" [class.open]="isMenuOpen">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/rooms">Rooms</a></li>
+      <li><a routerLink="/hotels">Hotels</a></li>
+      <li><a routerLink="/book-rooms">Booked Rooms</a></li>
+      <li><a routerLink="/register" class="active">Register</a></li>
+      <li><button class="btn-book" routerLink="/rooms">Book Now</button></li>
+    </ul>
+
+    <button class="hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="register-hero">
+  <div class="register-hero-bg"></div>
+  <div class="register-hero-overlay"></div>
+  <div class="register-hero-content">
+    <span class="hero-eyebrow">Join AirGlo</span>
+    <h1>Create Your Account</h1>
+    <p>Register to book rooms and manage reservations in one place.</p>
+  </div>
+  <div class="hero-breadcrumb">
+    <a routerLink="/">Home</a>
+    <span>/</span>
+    <span class="crumb-active">Register</span>
+  </div>
+</section>
+
+<main class="register-main">
+  <div class="register-card">
+    <div class="top-row">
+      <div>
+        <p class="eyebrow"></p>
+        <h2>Create Account</h2>
+        <p class="subtitle">Create your account to book and manage reservations.</p>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="grid">
+        <div class="field">
+          <label for="firstName">First Name</label>
+          <input id="firstName" type="text" formControlName="firstName" />
+        </div>
+        <div class="field">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" type="text" formControlName="lastName" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" />
+      </div>
+
+      <div class="field">
+        <label for="phoneNumber">Phone Number</label>
+        <input id="phoneNumber" type="tel" formControlName="phoneNumber" placeholder="+9955XXXXXXX" />
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" formControlName="password" />
+        </div>
+        <div class="field">
+          <label for="confirmPassword">Confirm Password</label>
+          <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+        </div>
+      </div>
+
+      <p class="error" *ngIf="passwordMismatch">Passwords do not match.</p>
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+
+      <button class="submit-btn" type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Creating account...' : 'Register' }}
+      </button>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logo">Air<span>Glo</span></div>
+  <p class="footer-tagline">Redefining luxury hospitality since 2009</p>
+  <div class="footer-links">
+    <a routerLink="/">Home</a>
+    <a routerLink="/rooms">Rooms</a>
+    <a routerLink="/hotels">Hotels</a>
+    <a routerLink="/book-rooms">Booked Rooms</a>
+    <a routerLink="/register">Register</a>
+  </div>
+  <p class="footer-copy">© 2025 AirGlo Luxury Collection. All Rights Reserved.</p>
+</footer>

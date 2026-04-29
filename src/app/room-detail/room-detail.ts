@@ -179,6 +179,16 @@ export class RoomDetail implements OnInit {
   }
 
   async bookNow() {
+    if (
+      !localStorage.getItem('isRegistered') &&
+      !localStorage.getItem('accessToken') &&
+      !localStorage.getItem('token') &&
+      !localStorage.getItem('authToken')
+    ) {
+      this.router.navigate(['/register']);
+      return;
+    }
+
     if (!this.checkIn || !this.checkOut || !this.customerName || !this.customerPhone) {
       this.bookingStatus = 'error';
       this.bookingMessage = 'Please fill in all fields before booking.';
