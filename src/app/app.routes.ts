@@ -10,9 +10,9 @@ import { registeredGuard } from './auth.guard';
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'hotels', component: Hotels },
-  { path: 'rooms', component: Rooms },
-  { path: 'rooms/:id', component: RoomDetail },
-  { path: 'book-rooms', component: BookRooms, canActivate: [registeredGuard] },
+  { path: 'rooms', component: Rooms, canActivate: [registeredGuard] },
+  { path: 'rooms/:id', component: RoomDetail, canActivate: [registeredGuard] },
+  { path: 'book-rooms', component: BookRooms },
   { path: 'register', component: Register },
   { path: '**', redirectTo: '' },
 ];
