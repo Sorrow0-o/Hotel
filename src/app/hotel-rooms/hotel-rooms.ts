@@ -52,7 +52,7 @@ export class HotelRooms implements OnInit {
     setTimeout(() => controller.abort(), 6000);
 
     try {
-      // Try to get hotel info
+     
       const hotelsRes = await fetch(`${HOTEL_API_BASE}/Hotels/GetAll`, {
         signal: controller.signal,
       });
@@ -73,10 +73,10 @@ export class HotelRooms implements OnInit {
           'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&auto=format&fit=crop';
       }
     } catch {
-      // Hotel info unavailable — keep defaults
+    
     }
 
-    // Try hotel-specific rooms endpoint
+
     try {
       const roomsRes = await fetch(`${HOTEL_API_BASE}/Rooms/GetByHotelId/${this.hotelId}`, {
         signal: controller.signal,
@@ -91,10 +91,10 @@ export class HotelRooms implements OnInit {
         }
       }
     } catch {
-      /* try next */
+     
     }
 
-    // Fallback: get all rooms and filter by hotelId
+   
     try {
       const allRes = await fetch(`${HOTEL_API_BASE}/Rooms/GetAll`);
       if (allRes.ok) {
@@ -110,10 +110,10 @@ export class HotelRooms implements OnInit {
         }
       }
     } catch {
-      /* fall through to mock */
+    
     }
 
-    // Final fallback: mock rooms for this hotel
+   
     this.rooms = this.getMockRooms();
     this.isLoading = false;
   }
