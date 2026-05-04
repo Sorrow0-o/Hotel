@@ -133,7 +133,7 @@ nav:not(.footer-links) {
 }
 
 // ─── Hero ────────────────────────────────────────────────────────────────────
-.register-hero {
+.reviews-hero {
   position: relative;
   height: 360px;
   display: flex;
@@ -142,20 +142,20 @@ nav:not(.footer-links) {
   overflow: hidden;
 }
 
-.register-hero-bg {
+.reviews-hero-bg {
   position: absolute;
   inset: 0;
-  background: url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1600&auto=format&fit=crop')
+  background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&auto=format&fit=crop')
     center / cover;
 }
 
-.register-hero-overlay {
+.reviews-hero-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, rgba($dark, 0.88), rgba(#1a2a2a, 0.7));
 }
 
-.register-hero-content {
+.reviews-hero-content {
   position: relative;
   z-index: 2;
 
@@ -200,24 +200,266 @@ nav:not(.footer-links) {
 }
 
 // ─── Main ────────────────────────────────────────────────────────────────────
-.register-main {
-  background: $cream;
-  min-height: calc(100vh - 360px);
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 4rem 2rem 6rem;
+.reviews-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 6rem;
 }
 
-// ─── Card ────────────────────────────────────────────────────────────────────
-.register-card {
+// ─── Stats ───────────────────────────────────────────────────────────────────
+.stats-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
   background: #fff;
   border: 1px solid #eeebe4;
-  border-radius: 20px;
-  padding: 2.8rem;
+  border-radius: 16px;
+  padding: 2rem 3rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.stat-number {
+  font-family: $serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: $dark;
+  line-height: 1;
+}
+
+.stat-stars {
+  display: flex;
+  gap: 2px;
+  margin: 2px 0;
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $muted;
+}
+
+.stat-divider {
+  width: 1px;
+  height: 56px;
+  background: #e8e4dc;
+  @media (max-width: 680px) {
+    display: none;
+  }
+}
+
+// ─── Stars shared ────────────────────────────────────────────────────────────
+.star {
+  color: #ddd;
+  font-size: 1rem;
+  &.filled {
+    color: $gold;
+  }
+}
+
+// ─── Filter ──────────────────────────────────────────────────────────────────
+.filter-bar {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.4rem;
+}
+
+.filter-btn {
+  border: 1px solid #e1dcd2;
+  background: #fff;
+  color: $muted;
+  padding: 0.48rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: $gold;
+    color: $dark;
+  }
+  &.active {
+    background: $dark;
+    color: $gold;
+    border-color: $dark;
+  }
+}
+
+// ─── Reviews grid ────────────────────────────────────────────────────────────
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6rem;
+  margin-bottom: 4rem;
+}
+
+.review-card {
+  background: #fff;
+  border: 1px solid #eeebe4;
+  border-radius: 16px;
+  padding: 1.8rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+  }
+
+  &.is-own {
+    border-color: rgba($gold, 0.35);
+  }
+}
+
+.review-delete-x {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: #f5f5f5;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.18s,
+    color 0.18s;
+  padding: 0;
+  line-height: 1;
+
+  &:hover {
+    background: #b42318;
+    color: #fff;
+  }
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: $dark;
+  color: $gold;
+  font-family: $serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.reviewer-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.reviewer-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: $dark;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reviewer-stay {
+  font-size: 0.74rem;
+  color: $muted;
+  margin-top: 1px;
+}
+
+.review-stars {
+  display: flex;
+  gap: 1px;
+  flex-shrink: 0;
+}
+
+.review-title {
+  font-family: $serif;
+  font-size: 1rem;
+  color: $dark;
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.review-body {
+  font-size: 0.88rem;
+  color: $muted;
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+
+.review-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.8rem;
+  border-top: 1px solid #f3efe8;
+  margin-top: auto;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.review-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $gold;
+  background: rgba($gold, 0.1);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.review-date {
+  font-size: 0.74rem;
+  color: #bbb;
+}
+
+// ─── Write Review ────────────────────────────────────────────────────────────
+.write-review-section {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.write-review-card {
+  background: #fff;
+  border: 1px solid #eeebe4;
+  border-radius: 16px;
+  padding: 2.4rem;
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.08);
-  width: 100%;
-  max-width: 680px;
 }
 
 .top-row {
@@ -242,10 +484,8 @@ h2 {
 .subtitle {
   margin: 8px 0 0;
   color: $muted;
-  font-size: 0.9rem;
 }
 
-// ─── Form ────────────────────────────────────────────────────────────────────
 form {
   display: flex;
   flex-direction: column;
@@ -269,66 +509,80 @@ label {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #887f76;
-  font-family: $sans;
 }
 
-input {
+input,
+textarea,
+select {
   border: 1px solid #e1dcd2;
   background: #fff;
   color: #1a1a1a;
   border-radius: 10px;
-  padding: 11px 14px;
+  padding: 11px 12px;
   outline: none;
   font-family: $sans;
   font-size: 0.9rem;
-  transition: border-color 0.2s;
-  width: 100%;
-  box-sizing: border-box;
-
   &:focus {
     border-color: $gold;
-    box-shadow: 0 0 0 3px rgba($gold, 0.1);
-  }
-
-  &::placeholder {
-    color: #c0b8b0;
   }
 }
 
-// ─── Submit button ───────────────────────────────────────────────────────────
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+// ─── Star picker ─────────────────────────────────────────────────────────────
+.star-picker {
+  display: flex;
+  gap: 6px;
+}
+
+.star-pick {
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #ddd;
+  transition:
+    color 0.15s,
+    transform 0.15s;
+  &:hover,
+  &.active {
+    color: $gold;
+    transform: scale(1.15);
+  }
+}
+
+// ─── Buttons / messages ──────────────────────────────────────────────────────
 .submit-btn {
   margin-top: 8px;
   border: 0;
   border-radius: 10px;
   background: $dark;
   color: $cream;
-  padding: 13px 16px;
+  padding: 12px 16px;
   cursor: pointer;
   font-weight: 600;
   font-family: $sans;
-  font-size: 0.95rem;
-  letter-spacing: 0.03em;
-  transition:
-    background 0.2s,
-    opacity 0.2s;
-
-  &:hover:not(:disabled) {
-    background: #2a2a2a;
-  }
-
   &:disabled {
     opacity: 0.7;
     cursor: wait;
   }
 }
 
-// ─── Messages ────────────────────────────────────────────────────────────────
 .error {
   margin: 0;
   color: #b42318;
   font-size: 0.88rem;
 }
-
 .success {
   margin: 0;
   color: #067647;
@@ -371,9 +625,6 @@ footer {
     text-transform: uppercase;
     color: rgba($cream, 0.4);
     text-decoration: none;
-    &:hover {
-      color: rgba($cream, 0.7);
-    }
   }
 }
 
@@ -383,6 +634,12 @@ footer {
 }
 
 // ─── Responsive ──────────────────────────────────────────────────────────────
+@media (max-width: 1024px) {
+  .reviews-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 900px) {
   .nav-inner {
     padding: 0 1.5rem;
@@ -411,32 +668,32 @@ footer {
     display: flex;
   }
 
-  .register-hero {
-    height: 300px;
+  .reviews-hero {
+    height: 320px;
     padding: 0 1.5rem;
   }
-
   .hero-breadcrumb {
     left: 1.5rem;
   }
 
-  .register-card {
-    padding: 2rem;
+  .stats-bar {
+    gap: 2rem;
+    padding: 1.5rem 2rem;
   }
 }
 
-@media (max-width: 600px) {
-  .register-main {
-    padding: 2rem 1rem 4rem;
+@media (max-width: 680px) {
+  .reviews-grid {
+    grid-template-columns: 1fr;
   }
-  .register-card {
+  .stats-bar {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .write-review-card {
     padding: 1.5rem;
-    border-radius: 14px;
   }
   .grid {
     grid-template-columns: 1fr;
-  }
-  h2 {
-    font-size: 1.6rem;
   }
 }

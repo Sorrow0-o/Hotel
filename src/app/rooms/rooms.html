@@ -1,4 +1,3 @@
-
 <nav
   [class.scrolled]="isScrolled"
   style="background: rgba(13, 13, 13, 0.92); backdrop-filter: blur(12px)"
@@ -31,6 +30,7 @@
       <li><a routerLink="/rooms" class="active">Rooms</a></li>
       <li><a routerLink="/hotels">Hotels</a></li>
       <li><a routerLink="/book-rooms">Booked Rooms</a></li>
+      <li><a routerLink="/reviews">Reviews</a></li>
       <li><a routerLink="/register">Register</a></li>
       <li><button class="btn-book" routerLink="/rooms">Book Now</button></li>
     </ul>
@@ -40,7 +40,6 @@
     </button>
   </div>
 </nav>
-
 
 <section class="rooms-hero">
   <div class="rooms-hero-bg"></div>
@@ -57,9 +56,7 @@
   </div>
 </section>
 
-
 <main class="rooms-main">
-  
   <div class="type-tabs">
     <button class="type-tab" [class.active]="activeType === 'All'" (click)="setActiveType('All')">
       All Rooms
@@ -74,10 +71,8 @@
     </button>
   </div>
 
- 
   <div class="filter-panel">
     <div class="filter-grid">
-    
       <div class="filter-group">
         <label class="filter-label">
           <svg
@@ -122,7 +117,6 @@
         </div>
       </div>
 
-     
       <div class="filter-group">
         <label class="filter-label">
           <svg
@@ -158,7 +152,6 @@
         </div>
       </div>
 
-     
       <div class="filter-group">
         <label class="filter-label">
           <svg
@@ -181,7 +174,6 @@
         <input type="date" [(ngModel)]="checkIn" class="filter-date" />
       </div>
 
-     
       <div class="filter-group">
         <label class="filter-label">
           <svg
@@ -204,7 +196,6 @@
         <input type="date" [(ngModel)]="checkOut" class="filter-date" />
       </div>
 
-      
       <div class="filter-group">
         <label class="filter-label">
           <svg
@@ -265,13 +256,11 @@
     </div>
   </div>
 
- 
   <div class="loading" *ngIf="isLoading">
     <div class="spinner"></div>
     <p>Curating your collection…</p>
   </div>
 
- 
   <div class="empty-state" *ngIf="!isLoading && displayedRooms.length === 0">
     <div class="empty-icon">
       <svg
@@ -291,7 +280,6 @@
     <button class="btn-apply" (click)="resetFilter()">Clear Filters</button>
   </div>
 
- 
   <div class="rooms-grid-page" *ngIf="!isLoading && displayedRooms.length > 0">
     <div class="room-card-page" *ngFor="let room of displayedRooms">
       <div class="rcp-image" [style.background-image]="'url(' + room.image + ')'">
@@ -346,7 +334,6 @@
   </div>
 </main>
 
-
 <footer>
   <div class="footer-logo">Air<span>Glo</span></div>
   <p class="footer-tagline">Redefining luxury hospitality since 2009</p>
@@ -355,6 +342,7 @@
     <a routerLink="/rooms">Rooms</a>
     <a routerLink="/hotels">Hotels</a>
     <a routerLink="/book-rooms">Booked Rooms</a>
+    <a routerLink="/reviews">Reviews</a>
     <a routerLink="/register">Register</a>
   </div>
   <p class="footer-copy">© 2025 AirGlo Luxury Collection. All Rights Reserved.</p>

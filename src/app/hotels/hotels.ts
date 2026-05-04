@@ -70,11 +70,9 @@ export class Hotels implements OnInit {
   ngOnInit() {
     this.isScrolled = window.scrollY > 40;
 
-    
     const controller = new AbortController();
     setTimeout(() => controller.abort(), 5000);
 
-   
     fetch('https://hotelbooking.stepprojects.ge/api/Hotels/GetCities', {
       signal: controller.signal,
     })
@@ -92,7 +90,6 @@ export class Hotels implements OnInit {
         this.cities = this.fallbackCities;
       });
 
-    
     fetch('https://hotelbooking.stepprojects.ge/api/Hotels/GetAll', { signal: controller.signal })
       .then((res) => res.json())
       .then((data) => {
@@ -143,6 +140,10 @@ export class Hotels implements OnInit {
 
   getHotelCity(hotel: any): string {
     return hotel.city || hotel.cityName || hotel.location || '';
+  }
+
+  getHotelId(hotel: any): number | string {
+    return hotel.id ?? hotel.hotelId ?? 0;
   }
 
   getHotelImage(hotel: any): string {

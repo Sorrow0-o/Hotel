@@ -63,11 +63,13 @@ export class Register {
     const email = this.form.value.email?.trim() ?? '';
     const firstName = this.form.value.firstName?.trim() ?? '';
     const lastName = this.form.value.lastName?.trim() ?? '';
+    const phoneNumber = this.form.value.phoneNumber?.trim() ?? '';
 
     const payload = {
       firstName,
       lastName,
       email,
+      phoneNumber,
       password: this.form.value.password ?? '',
     };
 
@@ -80,7 +82,6 @@ export class Register {
         headers: {
           'Content-Type': 'application/json',
           'X-API-KEY': RESTAURANT_API_KEY,
-          'X-Codeme-Token': RESTAURANT_API_KEY,
         },
         body: JSON.stringify(payload),
       });
@@ -106,7 +107,6 @@ export class Register {
         return;
       }
 
-      
       const token =
         responseData?.accessToken ||
         responseData?.token ||

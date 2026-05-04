@@ -1,4 +1,3 @@
-
 <nav class="hotels-nav" [class.scrolled]="isScrolled">
   <div class="nav-inner">
     <div class="logo" routerLink="/">
@@ -26,12 +25,12 @@
       <li><a routerLink="/rooms">Rooms</a></li>
       <li><a routerLink="/hotels" class="active">Hotels</a></li>
       <li><a routerLink="/book-rooms">Booked Rooms</a></li>
+      <li><a routerLink="/reviews">Reviews</a></li>
       <li><a routerLink="/register">Register</a></li>
       <li><a routerLink="/rooms" class="btn-book">Book Now</a></li>
     </ul>
   </div>
 </nav>
-
 
 <section class="page-hero">
   <div class="page-hero-content">
@@ -43,9 +42,7 @@
   </div>
 </section>
 
-
 <section class="hotels-section">
- 
   <div class="filter-bar" *ngIf="cities.length > 0">
     <span class="filter-label">Filter by city</span>
     <div class="filter-buttons">
@@ -69,15 +66,12 @@
     </div>
   </div>
 
- 
   <div class="loading" *ngIf="isLoading">
     <div class="spinner"></div>
     <p>Loading hotels…</p>
   </div>
 
-
   <div class="hotels-grid" *ngIf="!isLoading">
-    
     <div class="empty-state" *ngIf="getFilteredHotels().length === 0">
       <p>No hotels found for this city.</p>
     </div>
@@ -105,13 +99,12 @@
         <div class="hotel-name">{{ getHotelName(hotel) }}</div>
         <div class="hotel-stars">★★★★★</div>
         <div class="hotel-footer">
-          <a routerLink="/rooms" class="hotel-btn">View Rooms</a>
+          <a [routerLink]="['/hotels', getHotelId(hotel), 'rooms']" class="hotel-btn">View Rooms</a>
         </div>
       </div>
     </div>
   </div>
 </section>
-
 
 <footer>
   <div class="footer-logo">Air<span>Glo</span></div>
@@ -121,6 +114,7 @@
     <a routerLink="/rooms">Rooms</a>
     <a routerLink="/hotels">Hotels</a>
     <a routerLink="/book-rooms">Booked Rooms</a>
+    <a routerLink="/reviews">Reviews</a>
     <a routerLink="/register">Register</a>
   </div>
   <p class="footer-copy">© 2025 AirGlo Luxury Collection. All Rights Reserved.</p>

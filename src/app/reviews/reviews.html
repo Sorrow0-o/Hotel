@@ -1,0 +1,234 @@
+<nav
+  [class.scrolled]="isScrolled"
+  style="background: rgba(13, 13, 13, 0.92); backdrop-filter: blur(12px)"
+>
+  <div class="nav-inner">
+    <div class="logo" routerLink="/">
+      <div class="logo-mark">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="brand">AirGlo</span>
+        <span class="sub">Luxury Collection</span>
+      </div>
+    </div>
+
+    <ul class="nav-links" [class.open]="isMenuOpen">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/rooms">Rooms</a></li>
+      <li><a routerLink="/hotels">Hotels</a></li>
+      <li><a routerLink="/book-rooms">Booked Rooms</a></li>
+      <li><a routerLink="/reviews" class="active">Reviews</a></li>
+      <li><a routerLink="/register">Register</a></li>
+      <li><button class="btn-book" routerLink="/rooms">Book Now</button></li>
+    </ul>
+
+    <button class="hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="reviews-hero">
+  <div class="reviews-hero-bg"></div>
+  <div class="reviews-hero-overlay"></div>
+  <div class="reviews-hero-content">
+    <span class="hero-eyebrow">Guest Voices</span>
+    <h1>Stories & Reviews</h1>
+    <p>Hear from guests who have experienced AirGlo's luxury firsthand.</p>
+  </div>
+  <div class="hero-breadcrumb">
+    <a routerLink="/">Home</a>
+    <span>/</span>
+    <span class="crumb-active">Reviews</span>
+  </div>
+</section>
+
+<main class="reviews-main">
+  <!-- Stats bar -->
+  <div class="stats-bar">
+    <div class="stat">
+      <span class="stat-number">4.9</span>
+      <div class="stat-stars">
+        <span *ngFor="let s of [1, 2, 3, 4, 5]" class="star filled">★</span>
+      </div>
+      <span class="stat-label">Overall Rating</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-number">2,400+</span>
+      <span class="stat-label">Happy Guests</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-number">98%</span>
+      <span class="stat-label">Would Return</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <span class="stat-number">15+</span>
+      <span class="stat-label">Years of Excellence</span>
+    </div>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <button
+      *ngFor="let f of filters"
+      class="filter-btn"
+      [class.active]="activeFilter === f"
+      (click)="setFilter(f)"
+    >
+      {{ f }}
+    </button>
+  </div>
+
+  <!-- Reviews grid -->
+  <div class="reviews-grid">
+    <div
+      class="review-card"
+      *ngFor="let review of filteredReviews"
+      [class.is-own]="userReviewIds.has(review.id)"
+    >
+      <button
+        *ngIf="userReviewIds.has(review.id)"
+        class="review-delete-x"
+        (click)="deleteReview(review.id)"
+        title="Delete your review"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          width="12"
+          height="12"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+      <div class="review-header">
+        <div class="avatar">{{ review.initials }}</div>
+        <div class="reviewer-info">
+          <span class="reviewer-name">{{ review.name }}</span>
+          <span class="reviewer-stay">{{ review.stay }}</span>
+        </div>
+        <div class="review-stars">
+          <span *ngFor="let s of getStars(review.rating)" class="star" [class.filled]="s">★</span>
+        </div>
+      </div>
+      <p class="review-title">"{{ review.title }}"</p>
+      <p class="review-body">{{ review.body }}</p>
+      <div class="review-footer">
+        <span class="review-tag">{{ review.category }}</span>
+        <span class="review-date">{{ review.date }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Write a review -->
+  <div class="write-review-section">
+    <div class="write-review-card">
+      <div class="top-row">
+        <div>
+          <p class="eyebrow">Share Your Experience</p>
+          <h2>Leave a Review</h2>
+          <p class="subtitle">Your feedback helps us deliver exceptional experiences.</p>
+        </div>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="grid">
+          <div class="field">
+            <label for="name">Full Name</label>
+            <input id="name" type="text" formControlName="name" placeholder="John Smith" />
+          </div>
+          <div class="field">
+            <label for="stay">Room / Stay Type</label>
+            <input id="stay" type="text" formControlName="stay" placeholder="e.g. Deluxe Suite" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Your Rating</label>
+          <div class="star-picker">
+            <span
+              *ngFor="let s of [1, 2, 3, 4, 5]"
+              class="star-pick"
+              [class.active]="s <= (hoverRating || selectedRating)"
+              (mouseenter)="hoverRating = s"
+              (mouseleave)="hoverRating = 0"
+              (click)="setRating(s)"
+              >★</span
+            >
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="title">Review Title</label>
+          <input
+            id="title"
+            type="text"
+            formControlName="title"
+            placeholder="Summarise your experience"
+          />
+        </div>
+
+        <div class="field">
+          <label for="body">Your Review</label>
+          <textarea
+            id="body"
+            formControlName="body"
+            rows="4"
+            placeholder="Tell us about your stay..."
+          ></textarea>
+        </div>
+
+        <div class="field">
+          <label for="category">Category</label>
+          <select id="category" formControlName="category">
+            <option value="">Select a category</option>
+            <option value="Rooms">Rooms</option>
+            <option value="Service">Service</option>
+            <option value="Dining">Dining</option>
+            <option value="Spa">Spa</option>
+            <option value="Location">Location</option>
+          </select>
+        </div>
+
+        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+        <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+
+        <button class="submit-btn" type="submit" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Submitting...' : 'Submit Review' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logo">Air<span>Glo</span></div>
+  <p class="footer-tagline">Redefining luxury hospitality since 2009</p>
+  <div class="footer-links">
+    <a routerLink="/">Home</a>
+    <a routerLink="/rooms">Rooms</a>
+    <a routerLink="/hotels">Hotels</a>
+    <a routerLink="/book-rooms">Booked Rooms</a>
+    <a routerLink="/reviews">Reviews</a>
+    <a routerLink="/register">Register</a>
+  </div>
+  <p class="footer-copy">© 2025 AirGlo Luxury Collection. All Rights Reserved.</p>
+</footer>

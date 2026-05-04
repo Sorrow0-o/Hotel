@@ -1,4 +1,3 @@
-
 <nav [class.scrolled]="isScrolled">
   <div class="nav-inner">
     <div class="logo" (click)="scrollTo('hero')">
@@ -26,6 +25,7 @@
       <li><a routerLink="/rooms">Rooms</a></li>
       <li><a routerLink="/hotels">Hotels</a></li>
       <li><a routerLink="/book-rooms">Booked Rooms</a></li>
+      <li><a routerLink="/reviews">Reviews</a></li>
       <li><a routerLink="/register">Register</a></li>
       <li><button class="btn-book" (click)="scrollTo('rooms')">Book Now</button></li>
     </ul>
@@ -230,6 +230,7 @@
     <a routerLink="/rooms">Rooms</a>
     <a routerLink="/hotels">Hotels</a>
     <a routerLink="/book-rooms">Booked Rooms</a>
+    <a routerLink="/reviews">Reviews</a>
     <a routerLink="/register">Register</a>
     <a (click)="scrollTo('history')">Our Story</a>
   </div>
