@@ -6,7 +6,7 @@ $muted: #6b6560;
 $serif: 'Playfair Display', Georgia, serif;
 $sans: 'DM Sans', sans-serif;
 
-// ─── Nav ────────────────────────────────────────────────────────────────────
+
 nav:not(.footer-links) {
   position: fixed;
   top: 0;
@@ -132,7 +132,7 @@ nav:not(.footer-links) {
   }
 }
 
-// ─── Hero ────────────────────────────────────────────────────────────────────
+
 .reviews-hero {
   position: relative;
   height: 360px;
@@ -199,14 +199,14 @@ nav:not(.footer-links) {
   }
 }
 
-// ─── Main ────────────────────────────────────────────────────────────────────
+
 .reviews-main {
   max-width: 1200px;
   margin: 0 auto;
   padding: 3.5rem 2rem 6rem;
 }
 
-// ─── Stats ───────────────────────────────────────────────────────────────────
+
 .stats-bar {
   display: flex;
   align-items: center;
@@ -259,7 +259,7 @@ nav:not(.footer-links) {
   }
 }
 
-// ─── Stars shared ────────────────────────────────────────────────────────────
+
 .star {
   color: #ddd;
   font-size: 1rem;
@@ -268,7 +268,7 @@ nav:not(.footer-links) {
   }
 }
 
-// ─── Filter ──────────────────────────────────────────────────────────────────
+
 .filter-bar {
   display: flex;
   gap: 0.6rem;
@@ -298,7 +298,7 @@ nav:not(.footer-links) {
   }
 }
 
-// ─── Reviews grid ────────────────────────────────────────────────────────────
+
 .reviews-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -448,7 +448,7 @@ nav:not(.footer-links) {
   color: #bbb;
 }
 
-// ─── Write Review ────────────────────────────────────────────────────────────
+
 .write-review-section {
   max-width: 860px;
   margin: 0 auto;
@@ -541,7 +541,7 @@ select {
   padding-right: 36px;
 }
 
-// ─── Star picker ─────────────────────────────────────────────────────────────
+
 .star-picker {
   display: flex;
   gap: 6px;
@@ -561,7 +561,7 @@ select {
   }
 }
 
-// ─── Buttons / messages ──────────────────────────────────────────────────────
+
 .submit-btn {
   margin-top: 8px;
   border: 0;
@@ -589,7 +589,7 @@ select {
   font-size: 0.88rem;
 }
 
-// ─── Footer ──────────────────────────────────────────────────────────────────
+
 footer {
   background: $dark;
   padding: 3.5rem 3rem;
@@ -633,7 +633,7 @@ footer {
   color: rgba($cream, 0.3);
 }
 
-// ─── Responsive ──────────────────────────────────────────────────────────────
+
 @media (max-width: 1024px) {
   .reviews-grid {
     grid-template-columns: repeat(2, 1fr);
