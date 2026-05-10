@@ -54,7 +54,7 @@
 </section>
 
 <main class="rsv-main">
- 
+  <!-- Picker bar -->
   <div class="rsv-picker-bar">
     <div class="rsv-picker-inner">
       <div class="rsv-picker-field">
@@ -85,7 +85,7 @@
     </div>
   </div>
 
-
+  <!-- Floor plan -->
   <div class="rsv-floor-wrap">
     <div class="rsv-floor-header">
       <p class="rsv-floor-hint">Click on an available table to reserve it.</p>
@@ -97,25 +97,19 @@
     </div>
 
     <div class="rsv-floor">
-    
-      <div class="rsv-zone-label" style="top: 18px; left: 50%; transform: translateX(-50%)">
-        WINDOW
-      </div>
-      <div class="rsv-zone-label" style="top: 185px; left: 38px">MAIN</div>
-      <div class="rsv-zone-label" style="top: 310px; left: 38px">CENTRE</div>
-      <div class="rsv-zone-label" style="top: 310px; right: 130px">ALCOVE</div>
-      <div class="rsv-zone-label" style="top: 420px; left: 38px">PRIVATE</div>
+      <!-- Zone labels -->
+      <div *ngFor="let z of zoneLabels" class="rsv-zone-label" [style]="z.style">{{ z.label }}</div>
 
-     
+      <!-- BAR -->
       <div class="rsv-bar"><span>B</span><span>A</span><span>R</span></div>
 
-     
+      <!-- ENTRANCE -->
       <div class="rsv-entrance">ENTRANCE</div>
 
-    
+      <!-- KITCHEN -->
       <div class="rsv-kitchen">🍳 KITCHEN</div>
 
-  
+      <!-- Tables -->
       <div
         *ngFor="let table of tables"
         class="rsv-table"
@@ -138,7 +132,7 @@
     </div>
   </div>
 
-
+  <!-- Booking form -->
   <div class="rsv-form-section" *ngIf="selectedTable && !bookingSuccess">
     <div class="rsv-form-card">
       <div class="rsv-form-header">
@@ -177,7 +171,7 @@
     </div>
   </div>
 
- 
+  <!-- Success -->
   <div class="rsv-success" *ngIf="bookingSuccess">
     <div class="rsv-success-icon">✓</div>
     <h3>Reservation Confirmed!</h3>

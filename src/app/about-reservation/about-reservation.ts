@@ -18,42 +18,177 @@ export interface RestaurantTable {
   dots: number[];
 }
 
-function makeTables(): RestaurantTable[] {
-  const occupied = new Set([2, 5, 7, 11]);
-  const raw: Omit<RestaurantTable, 'status' | 'dots'>[] = [
-    { id: 1, label: 'T1', capacity: 2, zone: 'Window', shape: 'round', x: 60, y: 55 },
-    { id: 2, label: 'T2', capacity: 2, zone: 'Window', shape: 'round', x: 165, y: 55 },
-    { id: 3, label: 'T3', capacity: 2, zone: 'Window', shape: 'round', x: 270, y: 55 },
-    { id: 4, label: 'T4', capacity: 4, zone: 'Window', shape: 'round', x: 390, y: 55 },
-    { id: 5, label: 'T5', capacity: 4, zone: 'Window', shape: 'round', x: 505, y: 55 },
-
-    { id: 6, label: 'T6', capacity: 4, zone: 'Main', shape: 'square', x: 60, y: 180 },
-    { id: 7, label: 'T7', capacity: 4, zone: 'Main', shape: 'square', x: 185, y: 180 },
-    { id: 8, label: 'T8', capacity: 4, zone: 'Main', shape: 'square', x: 310, y: 180 },
-    { id: 9, label: 'T9', capacity: 4, zone: 'Main', shape: 'square', x: 435, y: 180 },
-
-    { id: 10, label: 'T10', capacity: 5, zone: 'Centre', shape: 'square', x: 60, y: 300 },
-    { id: 11, label: 'T11', capacity: 5, zone: 'Centre', shape: 'square', x: 210, y: 300 },
-
-    { id: 12, label: 'T12', capacity: 2, zone: 'Alcove', shape: 'round', x: 390, y: 305 },
-    { id: 13, label: 'T13', capacity: 2, zone: 'Alcove', shape: 'round', x: 490, y: 305 },
-
-    {
-      id: 14,
-      label: 'T14',
-      capacity: 8,
-      zone: 'Private',
-      shape: 'square',
-      size: 'large',
-      x: 60,
-      y: 415,
-    },
-  ];
+function makeTables(
+  occupied: number[],
+  raw: Omit<RestaurantTable, 'status' | 'dots'>[],
+): RestaurantTable[] {
+  const occ = new Set(occupied);
   return raw.map((t) => ({
     ...t,
-    status: occupied.has(t.id) ? 'occupied' : 'available',
+    status: occ.has(t.id) ? 'occupied' : 'available',
     dots: Array(t.capacity <= 2 ? 2 : t.capacity <= 4 ? 4 : 6).fill(0),
   }));
+}
+
+// ── Hotel 1: Window / Main / Centre / Alcove / Private ────────────────────────
+function makeTables1(): RestaurantTable[] {
+  return makeTables(
+    [2, 5, 7, 11],
+    [
+      { id: 1, label: 'T1', capacity: 2, zone: 'Window', shape: 'round', x: 60, y: 55 },
+      { id: 2, label: 'T2', capacity: 2, zone: 'Window', shape: 'round', x: 165, y: 55 },
+      { id: 3, label: 'T3', capacity: 2, zone: 'Window', shape: 'round', x: 270, y: 55 },
+      { id: 4, label: 'T4', capacity: 4, zone: 'Window', shape: 'round', x: 390, y: 55 },
+      { id: 5, label: 'T5', capacity: 4, zone: 'Window', shape: 'round', x: 505, y: 55 },
+      { id: 6, label: 'T6', capacity: 4, zone: 'Main', shape: 'square', x: 60, y: 180 },
+      { id: 7, label: 'T7', capacity: 4, zone: 'Main', shape: 'square', x: 185, y: 180 },
+      { id: 8, label: 'T8', capacity: 4, zone: 'Main', shape: 'square', x: 310, y: 180 },
+      { id: 9, label: 'T9', capacity: 4, zone: 'Main', shape: 'square', x: 435, y: 180 },
+      { id: 10, label: 'T10', capacity: 5, zone: 'Centre', shape: 'square', x: 60, y: 300 },
+      { id: 11, label: 'T11', capacity: 5, zone: 'Centre', shape: 'square', x: 210, y: 300 },
+      { id: 12, label: 'T12', capacity: 2, zone: 'Alcove', shape: 'round', x: 390, y: 305 },
+      { id: 13, label: 'T13', capacity: 2, zone: 'Alcove', shape: 'round', x: 490, y: 305 },
+      {
+        id: 14,
+        label: 'T14',
+        capacity: 8,
+        zone: 'Private',
+        shape: 'square',
+        size: 'large',
+        x: 60,
+        y: 415,
+      },
+    ],
+  );
+}
+
+// ── Hotel 2: Terrace / Garden / Bar Lounge / VIP ─────────────────────────────
+function makeTables2(): RestaurantTable[] {
+  return makeTables(
+    [1, 4, 8, 12],
+    [
+      // Terrace row — round, top
+      { id: 1, label: 'T1', capacity: 2, zone: 'Terrace', shape: 'round', x: 55, y: 50 },
+      { id: 2, label: 'T2', capacity: 2, zone: 'Terrace', shape: 'round', x: 155, y: 50 },
+      { id: 3, label: 'T3', capacity: 4, zone: 'Terrace', shape: 'round', x: 265, y: 50 },
+      { id: 4, label: 'T4', capacity: 4, zone: 'Terrace', shape: 'round', x: 375, y: 50 },
+      { id: 5, label: 'T5', capacity: 2, zone: 'Terrace', shape: 'round', x: 490, y: 50 },
+      // Garden — square middle-left cluster
+      { id: 6, label: 'T6', capacity: 4, zone: 'Garden', shape: 'square', x: 55, y: 175 },
+      { id: 7, label: 'T7', capacity: 4, zone: 'Garden', shape: 'square', x: 195, y: 175 },
+      {
+        id: 8,
+        label: 'T8',
+        capacity: 6,
+        zone: 'Garden',
+        shape: 'square',
+        size: 'large',
+        x: 55,
+        y: 295,
+      },
+      { id: 9, label: 'T9', capacity: 4, zone: 'Garden', shape: 'square', x: 245, y: 295 },
+      // Bar Lounge — right side round
+      { id: 10, label: 'T10', capacity: 2, zone: 'Bar Lounge', shape: 'round', x: 370, y: 175 },
+      { id: 11, label: 'T11', capacity: 2, zone: 'Bar Lounge', shape: 'round', x: 480, y: 175 },
+      { id: 12, label: 'T12', capacity: 2, zone: 'Bar Lounge', shape: 'round', x: 370, y: 285 },
+      { id: 13, label: 'T13', capacity: 2, zone: 'Bar Lounge', shape: 'round', x: 480, y: 285 },
+      // VIP — bottom large
+      {
+        id: 14,
+        label: 'T14',
+        capacity: 8,
+        zone: 'VIP',
+        shape: 'square',
+        size: 'large',
+        x: 55,
+        y: 415,
+      },
+      { id: 15, label: 'T15', capacity: 4, zone: 'VIP', shape: 'square', x: 255, y: 415 },
+    ],
+  );
+}
+
+// ── Hotel 3: Panorama / Classic / Lounge / Suite ──────────────────────────────
+function makeTables3(): RestaurantTable[] {
+  return makeTables(
+    [3, 6, 10, 14],
+    [
+      // Panorama — curved top row
+      { id: 1, label: 'T1', capacity: 2, zone: 'Panorama', shape: 'round', x: 40, y: 45 },
+      { id: 2, label: 'T2', capacity: 2, zone: 'Panorama', shape: 'round', x: 140, y: 45 },
+      { id: 3, label: 'T3', capacity: 4, zone: 'Panorama', shape: 'round', x: 255, y: 45 },
+      { id: 4, label: 'T4', capacity: 4, zone: 'Panorama', shape: 'round', x: 375, y: 45 },
+      { id: 5, label: 'T5', capacity: 2, zone: 'Panorama', shape: 'round', x: 495, y: 45 },
+      // Classic — square grid
+      { id: 6, label: 'T6', capacity: 4, zone: 'Classic', shape: 'square', x: 40, y: 170 },
+      { id: 7, label: 'T7', capacity: 4, zone: 'Classic', shape: 'square', x: 170, y: 170 },
+      { id: 8, label: 'T8', capacity: 4, zone: 'Classic', shape: 'square', x: 300, y: 170 },
+      { id: 9, label: 'T9', capacity: 4, zone: 'Classic', shape: 'square', x: 430, y: 170 },
+      {
+        id: 10,
+        label: 'T10',
+        capacity: 6,
+        zone: 'Classic',
+        shape: 'square',
+        size: 'large',
+        x: 40,
+        y: 290,
+      },
+      { id: 11, label: 'T11', capacity: 4, zone: 'Classic', shape: 'square', x: 240, y: 290 },
+      // Lounge — round bottom-right
+      { id: 12, label: 'T12', capacity: 2, zone: 'Lounge', shape: 'round', x: 385, y: 295 },
+      { id: 13, label: 'T13', capacity: 2, zone: 'Lounge', shape: 'round', x: 490, y: 295 },
+      // Suite — large private bottom
+      {
+        id: 14,
+        label: 'T14',
+        capacity: 10,
+        zone: 'Suite',
+        shape: 'square',
+        size: 'large',
+        x: 40,
+        y: 415,
+      },
+    ],
+  );
+}
+
+function makeTablesForHotel(id: string | number): RestaurantTable[] {
+  switch (String(id)) {
+    case '2':
+      return makeTables2();
+    case '3':
+      return makeTables3();
+    default:
+      return makeTables1();
+  }
+}
+
+function getZoneLabels(id: string | number): { label: string; style: string }[] {
+  switch (String(id)) {
+    case '2':
+      return [
+        { label: 'TERRACE', style: 'top:18px;left:50%;transform:translateX(-50%)' },
+        { label: 'GARDEN', style: 'top:185px;left:38px' },
+        { label: 'BAR LOUNGE', style: 'top:185px;right:55px' },
+        { label: 'VIP', style: 'top:425px;left:38px' },
+      ];
+    case '3':
+      return [
+        { label: 'PANORAMA', style: 'top:18px;left:50%;transform:translateX(-50%)' },
+        { label: 'CLASSIC', style: 'top:185px;left:38px' },
+        { label: 'LOUNGE', style: 'top:305px;right:38px' },
+        { label: 'SUITE', style: 'top:425px;left:38px' },
+      ];
+    default:
+      return [
+        { label: 'WINDOW', style: 'top:18px;left:50%;transform:translateX(-50%)' },
+        { label: 'MAIN', style: 'top:185px;left:38px' },
+        { label: 'CENTRE', style: 'top:310px;left:38px' },
+        { label: 'ALCOVE', style: 'top:310px;right:130px' },
+        { label: 'PRIVATE', style: 'top:420px;left:38px' },
+      ];
+  }
 }
 
 @Component({
@@ -92,9 +227,10 @@ export class AboutReservation implements OnInit {
     '23:00',
   ];
 
-  tables: RestaurantTable[] = makeTables();
+  tables: RestaurantTable[] = [];
   selectedTable: RestaurantTable | null = null;
   confirmedTable: RestaurantTable | null = null;
+  zoneLabels: { label: string; style: string }[] = [];
 
   form = { name: '', email: '', phone: '', notes: '' };
   formError = '';
@@ -112,6 +248,8 @@ export class AboutReservation implements OnInit {
 
   ngOnInit() {
     this.hotelId = this.route.snapshot.paramMap.get('id') ?? '';
+    this.tables = makeTablesForHotel(this.hotelId);
+    this.zoneLabels = getZoneLabels(this.hotelId);
     this.loadHotel();
   }
 

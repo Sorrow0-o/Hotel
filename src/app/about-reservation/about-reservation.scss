@@ -6,7 +6,6 @@ $muted: #6b7280;
 $serif: 'Playfair Display', Georgia, serif;
 $sans: 'DM Sans', sans-serif;
 
-
 .hs-header {
   position: sticky;
   top: 0;
@@ -110,7 +109,6 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-
 .hs-hero {
   position: relative;
   height: 560px;
@@ -173,7 +171,6 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-
 .hs-main {
   background: $white;
 }
@@ -186,7 +183,6 @@ $sans: 'DM Sans', sans-serif;
   color: $gold;
   margin-bottom: 0.7rem;
 }
-
 
 .hs-intro {
   padding: 6rem 3rem;
@@ -245,7 +241,6 @@ $sans: 'DM Sans', sans-serif;
   text-transform: uppercase;
   color: $muted;
 }
-
 
 .hs-services {
   padding: 6rem 3rem;
@@ -319,7 +314,6 @@ $sans: 'DM Sans', sans-serif;
   margin-top: auto;
 }
 
-
 .hs-amenities {
   padding: 5rem 3rem;
   background: $navy;
@@ -370,7 +364,6 @@ $sans: 'DM Sans', sans-serif;
   font-weight: 500;
 }
 
-
 .hs-gallery {
   padding: 5rem 3rem;
   background: $cream;
@@ -406,7 +399,6 @@ $sans: 'DM Sans', sans-serif;
     grid-row: span 2;
   }
 }
-
 
 .hs-policies {
   padding: 5rem 3rem;
@@ -452,7 +444,6 @@ $sans: 'DM Sans', sans-serif;
   color: $navy;
   font-weight: 500;
 }
-
 
 .hs-footer {
   background: $navy;
@@ -524,7 +515,6 @@ $sans: 'DM Sans', sans-serif;
     color: $gold;
   }
 }
-
 
 .hs-hero--short {
   height: 340px;
@@ -671,7 +661,6 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-
 $navy: #1e2d3d;
 $gold: #c9a96e;
 $green: #3d8b5e;
@@ -683,7 +672,6 @@ $floor-bg: #1a2230;
   min-height: 60vh;
   padding-bottom: 4rem;
 }
-
 
 .rsv-picker-bar {
   background: $navy;
@@ -789,7 +777,6 @@ $floor-bg: #1a2230;
   }
 }
 
-
 .rsv-floor-wrap {
   max-width: 800px;
   margin: 2.5rem auto 0;
@@ -851,7 +838,6 @@ $floor-bg: #1a2230;
   overflow: hidden;
 }
 
-
 .rsv-zone-label {
   position: absolute;
   font-size: 0.6rem;
@@ -861,7 +847,6 @@ $floor-bg: #1a2230;
   pointer-events: none;
   z-index: 1;
 }
-
 
 .rsv-bar {
   position: absolute;
@@ -884,7 +869,6 @@ $floor-bg: #1a2230;
   }
 }
 
-
 .rsv-entrance {
   position: absolute;
   right: -28px;
@@ -896,7 +880,6 @@ $floor-bg: #1a2230;
   color: rgba(255, 255, 255, 0.2);
 }
 
-
 .rsv-kitchen {
   position: absolute;
   bottom: 12px;
@@ -907,7 +890,6 @@ $floor-bg: #1a2230;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.2);
 }
-
 
 .rsv-table {
   position: absolute;
@@ -994,7 +976,6 @@ $floor-bg: #1a2230;
   }
 }
 
-
 .rsv-form-section {
   max-width: 720px;
   margin: 2.5rem auto 0;
@@ -1075,7 +1056,6 @@ $floor-bg: #1a2230;
   }
 }
 
-
 .rsv-success {
   max-width: 540px;
   margin: 2.5rem auto 0;
@@ -1116,7 +1096,6 @@ $floor-bg: #1a2230;
 .rsv-success .rsv-submit-btn {
   margin-top: 1.5rem;
 }
-
 
 .hs-hamburger {
   display: none;
