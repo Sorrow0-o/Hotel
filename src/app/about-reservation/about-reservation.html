@@ -1,0 +1,215 @@
+<header class="hs-header">
+  <div class="hs-header-main">
+    <div class="hs-brand">
+      <span class="hs-brand-name">{{ hotelName }}</span>
+      <span class="hs-brand-city" *ngIf="hotelCity">{{ hotelCity }}, Georgia</span>
+    </div>
+    <nav class="hs-nav" [class.open]="isMenuOpen">
+      <a
+        [routerLink]="['/hotels', hotelId, 'about']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >About</a
+      >
+      <a
+        [routerLink]="['/hotels', hotelId, 'restaurant']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        >Restaurant</a
+      >
+      <a
+        [routerLink]="['/hotels', hotelId, 'reservation']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        >Reservations</a
+      >
+      <a
+        [routerLink]="['/hotels', hotelId, 'partners']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        >Partners</a
+      >
+      <a [routerLink]="['/hotels', hotelId, 'rooms']" class="hs-nav-book">Book a Room</a>
+    </nav>
+    <button class="hs-hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section class="hs-hero hs-hero--short">
+  <div
+    class="hs-hero-bg"
+    style="
+      background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&auto=format&fit=crop');
+    "
+  ></div>
+  <div class="hs-hero-overlay"></div>
+  <div class="hs-hero-content">
+    <span class="hs-hero-eyebrow">Fine Dining</span>
+    <h1>Reserve a Table</h1>
+    <p>Select your preferred table and dining time.</p>
+  </div>
+</section>
+
+<main class="rsv-main">
+  <!-- Picker bar -->
+  <div class="rsv-picker-bar">
+    <div class="rsv-picker-inner">
+      <div class="rsv-picker-field">
+        <label>📅 Date</label>
+        <input type="date" [(ngModel)]="selectedDate" [min]="today" />
+      </div>
+      <div class="rsv-picker-field">
+        <label>🕐 Time</label>
+        <select [(ngModel)]="selectedTime">
+          <option *ngFor="let t of timeSlots" [value]="t">{{ t }}</option>
+        </select>
+      </div>
+      <div class="rsv-picker-field">
+        <label>👥 Guests</label>
+        <div class="rsv-guests">
+          <button (click)="guests > 1 ? (guests = guests - 1) : null">−</button>
+          <span>{{ guests }}</span>
+          <button (click)="guests < 10 ? (guests = guests + 1) : null">+</button>
+        </div>
+      </div>
+      <div class="rsv-selected-info" *ngIf="selectedTable">
+        <span class="rsv-selected-badge">
+          Table {{ selectedTable.label }} · {{ selectedTable.capacity }} guests ·
+          {{ selectedTable.zone }}
+        </span>
+        <button class="rsv-clear-btn" (click)="clearSelection()">✕ Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floor plan -->
+  <div class="rsv-floor-wrap">
+    <div class="rsv-floor-header">
+      <p class="rsv-floor-hint">Click on an available table to reserve it.</p>
+      <div class="rsv-legend">
+        <span class="rsv-legend-item rsv-legend-item--available">Available</span>
+        <span class="rsv-legend-item rsv-legend-item--occupied">Occupied</span>
+        <span class="rsv-legend-item rsv-legend-item--selected">Your Selection</span>
+      </div>
+    </div>
+
+    <div class="rsv-floor">
+      <!-- Zone labels -->
+      <div class="rsv-zone-label" style="top: 18px; left: 50%; transform: translateX(-50%)">
+        WINDOW
+      </div>
+      <div class="rsv-zone-label" style="top: 185px; left: 38px">MAIN</div>
+      <div class="rsv-zone-label" style="top: 310px; left: 38px">CENTRE</div>
+      <div class="rsv-zone-label" style="top: 310px; right: 130px">ALCOVE</div>
+      <div class="rsv-zone-label" style="top: 420px; left: 38px">PRIVATE</div>
+
+      <!-- BAR -->
+      <div class="rsv-bar"><span>B</span><span>A</span><span>R</span></div>
+
+      <!-- ENTRANCE -->
+      <div class="rsv-entrance">ENTRANCE</div>
+
+      <!-- KITCHEN -->
+      <div class="rsv-kitchen">🍳 KITCHEN</div>
+
+      <!-- Tables -->
+      <div
+        *ngFor="let table of tables"
+        class="rsv-table"
+        [class.rsv-table--round]="table.shape === 'round'"
+        [class.rsv-table--square]="table.shape === 'square'"
+        [class.rsv-table--large]="table.size === 'large'"
+        [class.rsv-table--available]="table.status === 'available'"
+        [class.rsv-table--occupied]="table.status === 'occupied'"
+        [class.rsv-table--selected]="selectedTable?.id === table.id"
+        [style.left.px]="table.x"
+        [style.top.px]="table.y"
+        (click)="selectTable(table)"
+      >
+        <span class="rsv-table-label">{{ table.label }}</span>
+        <span class="rsv-table-guests">{{ table.capacity }} guests</span>
+        <div class="rsv-table-dots">
+          <span *ngFor="let d of table.dots" class="rsv-dot"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking form -->
+  <div class="rsv-form-section" *ngIf="selectedTable && !bookingSuccess">
+    <div class="rsv-form-card">
+      <div class="rsv-form-header">
+        <h3>Complete Your Reservation</h3>
+        <p>
+          Table {{ selectedTable.label }} · {{ selectedTable.zone }} ·
+          {{ selectedTable.capacity }} guests · {{ selectedDate }} at {{ selectedTime }}
+        </p>
+      </div>
+      <div class="rsv-form-grid">
+        <div class="rsv-form-field">
+          <label>Full Name</label>
+          <input type="text" [(ngModel)]="form.name" placeholder="John Smith" />
+        </div>
+        <div class="rsv-form-field">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="form.email" placeholder="john@example.com" />
+        </div>
+        <div class="rsv-form-field">
+          <label>Phone</label>
+          <input type="tel" [(ngModel)]="form.phone" placeholder="+995 5XX XXX XXX" />
+        </div>
+        <div class="rsv-form-field">
+          <label>Special Requests</label>
+          <input
+            type="text"
+            [(ngModel)]="form.notes"
+            placeholder="Allergies, occasion, preferences…"
+          />
+        </div>
+      </div>
+      <p class="rsv-form-error" *ngIf="formError">{{ formError }}</p>
+      <button class="rsv-submit-btn" (click)="submitReservation()" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Reserving…' : 'Confirm Reservation' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Success -->
+  <div class="rsv-success" *ngIf="bookingSuccess">
+    <div class="rsv-success-icon">✓</div>
+    <h3>Reservation Confirmed!</h3>
+    <p>
+      Table {{ confirmedTable?.label }} · {{ confirmedTable?.zone }} · {{ selectedDate }} at
+      {{ selectedTime }}
+    </p>
+    <p class="rsv-success-note">
+      A confirmation has been sent to <strong>{{ form.email }}</strong
+      >. We look forward to welcoming you.
+    </p>
+    <button class="rsv-submit-btn" (click)="resetBooking()">Make Another Reservation</button>
+  </div>
+</main>
+
+<footer class="hs-footer">
+  <div class="hs-footer-inner">
+    <div class="hs-footer-brand">
+      <span class="hs-footer-name">{{ hotelName }}</span>
+      <span class="hs-footer-city" *ngIf="hotelCity">{{ hotelCity }}, Georgia</span>
+      <div class="hs-footer-stars">★★★★★</div>
+    </div>
+    <div class="hs-footer-links">
+      <a [routerLink]="['/hotels', hotelId, 'about']">About</a>
+      <a [routerLink]="['/hotels', hotelId, 'restaurant']">Restaurant</a>
+      <a [routerLink]="['/hotels', hotelId, 'reservation']">Reservations</a>
+      <a [routerLink]="['/hotels', hotelId, 'partners']">Partners</a>
+      <a [routerLink]="['/hotels', hotelId, 'rooms']">Rooms</a>
+    </div>
+    <div class="hs-footer-bottom">
+      <span>© 2025 {{ hotelName }}. All rights reserved.</span>
+      <a routerLink="/hotels" class="hs-footer-airglo">Part of the AirGlo Luxury Collection</a>
+    </div>
+  </div>
+</footer>

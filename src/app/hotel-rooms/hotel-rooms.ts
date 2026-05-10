@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 
@@ -31,7 +37,10 @@ export class HotelRooms implements OnInit {
   hotelImage = '';
   rooms: any[] = [];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   @HostListener('window:scroll')
   onScroll() {
@@ -49,7 +58,7 @@ export class HotelRooms implements OnInit {
 
   private async loadHotelAndRooms() {
     const controller = new AbortController();
-    setTimeout(() => controller.abort(), 6000);
+    setTimeout(() => controller.abort(), 3000);
 
     try {
       // Try to get hotel info
@@ -76,38 +85,30 @@ export class HotelRooms implements OnInit {
       // Hotel info unavailable — keep defaults
     }
 
-    // Try hotel-specific rooms endpoint
+    // Fetch rooms by individual IDs using GetRoom/{id}
+    // Each hotel gets its own range of room IDs (hotel 1 → 1-4, hotel 2 → 5-8, etc.)
     try {
-      const roomsRes = await fetch(`${HOTEL_API_BASE}/Rooms/GetByHotelId/${this.hotelId}`, {
-        signal: controller.signal,
-      });
-      if (roomsRes.ok) {
-        const data = await roomsRes.json();
-        const raw: any[] = Array.isArray(data) ? data : (data.rooms ?? data.data ?? []);
-        if (raw.length > 0) {
-          this.rooms = raw;
-          this.isLoading = false;
-          return;
-        }
-      }
-    } catch {
-      /* try next */
-    }
+      const hotelNum = Number(this.hotelId) || 1;
+      const startId = (hotelNum - 1) * 3 + 1;
+      const roomIds = [startId, startId + 1, startId + 2];
 
-    // Fallback: get all rooms and filter by hotelId
-    try {
-      const allRes = await fetch(`${HOTEL_API_BASE}/Rooms/GetAll`);
-      if (allRes.ok) {
-        const data = await allRes.json();
-        const raw: any[] = Array.isArray(data) ? data : (data.rooms ?? data.data ?? []);
-        const filtered = raw.filter(
-          (r) => String(r.hotelId ?? r.hotel_id ?? r.hotel?.id) === String(this.hotelId),
-        );
-        if (filtered.length > 0) {
-          this.rooms = filtered;
-          this.isLoading = false;
-          return;
-        }
+      const results = await Promise.allSettled(
+        roomIds.map((id) =>
+          fetch(`${HOTEL_API_BASE}/Rooms/GetRoom/${id}`, { signal: controller.signal }).then(
+            (res) => (res.ok ? res.json() : null),
+          ),
+        ),
+      );
+
+      const fetched = results
+        .filter((r) => r.status === 'fulfilled' && r.value !== null)
+        .map((r) => (r as PromiseFulfilledResult<any>).value);
+
+      if (fetched.length > 0) {
+        this.rooms = fetched;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+        return;
       }
     } catch {
       /* fall through to mock */
@@ -116,65 +117,107 @@ export class HotelRooms implements OnInit {
     // Final fallback: mock rooms for this hotel
     this.rooms = this.getMockRooms();
     this.isLoading = false;
+    this.cdr.detectChanges();
   }
 
   private getMockRooms(): any[] {
-    return [
-      {
-        id: 101,
-        name: 'Classic Room',
-        type: 'Classic',
-        price: 180,
-        maxGuests: 2,
-        amenities: ['Free Wi-Fi', 'Air Conditioning', 'Mini Bar'],
-        image: ROOM_IMAGES[0],
-      },
-      {
-        id: 102,
-        name: 'Deluxe King Room',
-        type: 'Deluxe',
-        price: 280,
-        maxGuests: 2,
-        amenities: ['Sea View', 'King Bed', 'Jacuzzi', 'Balcony'],
-        image: ROOM_IMAGES[1],
-      },
-      {
-        id: 103,
-        name: 'Junior Suite',
-        type: 'Suite',
-        price: 420,
-        maxGuests: 3,
-        amenities: ['Living Area', 'Rain Shower', 'Premium Minibar', 'Butler'],
-        image: ROOM_IMAGES[2],
-      },
-      {
-        id: 104,
-        name: 'Executive Suite',
-        type: 'Suite',
-        price: 580,
-        maxGuests: 4,
-        amenities: ['Panoramic View', 'Private Terrace', 'Dining Area', 'Spa Access'],
-        image: ROOM_IMAGES[3],
-      },
-      {
-        id: 105,
-        name: 'Garden View Room',
-        type: 'Deluxe',
-        price: 240,
-        maxGuests: 2,
-        amenities: ['Garden View', 'Queen Bed', 'Free Breakfast', 'Lounge Access'],
-        image: ROOM_IMAGES[4],
-      },
-      {
-        id: 106,
-        name: 'Penthouse Suite',
-        type: 'Penthouse',
-        price: 980,
-        maxGuests: 6,
-        amenities: ['Private Pool', 'Chef Service', 'City View', '24h Concierge'],
-        image: ROOM_IMAGES[5],
-      },
+    const hotelNum = Number(this.hotelId) || 1;
+
+    const allRoomSets: any[][] = [
+      // Hotel 1 → IDs 1-3
+      [
+        {
+          id: 1,
+          name: 'Classic Room',
+          hotelId: 1,
+          pricePerNight: 180,
+          maximumGuests: 2,
+          available: true,
+          images: [{ source: ROOM_IMAGES[0] }],
+        },
+        {
+          id: 2,
+          name: 'Deluxe King Room',
+          hotelId: 1,
+          pricePerNight: 280,
+          maximumGuests: 2,
+          available: true,
+          images: [{ source: ROOM_IMAGES[1] }],
+        },
+        {
+          id: 3,
+          name: 'Junior Suite',
+          hotelId: 1,
+          pricePerNight: 420,
+          maximumGuests: 3,
+          available: true,
+          images: [{ source: ROOM_IMAGES[2] }],
+        },
+      ],
+      // Hotel 2 → IDs 4-6
+      [
+        {
+          id: 4,
+          name: 'Standard Room',
+          hotelId: 2,
+          pricePerNight: 120,
+          maximumGuests: 2,
+          available: true,
+          images: [{ source: ROOM_IMAGES[3] }],
+        },
+        {
+          id: 5,
+          name: 'Garden View Room',
+          hotelId: 2,
+          pricePerNight: 240,
+          maximumGuests: 2,
+          available: true,
+          images: [{ source: ROOM_IMAGES[4] }],
+        },
+        {
+          id: 6,
+          name: 'Executive Suite',
+          hotelId: 2,
+          pricePerNight: 580,
+          maximumGuests: 4,
+          available: true,
+          images: [{ source: ROOM_IMAGES[1] }],
+        },
+      ],
+      // Hotel 3 → IDs 7-9
+      [
+        {
+          id: 7,
+          name: 'Executive Room',
+          hotelId: 3,
+          pricePerNight: 350,
+          maximumGuests: 2,
+          available: true,
+          images: [{ source: ROOM_IMAGES[1] }],
+        },
+        {
+          id: 8,
+          name: 'Deluxe Twin Room',
+          hotelId: 3,
+          pricePerNight: 260,
+          maximumGuests: 3,
+          available: true,
+          images: [{ source: ROOM_IMAGES[0] }],
+        },
+        {
+          id: 9,
+          name: 'Presidential Suite',
+          hotelId: 3,
+          pricePerNight: 1200,
+          maximumGuests: 6,
+          available: true,
+          images: [{ source: ROOM_IMAGES[5] }],
+        },
+      ],
     ];
+
+    const index = (hotelNum - 1) % allRoomSets.length;
+    return allRoomSets[index];
   }
 
   getRoomId(room: any): number | string {
@@ -190,19 +233,26 @@ export class HotelRooms implements OnInit {
   }
 
   getRoomPrice(room: any): number {
-    return room.price ?? room.pricePerNight ?? room.rate ?? 0;
+    return room.pricePerNight ?? room.price ?? room.rate ?? 0;
   }
 
   getRoomGuests(room: any): number {
-    return room.maxGuests ?? room.capacity ?? room.guests ?? 2;
+    return room.maximumGuests ?? room.maxGuests ?? room.capacity ?? 2;
   }
 
   getRoomAmenities(room: any): string[] {
-    const a = room.amenities ?? room.features ?? [];
-    return Array.isArray(a) ? a.slice(0, 4) : [];
+    if (room.amenities && Array.isArray(room.amenities)) return room.amenities.slice(0, 4);
+    if (room.features && Array.isArray(room.features)) return room.features.slice(0, 4);
+    // API has no amenities field — derive from available flag and type
+    const tags: string[] = [];
+    if (room.available !== false) tags.push('Available');
+    if (room.maximumGuests) tags.push(`Up to ${room.maximumGuests} guests`);
+    return tags;
   }
 
   getRoomImage(room: any): string {
+    if (room.images && room.images.length > 0 && room.images[0].source)
+      return room.images[0].source;
     if (room.image) return room.image;
     if (room.imageUrl) return room.imageUrl;
     if (room.photo) return room.photo;

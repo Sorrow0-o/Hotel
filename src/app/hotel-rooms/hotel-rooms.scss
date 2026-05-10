@@ -503,40 +503,42 @@ footer {
 }
 
 // ─── Responsive ──────────────────────────────────────────────────────────────
-@media (max-width: 1024px) {
-  .hr-rooms {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
-@media (max-width: 900px) {
+@media (max-width: 1070px) {
   .nav-inner {
     padding: 0 1.5rem;
-  }
-  .nav-links {
-    position: fixed;
-    top: 72px;
-    right: -100%;
-    width: min(78vw, 320px);
-    height: calc(100vh - 72px);
-    background: rgba($dark, 0.98);
-    border-left: 1px solid rgba($gold, 0.18);
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1.5rem;
-    transition: right 0.3s ease;
-    z-index: 99;
-    &.open {
-      right: 0;
-    }
   }
   .hamburger {
     display: flex;
   }
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: min(80vw, 300px);
+    height: 100vh;
+    background: rgba(#0d0d0d, 0.98);
+    border-left: 1px solid rgba(#c9a96e, 0.18);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    transition: right 0.3s ease;
+    z-index: 200;
+    &.open {
+      right: 0;
+    }
+    li a {
+      font-size: 1rem;
+    }
+  }
+  .btn-book {
+    display: none;
+  }
   .hr-hero {
     height: 300px;
-    padding: 0 1.5rem;
+    padding: 80px 1.5rem 0;
   }
   .hero-breadcrumb {
     left: 1.5rem;
@@ -544,9 +546,15 @@ footer {
   .hr-main {
     padding: 2.5rem 1.5rem 4rem;
   }
+  .hr-rooms {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  footer {
+    padding: 2.5rem 1.5rem;
+  }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 560px) {
   .hr-rooms {
     grid-template-columns: 1fr;
   }

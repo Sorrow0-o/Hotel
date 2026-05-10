@@ -527,6 +527,306 @@ $sans: 'DM Sans', sans-serif;
 
 // ─── Responsive ──────────────────────────────────────────────────────────────
 
+// ─── Restaurant page specific ─────────────────────────────────────────────────
+.hs-hero--short {
+  height: 340px;
+}
+
+.hs-intro-inner--single {
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+  h2 {
+    font-family: $serif;
+    font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+    color: $navy;
+    margin: 0.4rem 0 1.4rem;
+  }
+  p {
+    font-size: 0.96rem;
+    color: $muted;
+    line-height: 1.85;
+    margin: 0 0 1rem;
+  }
+}
+
+.hs-restaurant-menus {
+  padding: 5rem 3rem;
+  background: $white;
+}
+.hs-restaurant-menus-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  h2 {
+    font-family: $serif;
+    font-size: 2.2rem;
+    color: $navy;
+    margin: 0.4rem 0 2.5rem;
+  }
+}
+.hs-menus-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  text-align: left;
+}
+.hs-menu-card {
+  background: $cream;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e8e4dc;
+}
+.hs-menu-img {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+}
+.hs-menu-body {
+  padding: 1.3rem;
+}
+.hs-menu-time {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $gold;
+  margin-bottom: 0.4rem;
+}
+.hs-menu-body h3 {
+  font-family: $serif;
+  font-size: 1.1rem;
+  color: $navy;
+  margin: 0 0 0.6rem;
+}
+.hs-menu-body p {
+  font-size: 0.84rem;
+  color: $muted;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.hs-restaurant-info {
+  padding: 4rem 3rem;
+  background: $navy;
+}
+.hs-restaurant-info-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.hs-info-card {
+  text-align: center;
+}
+.hs-info-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+.hs-info-card h3 {
+  font-family: $serif;
+  font-size: 1.2rem;
+  color: $white;
+  margin: 0 0 0.6rem;
+}
+.hs-info-card p {
+  font-size: 0.86rem;
+  color: rgba($white, 0.55);
+  line-height: 1.7;
+  margin: 0;
+}
+
+// ─── Menu section ─────────────────────────────────────────────────────────────
+.rst-menu-section {
+  padding: 6rem 3rem;
+  background: #fff;
+}
+.rst-menu-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.rst-menu-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.4rem;
+    color: #1e2d3d;
+    margin: 0.4rem 0 0.6rem;
+  }
+}
+.rst-menu-subtitle {
+  font-size: 0.96rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+// Tabs
+.rst-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+.rst-tab {
+  background: transparent;
+  border: 1px solid #e8e4dc;
+  color: #1e2d3d;
+  padding: 0.55rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    border-color: #c9a96e;
+    color: #c9a96e;
+  }
+  &--active {
+    background: #1e2d3d;
+    color: #fff;
+    border-color: #1e2d3d;
+  }
+}
+
+// Dish grid
+.rst-dishes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.6rem;
+}
+
+.rst-dish {
+  display: flex;
+  background: #faf8f3;
+  border: 1px solid #eeebe4;
+  border-radius: 16px;
+  overflow: hidden;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.09);
+  }
+}
+
+.rst-dish-img {
+  width: 180px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.rst-dish-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #c9a96e;
+  color: #1e2d3d;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.rst-dish-body {
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+}
+
+.rst-dish-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.rst-dish-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem;
+  color: #1e2d3d;
+  margin: 0 0 2px;
+}
+.rst-dish-category {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c9a96e;
+}
+.rst-dish-price {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e2d3d;
+  flex-shrink: 0;
+}
+.rst-dish-desc {
+  font-size: 0.84rem;
+  color: #6b7280;
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+
+.rst-dish-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+.rst-dish-badge {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid #e1dcd2;
+  color: #6b7280;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+// ─── Hamburger (hotel sub-nav) ────────────────────────────────────────────────
+.hs-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+  span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: $navy;
+    transition: all 0.3s;
+  }
+  &.open {
+    span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+  }
+}
+
 // ─── Hamburger ────────────────────────────────────────────────────────────────
 .hs-hamburger {
   display: none;
@@ -661,5 +961,39 @@ $sans: 'DM Sans', sans-serif;
   }
   .hs-policies-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1070px) {
+  .hs-restaurant-menus,
+  .hs-restaurant-info {
+    padding: 3.5rem 1.5rem;
+  }
+  .hs-menus-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hs-restaurant-info-inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .rst-menu-section {
+    padding: 4rem 1.5rem;
+  }
+  .rst-dishes {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .hs-menus-grid {
+    grid-template-columns: 1fr;
+  }
+  .hs-restaurant-info-inner {
+    grid-template-columns: 1fr;
+  }
+  .rst-dish {
+    flex-direction: column;
+  }
+  .rst-dish-img {
+    width: 100%;
+    height: 180px;
   }
 }

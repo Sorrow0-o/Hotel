@@ -118,7 +118,7 @@
   </div>
 
   <div class="usp-grid">
-    <div class="usp-card" *ngFor="let item of uspItems">
+    <div class="usp-card" *ngFor="let item of uspItems; let i = index">
       <div class="usp-icon">
         <svg
           *ngIf="item.icon === 'beverage'"
@@ -176,7 +176,9 @@
       </div>
       <h3 class="usp-title">{{ item.title }}</h3>
       <p class="usp-desc">{{ item.desc }}</p>
-      <span class="usp-link">Discover more →</span>
+      <a class="usp-link" routerLink="/hotel-services" [fragment]="serviceFragments[i]"
+        >Discover more →</a
+      >
     </div>
   </div>
 </section>

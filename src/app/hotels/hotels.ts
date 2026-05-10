@@ -16,6 +16,7 @@ export class Hotels implements OnInit {
   selectedCity: string | null = null;
   isLoading = true;
   isScrolled = false;
+  isMenuOpen = false;
 
   fallbackHotels = [
     {
@@ -65,6 +66,10 @@ export class Hotels implements OnInit {
   @HostListener('window:scroll')
   onScroll() {
     this.isScrolled = window.scrollY > 40;
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   ngOnInit() {

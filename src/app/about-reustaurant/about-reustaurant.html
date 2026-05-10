@@ -1,0 +1,234 @@
+<header class="hs-header">
+  <div class="hs-header-main">
+    <div class="hs-brand">
+      <span class="hs-brand-name">{{ hotelName }}</span>
+      <span class="hs-brand-city" *ngIf="hotelCity">{{ hotelCity }}, Georgia</span>
+    </div>
+    <nav class="hs-nav" [class.open]="isMenuOpen">
+      <a
+        [routerLink]="['/hotels', hotelId, 'about']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >About</a
+      >
+      <a
+        [routerLink]="['/hotels', hotelId, 'restaurant']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        >Restaurant</a
+      >
+      <a
+        [routerLink]="['/hotels', hotelId, 'reservation']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        >Reservations</a
+      >
+      <a
+        [routerLink]="['/hotels', hotelId, 'partners']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        >Partners</a
+      >
+      <a [routerLink]="['/hotels', hotelId, 'rooms']" class="hs-nav-book">Book a Room</a>
+    </nav>
+    <button class="hs-hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hs-hero hs-hero--short">
+  <div
+    class="hs-hero-bg"
+    style="
+      background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&auto=format&fit=crop');
+    "
+  ></div>
+  <div class="hs-hero-overlay"></div>
+  <div class="hs-hero-content">
+    <span class="hs-hero-eyebrow">Fine Dining</span>
+    <h1>The Restaurant</h1>
+    <p>World-class cuisine, open 24 hours a day.</p>
+  </div>
+</section>
+
+<main class="hs-main">
+  <!-- Intro -->
+  <section class="hs-intro">
+    <div class="hs-intro-inner hs-intro-inner--single">
+      <span class="hs-section-label">Our Kitchen</span>
+      <h2>Culinary Excellence, Around the Clock</h2>
+      <p>
+        Our signature restaurant is helmed by an executive chef with over two decades of
+        Michelin-starred experience across Paris, Tokyo, and New York. The menu celebrates Georgian
+        produce — heritage-breed meats, sun-ripened vegetables, and aged cheeses from local artisan
+        producers — reimagined through a modern European lens.
+      </p>
+      <p>
+        Whether you join us for a leisurely breakfast at dawn, a business lunch in our private
+        dining room, or a late-night supper after the city has quieted, our kitchen operates with
+        the same commitment to excellence at every hour.
+      </p>
+    </div>
+  </section>
+
+  <!-- Menu filter tabs -->
+  <section class="rst-menu-section">
+    <div class="rst-menu-inner">
+      <div class="rst-menu-header">
+        <span class="hs-section-label">Chef's Selection</span>
+        <h2>Our Menu</h2>
+        <p class="rst-menu-subtitle">
+          A curated selection of Georgian and European cuisine, crafted fresh each day.
+        </p>
+      </div>
+
+      <div class="rst-tabs">
+        <button
+          class="rst-tab"
+          *ngFor="let cat of menuCategories"
+          [class.rst-tab--active]="activeCategory === cat"
+          (click)="setCategory(cat)"
+        >
+          {{ cat }}
+        </button>
+      </div>
+
+      <div class="rst-dishes">
+        <div class="rst-dish" *ngFor="let dish of filteredDishes">
+          <div class="rst-dish-img" [style.background-image]="'url(' + dish.image + ')'">
+            <span class="rst-dish-tag" *ngIf="dish.tag">{{ dish.tag }}</span>
+          </div>
+          <div class="rst-dish-body">
+            <div class="rst-dish-top">
+              <div>
+                <h3 class="rst-dish-name">{{ dish.name }}</h3>
+                <span class="rst-dish-category">{{ dish.category }}</span>
+              </div>
+              <span class="rst-dish-price">{{ dish.price }}</span>
+            </div>
+            <p class="rst-dish-desc">{{ dish.description }}</p>
+            <div class="rst-dish-tags">
+              <span class="rst-dish-badge" *ngFor="let b of dish.badges">{{ b }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Time slots -->
+  <section class="hs-restaurant-menus">
+    <div class="hs-restaurant-menus-inner">
+      <span class="hs-section-label">What We Serve</span>
+      <h2>Dining Hours</h2>
+      <div class="hs-menus-grid">
+        <div class="hs-menu-card">
+          <div
+            class="hs-menu-img"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=600&auto=format&fit=crop');
+            "
+          ></div>
+          <div class="hs-menu-body">
+            <span class="hs-menu-time">07:00 – 11:00</span>
+            <h3>Breakfast</h3>
+            <p>Georgian breads, pastries, seasonal fruits, cold cuts, and made-to-order eggs.</p>
+          </div>
+        </div>
+        <div class="hs-menu-card">
+          <div
+            class="hs-menu-img"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop');
+            "
+          ></div>
+          <div class="hs-menu-body">
+            <span class="hs-menu-time">12:00 – 16:00</span>
+            <h3>Lunch</h3>
+            <p>Rotating à la carte menu celebrating Georgian and Mediterranean ingredients.</p>
+          </div>
+        </div>
+        <div class="hs-menu-card">
+          <div
+            class="hs-menu-img"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&auto=format&fit=crop');
+            "
+          ></div>
+          <div class="hs-menu-body">
+            <span class="hs-menu-time">19:00 – 23:00</span>
+            <h3>Dinner</h3>
+            <p>Seven-course tasting menu with optional wine pairing from our sommelier.</p>
+          </div>
+        </div>
+        <div class="hs-menu-card">
+          <div
+            class="hs-menu-img"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=600&auto=format&fit=crop');
+            "
+          ></div>
+          <div class="hs-menu-body">
+            <span class="hs-menu-time">00:00 – 07:00</span>
+            <h3>Late Night</h3>
+            <p>Comfort classics and lighter fare. The same kitchen, the same quality — any hour.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Info cards -->
+  <section class="hs-restaurant-info">
+    <div class="hs-restaurant-info-inner">
+      <div class="hs-info-card">
+        <span class="hs-info-icon">🕐</span>
+        <h3>Opening Hours</h3>
+        <p>
+          Open 24 hours, 7 days a week. Breakfast 07:00–11:00 · Lunch 12:00–16:00 · Dinner
+          19:00–23:00 · Late Night Kitchen always open.
+        </p>
+      </div>
+      <div class="hs-info-card">
+        <span class="hs-info-icon">📍</span>
+        <h3>Location</h3>
+        <p>
+          Ground floor of the hotel, accessible to both guests and outside visitors. Private dining
+          room for groups of 8–24.
+        </p>
+      </div>
+      <div class="hs-info-card">
+        <span class="hs-info-icon">📞</span>
+        <h3>Reservations</h3>
+        <p>
+          Dinner reservations recommended. Breakfast and lunch are walk-in. Contact our concierge to
+          book your table.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="hs-footer">
+  <div class="hs-footer-inner">
+    <div class="hs-footer-brand">
+      <span class="hs-footer-name">{{ hotelName }}</span>
+      <span class="hs-footer-city" *ngIf="hotelCity">{{ hotelCity }}, Georgia</span>
+      <div class="hs-footer-stars">★★★★★</div>
+    </div>
+    <div class="hs-footer-links">
+      <a [routerLink]="['/hotels', hotelId, 'about']">About</a>
+      <a [routerLink]="['/hotels', hotelId, 'restaurant']">Restaurant</a>
+      <a [routerLink]="['/hotels', hotelId, 'reservation']">Reservations</a>
+      <a [routerLink]="['/hotels', hotelId, 'partners']">Partners</a>
+      <a [routerLink]="['/hotels', hotelId, 'rooms']">Rooms</a>
+    </div>
+    <div class="hs-footer-bottom">
+      <span>© 2025 {{ hotelName }}. All rights reserved.</span>
+      <a routerLink="/hotels" class="hs-footer-airglo">Part of the AirGlo Luxury Collection</a>
+    </div>
+  </div>
+</footer>

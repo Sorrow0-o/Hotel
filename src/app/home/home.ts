@@ -19,6 +19,8 @@ export class Home implements OnInit {
   isLoading = true;
   rooms: any[] = [];
 
+  serviceFragments = ['beverages', 'pay-later', 'restaurant', 'spa'];
+
   heroStats = [
     { num: '24+', label: 'Properties Worldwide' },
     { num: '98%', label: 'Guest Satisfaction' },

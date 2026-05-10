@@ -527,6 +527,309 @@ $sans: 'DM Sans', sans-serif;
 
 // ─── Responsive ──────────────────────────────────────────────────────────────
 
+// ─── Partners page specific ────────────────────────────────────────────────
+.hs-hero--short {
+  height: 340px;
+}
+
+.hs-intro-inner--single {
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+  h2 {
+    font-family: $serif;
+    font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+    color: $navy;
+    margin: 0.4rem 0 1.4rem;
+  }
+  p {
+    font-size: 0.96rem;
+    color: $muted;
+    line-height: 1.85;
+    margin: 0 0 1rem;
+  }
+}
+
+.hs-partners-grid-section {
+  padding: 5rem 3rem;
+  background: $white;
+}
+.hs-partners-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  h2 {
+    font-family: $serif;
+    font-size: 2.2rem;
+    color: $navy;
+    margin: 0.4rem 0 3rem;
+  }
+}
+.hs-partners-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  text-align: left;
+}
+.hs-partner-card {
+  background: $cream;
+  border-radius: 14px;
+  padding: 1.8rem;
+  display: flex;
+  gap: 1.2rem;
+  border: 1px solid #e8e4dc;
+  transition: box-shadow 0.2s;
+  &:hover {
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+  }
+}
+.hs-partner-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+.hs-partner-category {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $gold;
+  margin-bottom: 0.3rem;
+}
+.hs-partner-body h3 {
+  font-family: $serif;
+  font-size: 1.05rem;
+  color: $navy;
+  margin: 0 0 0.5rem;
+}
+.hs-partner-body p {
+  font-size: 0.84rem;
+  color: $muted;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.hs-partner-benefits {
+  padding: 5rem 3rem;
+  background: $navy;
+}
+.hs-benefits-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  .hs-section-label {
+    color: $gold;
+  }
+  h2 {
+    font-family: $serif;
+    font-size: 2.2rem;
+    color: $white;
+    margin: 0.4rem 0 3rem;
+  }
+}
+.hs-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  text-align: left;
+}
+.hs-benefit {
+  background: rgba($white, 0.05);
+  border: 1px solid rgba($gold, 0.12);
+  border-radius: 14px;
+  padding: 1.6rem;
+}
+.hs-benefit-icon {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+.hs-benefit h4 {
+  font-family: $serif;
+  font-size: 1rem;
+  color: $white;
+  margin: 0 0 0.5rem;
+}
+.hs-benefit p {
+  font-size: 0.83rem;
+  color: rgba($white, 0.5);
+  line-height: 1.7;
+  margin: 0;
+}
+
+// ─── AirGlo Story Section ─────────────────────────────────────────────────────
+$navy: #1e2d3d;
+$gold: #c9a96e;
+$cream: #faf8f3;
+$muted: #6b7280;
+$serif: 'Playfair Display', Georgia, serif;
+$sans: 'DM Sans', sans-serif;
+
+.hs-airglo-story {
+  padding: 6rem 3rem;
+  background: $navy;
+}
+
+.hs-airglo-story-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.hs-airglo-story-visual {
+  position: relative;
+}
+
+.hs-airglo-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 20px;
+  background: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&auto=format&fit=crop')
+    center / cover;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 1;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: linear-gradient(to bottom, transparent 50%, rgba($navy, 0.5));
+  }
+}
+
+.hs-airglo-year-badge {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background: $gold;
+  color: $navy;
+  border-radius: 14px;
+  padding: 1.2rem 1.6rem;
+  text-align: center;
+  z-index: 2;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.hs-airglo-year {
+  display: block;
+  font-family: $serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.hs-airglo-year-label {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  opacity: 0.75;
+}
+
+.hs-airglo-story-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+
+  .hs-section-label {
+    color: $gold;
+  }
+
+  h2 {
+    font-family: $serif;
+    font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+    color: #fff;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  p {
+    font-size: 0.93rem;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.85;
+    margin: 0;
+  }
+}
+
+.hs-airglo-lead {
+  font-size: 1.05rem !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-weight: 500;
+}
+
+// Clickable AirGlo title link
+.hs-airglo-link {
+  color: $gold;
+  text-decoration: none;
+  border-bottom: 1px solid rgba($gold, 0.3);
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+  font-style: italic;
+
+  &:hover {
+    color: lighten($gold, 12%);
+    border-bottom-color: $gold;
+  }
+}
+
+// CTA link
+.hs-airglo-cta {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: $gold;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba($gold, 0.35);
+  padding-bottom: 2px;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+  width: fit-content;
+
+  &:hover {
+    color: lighten($gold, 12%);
+    border-color: $gold;
+  }
+}
+
+// ─── Hamburger (hotel sub-nav) ────────────────────────────────────────────────
+.hs-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+  span {
+    display: block;
+    width: 24px;
+    height: 1.5px;
+    background: $navy;
+    transition: all 0.3s;
+  }
+  &.open {
+    span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+  }
+}
+
 // ─── Hamburger ────────────────────────────────────────────────────────────────
 .hs-hamburger {
   display: none;

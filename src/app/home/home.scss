@@ -766,43 +766,40 @@ footer {
   }
 }
 
-@media (max-width: 900px) {
-  .history-visual {
-    display: none;
-  }
-  .history-layout {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1070px) {
   .nav-inner {
     padding: 0 1.5rem;
   }
   .hamburger {
     display: flex;
   }
-
   .nav-links {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: min(80vw, 300px);
+    height: 100vh;
+    background: rgba(#0d0d0d, 0.98);
+    border-left: 1px solid rgba(#c9a96e, 0.18);
     flex-direction: column;
-    background: rgba($dark, 0.98);
-    padding: 2rem;
+    align-items: flex-start;
+    justify-content: center;
     gap: 1.5rem;
-    border-top: 1px solid rgba($gold, 0.15);
+    padding: 2rem;
+    transition: right 0.3s ease;
+    z-index: 200;
     &.open {
-      display: flex;
+      right: 0;
+    }
+    li a {
+      font-size: 1rem;
     }
   }
-
+  .btn-book {
+    display: none;
+  }
   .hero {
     padding: 0 1.5rem;
-    min-height: 100svh;
   }
   .hero-stats {
     left: 1.5rem;
@@ -814,17 +811,21 @@ footer {
     width: 100%;
     opacity: 0.15;
   }
-
   .rooms-section,
   .usp-section,
   .history-section {
     padding: 4rem 1.5rem;
   }
-
   .usp-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
+  .history-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .history-visual {
+    display: none;
+  }
   footer {
     padding: 3rem 1.5rem;
   }

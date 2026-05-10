@@ -1,1 +1,512 @@
-<p>hotel-services works!</p>
+<nav
+  [class.scrolled]="isScrolled"
+  style="background: rgba(13, 13, 13, 0.92); backdrop-filter: blur(12px)"
+>
+  <div class="nav-inner">
+    <div class="logo" routerLink="/">
+      <div class="logo-mark">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="brand">AirGlo</span>
+        <span class="sub">Luxury Collection</span>
+      </div>
+    </div>
+
+    <ul class="nav-links" [class.open]="isMenuOpen">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/rooms">Rooms</a></li>
+      <li><a routerLink="/hotels">Hotels</a></li>
+      <li><a routerLink="/book-rooms">Booked Rooms</a></li>
+      <li><a routerLink="/reviews">Reviews</a></li>
+      <li><a routerLink="/register">Register</a></li>
+      <li><button class="btn-book" routerLink="/rooms">Book Now</button></li>
+    </ul>
+
+    <button class="hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<section class="hs-hero">
+  <div class="hs-hero-bg"></div>
+  <div class="hs-hero-overlay"></div>
+  <div class="hs-hero-content">
+    <span class="hero-eyebrow">Why AirGlo</span>
+    <h1>Every Comfort, Considered</h1>
+    <p>We sweat the details so you never have to think about them.</p>
+  </div>
+  <div class="hero-breadcrumb">
+    <a routerLink="/">Home</a>
+    <span>/</span>
+    <span class="crumb-active">Hotel Services</span>
+  </div>
+</section>
+
+<main class="hs-main">
+  <!-- Service 1: Beverages -->
+  <section class="hs-section" id="beverages">
+    <div class="hs-section-inner">
+      <div class="hs-text">
+        <div class="hs-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M17 8h1a4 4 0 010 8h-1" />
+            <path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z" />
+            <line x1="6" y1="1" x2="6" y2="4" />
+            <line x1="10" y1="1" x2="10" y2="4" />
+            <line x1="14" y1="1" x2="14" y2="4" />
+          </svg>
+        </div>
+        <span class="hs-label">Service 01</span>
+        <h2>Beverages Included</h2>
+        <p class="hs-lead">
+          From morning espresso to evening aperitivo — premium drinks flow freely throughout your
+          stay.
+        </p>
+        <p>
+          Every AirGlo guest enjoys complimentary access to our full beverage programme. Begin your
+          morning with a hand-poured single-origin coffee or a freshly squeezed juice from our
+          breakfast bar. Throughout the day, our in-room minibar is replenished with still and
+          sparkling water, artisan sodas, and seasonal infusions.
+        </p>
+        <p>
+          As evening falls, our lounge offers a curated selection of wines, craft cocktails, and
+          premium spirits — all at no extra charge. Our sommeliers are on hand nightly to guide you
+          through our cellar, which spans over 300 labels from Georgia, France, and Italy.
+        </p>
+        <ul class="hs-features">
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Complimentary in-room minibar refreshed daily
+          </li>
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Specialty coffee & tea station open 06:00–22:00
+          </li>
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Evening wine & cocktail hour in the lounge
+          </li>
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            300+ label cellar with nightly sommelier
+          </li>
+        </ul>
+      </div>
+      <div class="hs-visual">
+        <div
+          class="hs-img"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=900&auto=format&fit=crop');
+          "
+        ></div>
+        <div class="hs-img-accent"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="hs-divider"></div>
+
+  <!-- Service 2: Stay First Pay Later -->
+  <section class="hs-section hs-section--reverse" id="pay-later">
+    <div class="hs-section-inner">
+      <div class="hs-text">
+        <div class="hs-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="1" y="4" width="22" height="16" rx="2" />
+            <line x1="1" y1="10" x2="23" y2="10" />
+          </svg>
+        </div>
+        <span class="hs-label">Service 02</span>
+        <h2>Stay First, Pay Later</h2>
+        <p class="hs-lead">
+          Reserve your room today and settle the bill on departure. No card holds, no surprises.
+        </p>
+        <p>
+          We believe your focus should be entirely on the experience, not the transaction. AirGlo's
+          flexible payment model lets you book with confidence — no upfront charge, no deposit, and
+          no credit card hold on arrival. Simply check in, enjoy every moment, and settle your
+          account at checkout.
+        </p>
+        <p>
+          Our transparent billing means every item is itemised clearly. You'll receive a digital
+          summary before checkout so there are never any surprises. For corporate guests, we also
+          offer direct invoicing and deferred settlement arrangements.
+        </p>
+        <ul class="hs-features">
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            No deposit or card hold on arrival
+          </li>
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Itemised digital bill sent before checkout
+          </li>
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            All major cards, bank transfer & crypto accepted
+          </li>
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Corporate direct invoicing available
+          </li>
+        </ul>
+      </div>
+      <div class="hs-visual">
+        <div
+          class="hs-img"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&auto=format&fit=crop');
+          "
+        ></div>
+        <div class="hs-img-accent"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="hs-divider"></div>
+
+  <!-- Service 3: 24 Hour Restaurant -->
+  <section class="hs-section" id="restaurant">
+    <div class="hs-section-inner">
+      <div class="hs-text">
+        <div class="hs-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 8h1a4 4 0 010 8h-1" />
+            <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
+            <line x1="6" y1="1" x2="6" y2="4" />
+            <line x1="10" y1="1" x2="10" y2="4" />
+            <line x1="14" y1="1" x2="14" y2="4" />
+          </svg>
+        </div>
+        <span class="hs-label">Service 03</span>
+        <h2>24 Hour Restaurant</h2>
+        <p class="hs-lead">
+          Midnight cravings or early risers — our kitchen never sleeps. World-class cuisine, any
+          hour.
+        </p>
+        <p>
+          AirGlo's signature restaurant operates around the clock, serving a rotating menu crafted
+          by our Michelin-trained executive chef. Whether you arrive at 2am after a long flight or
+          rise before sunrise for a morning ritual, our full kitchen is at your service — no
+          compromise on quality, regardless of the hour.
+        </p>
+        <p>
+          Daytime sees a vibrant à la carte menu celebrating Georgian produce and Mediterranean
+          influence. After midnight, our late-night kitchen offers comfort classics and lighter
+          fare. In-room dining mirrors the restaurant menu exactly, delivered within 20 minutes.
+        </p>
+        <ul class="hs-features">
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Full kitchen service 24 hours, 7 days a week
+          </li>
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Michelin-trained executive chef
+          </li>
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            In-room dining with 20-minute delivery
+          </li>
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Seasonal Georgian & Mediterranean menu
+          </li>
+        </ul>
+      </div>
+      <div class="hs-visual">
+        <div
+          class="hs-img"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&auto=format&fit=crop');
+          "
+        ></div>
+        <div class="hs-img-accent"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="hs-divider"></div>
+
+  <!-- Service 4: Spa -->
+  <section class="hs-section hs-section--reverse" id="spa">
+    <div class="hs-section-inner">
+      <div class="hs-text">
+        <div class="hs-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+        </div>
+        <span class="hs-label">Service 04</span>
+        <h2>Spa Included</h2>
+        <p class="hs-lead">
+          Every stay includes full access to our award-winning wellness sanctuary. Unwind
+          completely.
+        </p>
+        <p>
+          The AirGlo Wellness Sanctuary spans over 1,200 square metres and is included in every room
+          rate — no surcharges, no booking fees. Guests enjoy unrestricted access to the heated
+          indoor pool, hydrotherapy circuit, steam room, sauna, and fully equipped fitness centre
+          throughout their stay.
+        </p>
+        <p>
+          Our team of certified therapists offer a full treatment menu — from deep tissue massage
+          and hot stone therapy to Georgian wine baths and bespoke facials. Complimentary 30-minute
+          sessions are available daily for suite guests. The sanctuary is open from 06:00 to 22:00
+          with extended hours for in-room treatments.
+        </p>
+        <ul class="hs-features">
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            1,200m² wellness sanctuary, fully included
+          </li>
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Heated pool, sauna, steam & hydrotherapy
+          </li>
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Complimentary 30-min treatment for suite guests
+          </li>
+          <li>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              width="14"
+              height="14"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Georgian wine baths & signature facials
+          </li>
+        </ul>
+      </div>
+      <div class="hs-visual">
+        <div
+          class="hs-img"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&auto=format&fit=crop');
+          "
+        ></div>
+        <div class="hs-img-accent"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="hs-cta">
+    <h3>Ready to experience AirGlo?</h3>
+    <p>Every service above is included in your stay — no hidden costs, no compromises.</p>
+    <button class="hs-cta-btn" routerLink="/rooms">Browse Rooms</button>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logo">Air<span>Glo</span></div>
+  <p class="footer-tagline">Redefining luxury hospitality since 2009</p>
+  <div class="footer-links">
+    <a routerLink="/">Home</a>
+    <a routerLink="/rooms">Rooms</a>
+    <a routerLink="/hotels">Hotels</a>
+    <a routerLink="/book-rooms">Booked Rooms</a>
+    <a routerLink="/reviews">Reviews</a>
+    <a routerLink="/register">Register</a>
+  </div>
+  <p class="footer-copy">© 2025 AirGlo Luxury Collection. All Rights Reserved.</p>
+</footer>

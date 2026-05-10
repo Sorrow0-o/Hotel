@@ -1,1 +1,203 @@
-<p>about works!</p>
+<!-- Hotel sub-site header -->
+<header class="hs-header">
+  <div class="hs-header-main">
+    <div class="hs-brand">
+      <span class="hs-brand-name">{{ hotelName }}</span>
+      <span class="hs-brand-city" *ngIf="hotelCity">{{ hotelCity }}, Georgia</span>
+    </div>
+    <nav class="hs-nav" [class.open]="isMenuOpen">
+      <a
+        [routerLink]="['/hotels', hotelId, 'about']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >About</a
+      >
+      <a
+        [routerLink]="['/hotels', hotelId, 'restaurant']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        >Restaurant</a
+      >
+      <a
+        [routerLink]="['/hotels', hotelId, 'reservation']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        >Reservations</a
+      >
+      <a
+        [routerLink]="['/hotels', hotelId, 'partners']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        >Partners</a
+      >
+      <a [routerLink]="['/hotels', hotelId, 'rooms']" class="hs-nav-book">Book a Room</a>
+    </nav>
+    <button class="hs-hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hs-hero">
+  <div
+    class="hs-hero-bg"
+    [style.background-image]="
+      heroImage
+        ? 'url(' + heroImage + ')'
+        : 'url(https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1600&auto=format&fit=crop)'
+    "
+  ></div>
+  <div class="hs-hero-overlay"></div>
+  <div class="hs-hero-content">
+    <span class="hs-hero-eyebrow">Welcome to</span>
+    <h1>{{ hotelName }}</h1>
+    <p>An extraordinary address. An unforgettable experience.</p>
+    <a [routerLink]="['/hotels', hotelId, 'reservation']" class="hs-hero-btn">Make a Reservation</a>
+  </div>
+</section>
+
+<main class="hs-main" *ngIf="!isLoading">
+  <!-- Stats -->
+  <section class="hs-intro">
+    <div class="hs-intro-inner">
+      <div class="hs-intro-text">
+        <span class="hs-section-label">Our Story</span>
+        <h2>{{ overview.lead }}</h2>
+        <p>{{ overview.body1 }}</p>
+        <p>{{ overview.body2 }}</p>
+      </div>
+      <div class="hs-intro-stats">
+        <div class="hs-intro-stat" *ngFor="let s of stats">
+          <span class="hs-intro-stat-num">{{ s.num }}</span>
+          <span class="hs-intro-stat-label">{{ s.label }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services cards linking to sub-pages -->
+  <section class="hs-services">
+    <div class="hs-services-header">
+      <span class="hs-section-label">Explore the Hotel</span>
+      <h2>Everything We Offer</h2>
+    </div>
+    <div class="hs-services-grid">
+      <a [routerLink]="['/hotels', hotelId, 'restaurant']" class="hs-service-card">
+        <div
+          class="hs-service-img"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&auto=format&fit=crop');
+          "
+        ></div>
+        <div class="hs-service-body">
+          <span class="hs-service-icon">🍽️</span>
+          <h3>The Restaurant</h3>
+          <p>
+            World-class cuisine crafted by our Michelin-trained chef. Open 24 hours, 7 days a week.
+          </p>
+          <span class="hs-service-link">Discover →</span>
+        </div>
+      </a>
+      <a [routerLink]="['/hotels', hotelId, 'reservation']" class="hs-service-card">
+        <div
+          class="hs-service-img"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=700&auto=format&fit=crop');
+          "
+        ></div>
+        <div class="hs-service-body">
+          <span class="hs-service-icon">📅</span>
+          <h3>Reservations</h3>
+          <p>Reserve your stay with ease. No deposit required — pay on departure.</p>
+          <span class="hs-service-link">Book Now →</span>
+        </div>
+      </a>
+      <a [routerLink]="['/hotels', hotelId, 'partners']" class="hs-service-card">
+        <div
+          class="hs-service-img"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&auto=format&fit=crop');
+          "
+        ></div>
+        <div class="hs-service-body">
+          <span class="hs-service-icon">🤝</span>
+          <h3>Our Partners</h3>
+          <p>Exclusive partnerships with the world's finest luxury brands and services.</p>
+          <span class="hs-service-link">Learn More →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Amenities -->
+  <section class="hs-amenities">
+    <div class="hs-amenities-inner">
+      <div class="hs-amenities-header">
+        <span class="hs-section-label">Included With Every Stay</span>
+        <h2>Hotel Amenities</h2>
+      </div>
+      <div class="hs-amenities-grid">
+        <div class="hs-amenity" *ngFor="let a of amenities">
+          <span class="hs-amenity-icon">{{ a.emoji }}</span>
+          <span class="hs-amenity-name">{{ a.name }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="hs-gallery">
+    <div class="hs-gallery-header">
+      <span class="hs-section-label">Property Gallery</span>
+      <h2>A Glimpse Inside</h2>
+    </div>
+    <div class="hs-gallery-grid">
+      <div
+        class="hs-gallery-item"
+        *ngFor="let img of galleryImages; let i = index"
+        [class.hs-gallery-item--wide]="i === 0"
+        [style.background-image]="'url(' + img + ')'"
+      ></div>
+    </div>
+  </section>
+
+  <!-- Policies -->
+  <section class="hs-policies">
+    <div class="hs-policies-inner">
+      <div class="hs-policies-header">
+        <span class="hs-section-label">Good to Know</span>
+        <h2>Hotel Policies</h2>
+      </div>
+      <div class="hs-policies-grid">
+        <div class="hs-policy" *ngFor="let p of policies">
+          <span class="hs-policy-title">{{ p.title }}</span>
+          <span class="hs-policy-value">{{ p.value }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Hotel footer -->
+<footer class="hs-footer">
+  <div class="hs-footer-inner">
+    <div class="hs-footer-brand">
+      <span class="hs-footer-name">{{ hotelName }}</span>
+      <span class="hs-footer-city" *ngIf="hotelCity">{{ hotelCity }}, Georgia</span>
+      <div class="hs-footer-stars">★★★★★</div>
+    </div>
+    <div class="hs-footer-links">
+      <a [routerLink]="['/hotels', hotelId, 'about']">About</a>
+      <a [routerLink]="['/hotels', hotelId, 'restaurant']">Restaurant</a>
+      <a [routerLink]="['/hotels', hotelId, 'reservation']">Reservations</a>
+      <a [routerLink]="['/hotels', hotelId, 'partners']">Partners</a>
+      <a [routerLink]="['/hotels', hotelId, 'rooms']">Rooms</a>
+    </div>
+    <div class="hs-footer-bottom">
+      <span>© 2025 {{ hotelName }}. All rights reserved.</span>
+      <a routerLink="/hotels" class="hs-footer-airglo">Part of the AirGlo Luxury Collection</a>
+    </div>
+  </div>
+</footer>

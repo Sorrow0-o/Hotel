@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <ul class="nav-links">
+    <ul class="nav-links" [class.open]="isMenuOpen">
       <li><a routerLink="/">Home</a></li>
       <li><a routerLink="/rooms">Rooms</a></li>
       <li><a routerLink="/hotels" class="active">Hotels</a></li>
@@ -29,6 +29,9 @@
       <li><a routerLink="/register">Register</a></li>
       <li><a routerLink="/rooms" class="btn-book">Book Now</a></li>
     </ul>
+    <button class="hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
@@ -99,6 +102,11 @@
         <div class="hotel-name">{{ getHotelName(hotel) }}</div>
         <div class="hotel-stars">★★★★★</div>
         <div class="hotel-footer">
+          <a
+            [routerLink]="['/hotels', getHotelId(hotel), 'about']"
+            class="hotel-btn hotel-btn--outline"
+            >About</a
+          >
           <a [routerLink]="['/hotels', getHotelId(hotel), 'rooms']" class="hotel-btn">View Rooms</a>
         </div>
       </div>

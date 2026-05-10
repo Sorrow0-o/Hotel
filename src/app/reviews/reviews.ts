@@ -142,7 +142,7 @@ export class Reviews implements OnInit {
         this.userReviewIds = new Set(savedIds);
       }
     } catch {
-      // storage unavailable or corrupted — fall back to defaults
+     
     }
   }
 

@@ -1,0 +1,173 @@
+<header class="hs-header">
+  <div class="hs-header-main">
+    <div class="hs-brand">
+      <span class="hs-brand-name">{{ hotelName }}</span>
+      <span class="hs-brand-city" *ngIf="hotelCity">{{ hotelCity }}, Georgia</span>
+    </div>
+    <nav class="hs-nav" [class.open]="isMenuOpen">
+      <a
+        [routerLink]="['/hotels', hotelId, 'about']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >About</a
+      >
+      <a
+        [routerLink]="['/hotels', hotelId, 'restaurant']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        >Restaurant</a
+      >
+      <a
+        [routerLink]="['/hotels', hotelId, 'reservation']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        >Reservations</a
+      >
+      <a
+        [routerLink]="['/hotels', hotelId, 'partners']"
+        class="hs-nav-link"
+        routerLinkActive="hs-nav-link--active"
+        >Partners</a
+      >
+      <a [routerLink]="['/hotels', hotelId, 'rooms']" class="hs-nav-book">Book a Room</a>
+    </nav>
+    <button class="hs-hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section class="hs-hero hs-hero--short">
+  <div
+    class="hs-hero-bg"
+    style="
+      background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1600&auto=format&fit=crop');
+    "
+  ></div>
+  <div class="hs-hero-overlay"></div>
+  <div class="hs-hero-content">
+    <span class="hs-hero-eyebrow">Collaborations</span>
+    <h1>Our Partners</h1>
+    <p>Exclusive partnerships with the world's finest brands.</p>
+  </div>
+</section>
+
+<main class="hs-main">
+  <section class="hs-intro">
+    <div class="hs-intro-inner hs-intro-inner--single">
+      <span class="hs-section-label">Why We Partner</span>
+      <h2>Curated Collaborations That Elevate Your Stay</h2>
+      <p>
+        We partner exclusively with brands that share our commitment to quality, craftsmanship, and
+        exceptional guest experience. Every partnership is selected to add genuine value — whether
+        that means world-class transport, locally grown produce, or access to experiences
+        unavailable elsewhere in the city.
+      </p>
+    </div>
+  </section>
+
+  <!-- AirGlo Partnership Story -->
+  <section class="hs-airglo-story">
+    <div class="hs-airglo-story-inner">
+      <div class="hs-airglo-story-visual">
+        <div class="hs-airglo-img"></div>
+        <div class="hs-airglo-year-badge">
+          <span class="hs-airglo-year">{{ story.year }}</span>
+          <span class="hs-airglo-year-label">Partnership Est.</span>
+        </div>
+      </div>
+      <div class="hs-airglo-story-text">
+        <span class="hs-section-label">Our Founding Partnership</span>
+        <h2>
+          The Story of How We Joined
+          <a routerLink="/" class="hs-airglo-link">AirGlo</a>
+        </h2>
+        <p class="hs-airglo-lead">{{ story.lead }}</p>
+        <p>{{ story.p1 }}</p>
+        <p>{{ story.p2 }}</p>
+        <p>{{ story.p3 }}</p>
+        <a routerLink="/" class="hs-airglo-cta"> Visit the AirGlo Collection → </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="hs-partners-grid-section">
+    <div class="hs-partners-inner">
+      <span class="hs-section-label">Our Partners</span>
+      <h2>Who We Work With</h2>
+      <div class="hs-partners-grid">
+        <div class="hs-partner-card" *ngFor="let p of partners">
+          <div class="hs-partner-icon">{{ p.icon }}</div>
+          <div class="hs-partner-body">
+            <span class="hs-partner-category">{{ p.category }}</span>
+            <h3>{{ p.name }}</h3>
+            <p>{{ p.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hs-partner-benefits">
+    <div class="hs-benefits-inner">
+      <span class="hs-section-label">Guest Benefits</span>
+      <h2>What Partnerships Mean for You</h2>
+      <div class="hs-benefits-grid">
+        <div class="hs-benefit">
+          <span class="hs-benefit-icon">🚗</span>
+          <h4>Priority Airport Transfer</h4>
+          <p>
+            Exclusive rates and priority booking with our transport partner. Mercedes-Benz fleet,
+            available 24h.
+          </p>
+        </div>
+        <div class="hs-benefit">
+          <span class="hs-benefit-icon">🍷</span>
+          <h4>Cellar Access</h4>
+          <p>
+            Our wine partnership grants guests access to a 300+ label cellar with nightly sommelier
+            service included.
+          </p>
+        </div>
+        <div class="hs-benefit">
+          <span class="hs-benefit-icon">🧖</span>
+          <h4>Premium Wellness</h4>
+          <p>
+            Spa treatments from our partner brand — applied on-site by certified therapists, using
+            organic Georgian botanicals.
+          </p>
+        </div>
+        <div class="hs-benefit">
+          <span class="hs-benefit-icon">🎭</span>
+          <h4>Cultural Experiences</h4>
+          <p>
+            Priority tickets and private access to Tbilisi's finest galleries, performances, and
+            culinary events.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="hs-footer">
+  <div class="hs-footer-inner">
+    <div class="hs-footer-brand">
+      <span class="hs-footer-name">{{ hotelName }}</span>
+      <span class="hs-footer-city" *ngIf="hotelCity">{{ hotelCity }}, Georgia</span>
+      <div class="hs-footer-stars">★★★★★</div>
+    </div>
+    <div class="hs-footer-links">
+      <a [routerLink]="['/hotels', hotelId, 'about']">About</a>
+      <a [routerLink]="['/hotels', hotelId, 'restaurant']">Restaurant</a>
+      <a [routerLink]="['/hotels', hotelId, 'reservation']">Reservations</a>
+      <a [routerLink]="['/hotels', hotelId, 'partners']">Partners</a>
+      <a [routerLink]="['/hotels', hotelId, 'rooms']">Rooms</a>
+    </div>
+    <div class="hs-footer-bottom">
+      <span>© 2025 {{ hotelName }}. All rights reserved.</span>
+      <a routerLink="/hotels" class="hs-footer-airglo">Part of the AirGlo Luxury Collection</a>
+    </div>
+  </div>
+</footer>
