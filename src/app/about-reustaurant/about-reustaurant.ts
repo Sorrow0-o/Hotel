@@ -14,7 +14,7 @@ interface Dish {
   tag?: string;
 }
 
-// ── Hotel 1 menu: Georgian-European Fusion ────────────────────────────────────
+
 const MENU_1: Dish[] = [
   {
     name: 'Khachapuri Royale',
@@ -120,7 +120,7 @@ const MENU_1: Dish[] = [
   },
 ];
 
-// ── Hotel 2 menu: Mediterranean & Georgian ────────────────────────────────────
+
 const MENU_2: Dish[] = [
   {
     name: 'Burrata & Heirloom Tomato',
@@ -229,7 +229,7 @@ const MENU_2: Dish[] = [
   },
 ];
 
-// ── Hotel 3 menu: Contemporary International ──────────────────────────────────
+
 const MENU_3: Dish[] = [
   {
     name: 'Tuna Tataki',

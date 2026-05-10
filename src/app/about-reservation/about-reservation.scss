@@ -6,7 +6,7 @@ $muted: #6b7280;
 $serif: 'Playfair Display', Georgia, serif;
 $sans: 'DM Sans', sans-serif;
 
-// ─── Hotel Header ─────────────────────────────────────────────────────────────
+
 .hs-header {
   position: sticky;
   top: 0;
@@ -110,7 +110,7 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ─── Hero ─────────────────────────────────────────────────────────────────────
+
 .hs-hero {
   position: relative;
   height: 560px;
@@ -173,7 +173,7 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
+
 .hs-main {
   background: $white;
 }
@@ -187,7 +187,7 @@ $sans: 'DM Sans', sans-serif;
   margin-bottom: 0.7rem;
 }
 
-// ─── Intro ───────────────────────────────────────────────────────────────────
+
 .hs-intro {
   padding: 6rem 3rem;
   background: $cream;
@@ -246,7 +246,7 @@ $sans: 'DM Sans', sans-serif;
   color: $muted;
 }
 
-// ─── Services ────────────────────────────────────────────────────────────────
+
 .hs-services {
   padding: 6rem 3rem;
   background: $white;
@@ -319,7 +319,7 @@ $sans: 'DM Sans', sans-serif;
   margin-top: auto;
 }
 
-// ─── Amenities ───────────────────────────────────────────────────────────────
+
 .hs-amenities {
   padding: 5rem 3rem;
   background: $navy;
@@ -370,7 +370,7 @@ $sans: 'DM Sans', sans-serif;
   font-weight: 500;
 }
 
-// ─── Gallery ─────────────────────────────────────────────────────────────────
+
 .hs-gallery {
   padding: 5rem 3rem;
   background: $cream;
@@ -407,7 +407,7 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ─── Policies ────────────────────────────────────────────────────────────────
+
 .hs-policies {
   padding: 5rem 3rem;
   background: $white;
@@ -453,7 +453,7 @@ $sans: 'DM Sans', sans-serif;
   font-weight: 500;
 }
 
-// ─── Footer ──────────────────────────────────────────────────────────────────
+
 .hs-footer {
   background: $navy;
   padding: 4rem 3rem 2rem;
@@ -525,9 +525,7 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ─── Responsive ──────────────────────────────────────────────────────────────
 
-// ─── Reservation page specific ────────────────────────────────────────────────
 .hs-hero--short {
   height: 340px;
 }
@@ -673,7 +671,7 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ─── Reservation page ─────────────────────────────────────────────────────────
+
 $navy: #1e2d3d;
 $gold: #c9a96e;
 $green: #3d8b5e;
@@ -686,7 +684,7 @@ $floor-bg: #1a2230;
   padding-bottom: 4rem;
 }
 
-// ── Picker bar ────────────────────────────────────────────────────────────────
+
 .rsv-picker-bar {
   background: $navy;
   padding: 1.2rem 3rem;
@@ -791,7 +789,7 @@ $floor-bg: #1a2230;
   }
 }
 
-// ── Floor plan ────────────────────────────────────────────────────────────────
+
 .rsv-floor-wrap {
   max-width: 800px;
   margin: 2.5rem auto 0;
@@ -853,7 +851,7 @@ $floor-bg: #1a2230;
   overflow: hidden;
 }
 
-// Zone labels
+
 .rsv-zone-label {
   position: absolute;
   font-size: 0.6rem;
@@ -864,7 +862,7 @@ $floor-bg: #1a2230;
   z-index: 1;
 }
 
-// Bar
+
 .rsv-bar {
   position: absolute;
   right: 20px;
@@ -886,7 +884,7 @@ $floor-bg: #1a2230;
   }
 }
 
-// Entrance
+
 .rsv-entrance {
   position: absolute;
   right: -28px;
@@ -898,7 +896,7 @@ $floor-bg: #1a2230;
   color: rgba(255, 255, 255, 0.2);
 }
 
-// Kitchen
+
 .rsv-kitchen {
   position: absolute;
   bottom: 12px;
@@ -910,7 +908,7 @@ $floor-bg: #1a2230;
   color: rgba(255, 255, 255, 0.2);
 }
 
-// Tables
+
 .rsv-table {
   position: absolute;
   display: flex;
@@ -996,7 +994,7 @@ $floor-bg: #1a2230;
   }
 }
 
-// ── Booking form ──────────────────────────────────────────────────────────────
+
 .rsv-form-section {
   max-width: 720px;
   margin: 2.5rem auto 0;
@@ -1077,7 +1075,7 @@ $floor-bg: #1a2230;
   }
 }
 
-// ── Success ───────────────────────────────────────────────────────────────────
+
 .rsv-success {
   max-width: 540px;
   margin: 2.5rem auto 0;
@@ -1119,9 +1117,7 @@ $floor-bg: #1a2230;
   margin-top: 1.5rem;
 }
 
-// ── Responsive ────────────────────────────────────────────────────────────────
 
-// ─── Hamburger ────────────────────────────────────────────────────────────────
 .hs-hamburger {
   display: none;
   flex-direction: column;

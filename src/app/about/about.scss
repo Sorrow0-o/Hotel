@@ -6,7 +6,7 @@ $muted: #6b7280;
 $serif: 'Playfair Display', Georgia, serif;
 $sans: 'DM Sans', sans-serif;
 
-// ─── Hotel Header ─────────────────────────────────────────────────────────────
+
 .hs-header {
   position: sticky;
   top: 0;
@@ -110,7 +110,7 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ─── Hero ─────────────────────────────────────────────────────────────────────
+
 .hs-hero {
   position: relative;
   height: 560px;
@@ -173,7 +173,7 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
+
 .hs-main {
   background: $white;
 }
@@ -187,7 +187,7 @@ $sans: 'DM Sans', sans-serif;
   margin-bottom: 0.7rem;
 }
 
-// ─── Intro ───────────────────────────────────────────────────────────────────
+
 .hs-intro {
   padding: 6rem 3rem;
   background: $cream;
@@ -246,7 +246,7 @@ $sans: 'DM Sans', sans-serif;
   color: $muted;
 }
 
-// ─── Services ────────────────────────────────────────────────────────────────
+
 .hs-services {
   padding: 6rem 3rem;
   background: $white;
@@ -319,7 +319,7 @@ $sans: 'DM Sans', sans-serif;
   margin-top: auto;
 }
 
-// ─── Amenities ───────────────────────────────────────────────────────────────
+
 .hs-amenities {
   padding: 5rem 3rem;
   background: $navy;
@@ -370,7 +370,7 @@ $sans: 'DM Sans', sans-serif;
   font-weight: 500;
 }
 
-// ─── Gallery ─────────────────────────────────────────────────────────────────
+
 .hs-gallery {
   padding: 5rem 3rem;
   background: $cream;
@@ -407,7 +407,7 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ─── Policies ────────────────────────────────────────────────────────────────
+
 .hs-policies {
   padding: 5rem 3rem;
   background: $white;
@@ -453,7 +453,7 @@ $sans: 'DM Sans', sans-serif;
   font-weight: 500;
 }
 
-// ─── Footer ──────────────────────────────────────────────────────────────────
+
 .hs-footer {
   background: $navy;
   padding: 4rem 3rem 2rem;
@@ -525,9 +525,7 @@ $sans: 'DM Sans', sans-serif;
   }
 }
 
-// ─── Responsive ──────────────────────────────────────────────────────────────
 
-// ─── Hamburger ────────────────────────────────────────────────────────────────
 .hs-hamburger {
   display: none;
   flex-direction: column;

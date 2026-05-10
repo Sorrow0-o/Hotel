@@ -21,24 +21,23 @@ export interface RestaurantTable {
 function makeTables(): RestaurantTable[] {
   const occupied = new Set([2, 5, 7, 11]);
   const raw: Omit<RestaurantTable, 'status' | 'dots'>[] = [
-    // Window row (round)
     { id: 1, label: 'T1', capacity: 2, zone: 'Window', shape: 'round', x: 60, y: 55 },
     { id: 2, label: 'T2', capacity: 2, zone: 'Window', shape: 'round', x: 165, y: 55 },
     { id: 3, label: 'T3', capacity: 2, zone: 'Window', shape: 'round', x: 270, y: 55 },
     { id: 4, label: 'T4', capacity: 4, zone: 'Window', shape: 'round', x: 390, y: 55 },
     { id: 5, label: 'T5', capacity: 4, zone: 'Window', shape: 'round', x: 505, y: 55 },
-    // Main row (square)
+
     { id: 6, label: 'T6', capacity: 4, zone: 'Main', shape: 'square', x: 60, y: 180 },
     { id: 7, label: 'T7', capacity: 4, zone: 'Main', shape: 'square', x: 185, y: 180 },
     { id: 8, label: 'T8', capacity: 4, zone: 'Main', shape: 'square', x: 310, y: 180 },
     { id: 9, label: 'T9', capacity: 4, zone: 'Main', shape: 'square', x: 435, y: 180 },
-    // Centre row
+
     { id: 10, label: 'T10', capacity: 5, zone: 'Centre', shape: 'square', x: 60, y: 300 },
     { id: 11, label: 'T11', capacity: 5, zone: 'Centre', shape: 'square', x: 210, y: 300 },
-    // Alcove (round)
+
     { id: 12, label: 'T12', capacity: 2, zone: 'Alcove', shape: 'round', x: 390, y: 305 },
     { id: 13, label: 'T13', capacity: 2, zone: 'Alcove', shape: 'round', x: 490, y: 305 },
-    // Private (large square)
+
     {
       id: 14,
       label: 'T14',
@@ -145,7 +144,6 @@ export class AboutReservation implements OnInit {
     this.isSubmitting = true;
     await new Promise((r) => setTimeout(r, 900));
 
-    // Mark the table as occupied
     const t = this.tables.find((t) => t.id === this.selectedTable?.id);
     if (t) t.status = 'occupied';
 
