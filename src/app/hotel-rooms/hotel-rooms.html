@@ -74,13 +74,13 @@
 </section>
 
 <main class="hr-main">
-  <!-- Loading -->
+  
   <div class="loading" *ngIf="isLoading">
     <div class="spinner"></div>
     <p>Loading rooms…</p>
   </div>
 
-  <!-- Empty -->
+  
   <div class="empty-state" *ngIf="!isLoading && rooms.length === 0">
     <div class="empty-icon">
       <svg
@@ -100,7 +100,7 @@
     <button class="btn-back" routerLink="/hotels">← Back to Hotels</button>
   </div>
 
-  <!-- Rooms grid -->
+  
   <div class="hr-grid" *ngIf="!isLoading && rooms.length > 0">
     <div class="results-bar">
       <span

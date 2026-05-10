@@ -141,9 +141,7 @@ export class Reviews implements OnInit {
         this.allReviews = [...savedReviews, ...MOCK_REVIEWS];
         this.userReviewIds = new Set(savedIds);
       }
-    } catch {
-     
-    }
+    } catch {}
   }
 
   @HostListener('window:scroll')

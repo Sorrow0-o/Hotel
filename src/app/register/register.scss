@@ -6,7 +6,6 @@ $muted: #6b6560;
 $serif: 'Playfair Display', Georgia, serif;
 $sans: 'DM Sans', sans-serif;
 
-// ─── Nav ────────────────────────────────────────────────────────────────────
 nav:not(.footer-links) {
   position: fixed;
   top: 0;
@@ -132,7 +131,6 @@ nav:not(.footer-links) {
   }
 }
 
-// ─── Hero ────────────────────────────────────────────────────────────────────
 .register-hero {
   position: relative;
   height: 360px;
@@ -199,7 +197,6 @@ nav:not(.footer-links) {
   }
 }
 
-// ─── Main ────────────────────────────────────────────────────────────────────
 .register-main {
   background: $cream;
   min-height: calc(100vh - 360px);
@@ -209,7 +206,6 @@ nav:not(.footer-links) {
   padding: 4rem 2rem 6rem;
 }
 
-// ─── Card ────────────────────────────────────────────────────────────────────
 .register-card {
   background: #fff;
   border: 1px solid #eeebe4;
@@ -245,7 +241,6 @@ h2 {
   font-size: 0.9rem;
 }
 
-// ─── Form ────────────────────────────────────────────────────────────────────
 form {
   display: flex;
   flex-direction: column;
@@ -295,7 +290,6 @@ input {
   }
 }
 
-// ─── Submit button ───────────────────────────────────────────────────────────
 .submit-btn {
   margin-top: 8px;
   border: 0;
@@ -322,7 +316,6 @@ input {
   }
 }
 
-// ─── Messages ────────────────────────────────────────────────────────────────
 .error {
   margin: 0;
   color: #b42318;
@@ -335,7 +328,6 @@ input {
   font-size: 0.88rem;
 }
 
-// ─── Footer ──────────────────────────────────────────────────────────────────
 footer {
   background: $dark;
   padding: 3.5rem 3rem;
@@ -381,8 +373,6 @@ footer {
   font-size: 0.78rem;
   color: rgba($cream, 0.3);
 }
-
-// ─── Responsive ──────────────────────────────────────────────────────────────
 
 @media (max-width: 1070px) {
   .nav-inner {

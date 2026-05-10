@@ -61,7 +61,6 @@ export class HotelRooms implements OnInit {
     setTimeout(() => controller.abort(), 3000);
 
     try {
-      // Try to get hotel info
       const hotelsRes = await fetch(`${HOTEL_API_BASE}/Hotels/GetAll`, {
         signal: controller.signal,
       });
@@ -81,12 +80,8 @@ export class HotelRooms implements OnInit {
           hotel.photo ??
           'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&auto=format&fit=crop';
       }
-    } catch {
-      // Hotel info unavailable — keep defaults
-    }
+    } catch {}
 
-    // Fetch rooms by individual IDs using GetRoom/{id}
-    // Each hotel gets its own range of room IDs (hotel 1 → 1-4, hotel 2 → 5-8, etc.)
     try {
       const hotelNum = Number(this.hotelId) || 1;
       const startId = (hotelNum - 1) * 3 + 1;
@@ -110,11 +105,8 @@ export class HotelRooms implements OnInit {
         this.cdr.detectChanges();
         return;
       }
-    } catch {
-      /* fall through to mock */
-    }
+    } catch {}
 
-    // Final fallback: mock rooms for this hotel
     this.rooms = this.getMockRooms();
     this.isLoading = false;
     this.cdr.detectChanges();
@@ -124,7 +116,6 @@ export class HotelRooms implements OnInit {
     const hotelNum = Number(this.hotelId) || 1;
 
     const allRoomSets: any[][] = [
-      // Hotel 1 → IDs 1-3
       [
         {
           id: 1,
@@ -154,7 +145,7 @@ export class HotelRooms implements OnInit {
           images: [{ source: ROOM_IMAGES[2] }],
         },
       ],
-      // Hotel 2 → IDs 4-6
+
       [
         {
           id: 4,
@@ -184,7 +175,7 @@ export class HotelRooms implements OnInit {
           images: [{ source: ROOM_IMAGES[1] }],
         },
       ],
-      // Hotel 3 → IDs 7-9
+
       [
         {
           id: 7,
@@ -243,7 +234,7 @@ export class HotelRooms implements OnInit {
   getRoomAmenities(room: any): string[] {
     if (room.amenities && Array.isArray(room.amenities)) return room.amenities.slice(0, 4);
     if (room.features && Array.isArray(room.features)) return room.features.slice(0, 4);
-    // API has no amenities field — derive from available flag and type
+
     const tags: string[] = [];
     if (room.available !== false) tags.push('Available');
     if (room.maximumGuests) tags.push(`Up to ${room.maximumGuests} guests`);

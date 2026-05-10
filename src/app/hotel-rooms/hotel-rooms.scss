@@ -5,7 +5,6 @@ $muted: #6b6560;
 $serif: 'Playfair Display', Georgia, serif;
 $sans: 'DM Sans', sans-serif;
 
-// ─── Nav ─────────────────────────────────────────────────────────────────────
 nav {
   position: fixed;
   top: 0;
@@ -125,7 +124,6 @@ nav {
   }
 }
 
-// ─── Hero ─────────────────────────────────────────────────────────────────────
 .hr-hero {
   position: relative;
   height: 380px;
@@ -196,7 +194,6 @@ nav {
   }
 }
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
 .hr-main {
   background: $cream;
   min-height: 60vh;
@@ -208,7 +205,6 @@ nav {
   margin: 0 auto;
 }
 
-// ─── Results bar ─────────────────────────────────────────────────────────────
 .results-bar {
   display: flex;
   align-items: center;
@@ -231,7 +227,6 @@ nav {
   }
 }
 
-// ─── Rooms grid ──────────────────────────────────────────────────────────────
 .hr-rooms {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -380,7 +375,6 @@ nav {
   }
 }
 
-// ─── Loading / Empty ─────────────────────────────────────────────────────────
 .loading {
   text-align: center;
   padding: 5rem 2rem;
@@ -455,7 +449,6 @@ nav {
   margin-top: 0.5rem;
 }
 
-// ─── Footer ──────────────────────────────────────────────────────────────────
 footer {
   background: $dark;
   padding: 3.5rem 3rem;
@@ -502,7 +495,11 @@ footer {
   color: rgba($cream, 0.3);
 }
 
-// ─── Responsive ──────────────────────────────────────────────────────────────
+@media (max-width: 1024px) {
+  .hr-rooms {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
 @media (max-width: 1070px) {
   .nav-inner {
