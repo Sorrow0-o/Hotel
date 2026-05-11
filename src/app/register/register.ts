@@ -18,6 +18,10 @@ const AUTH_LOGIN_API =
   typeof window !== 'undefined' && window.location.hostname === 'localhost'
     ? '/api/auth/login'
     : 'https://restaurantapi.stepacademy.ge/api/auth/login';
+const AUTH_FORGOT_PASSWORD_API = (email: string) =>
+  typeof window !== 'undefined' && window.location.hostname === 'localhost'
+    ? `/api/auth/forgot-password/${encodeURIComponent(email)}`
+    : `https://restaurantapi.stepacademy.ge/api/auth/forgot-password/${encodeURIComponent(email)}`;
 
 @Component({
   selector: 'app-register',
@@ -33,14 +37,19 @@ export class Register {
   successMessage = '';
   errorMessage = '';
 
-  activeTab: 'register' | 'login' = 'register';
+  activeTab: 'register' | 'login' | 'forgot' = 'register';
 
   isLoginSubmitting = false;
   loginError = '';
   loginSuccess = '';
 
+  isForgotSubmitting = false;
+  forgotError = '';
+  forgotSuccess = '';
+
   readonly form;
   readonly loginForm;
+  readonly forgotForm;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -52,18 +61,24 @@ export class Register {
       confirmPassword: ['', [Validators.required]],
     });
 
+    this.forgotForm = this.fb.group({
+      forgotEmail: ['', [Validators.required, Validators.email]],
+    });
+
     this.loginForm = this.fb.group({
       loginEmail: ['', [Validators.required, Validators.email]],
       loginPassword: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
-  setTab(tab: 'register' | 'login') {
+  setTab(tab: 'register' | 'login' | 'forgot') {
     this.activeTab = tab;
     this.errorMessage = '';
     this.successMessage = '';
     this.loginError = '';
     this.loginSuccess = '';
+    this.forgotError = '';
+    this.forgotSuccess = '';
   }
 
   @HostListener('window:scroll')
@@ -208,6 +223,41 @@ export class Register {
       this.loginError = 'Network error. Please check your connection and retry.';
     } finally {
       this.isLoginSubmitting = false;
+    }
+  }
+
+  async submitForgot() {
+    this.forgotError = '';
+    this.forgotSuccess = '';
+
+    this.forgotForm.markAllAsTouched();
+    if (this.forgotForm.invalid) return;
+
+    this.isForgotSubmitting = true;
+    const email = this.forgotForm.value.forgotEmail?.trim() ?? '';
+
+    try {
+      const response = await fetch(AUTH_FORGOT_PASSWORD_API(email), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-KEY': RESTAURANT_API_KEY,
+        },
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        this.forgotError =
+          data?.message || data?.title || data?.detail || 'Request failed. Please try again.';
+        return;
+      }
+
+      this.forgotSuccess = 'A recovery email has been sent. Please check your inbox.';
+      this.forgotForm.reset();
+    } catch {
+      this.forgotError = 'Network error. Please check your connection and retry.';
+    } finally {
+      this.isForgotSubmitting = false;
     }
   }
 }

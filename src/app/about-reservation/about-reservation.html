@@ -54,7 +54,7 @@
 </section>
 
 <main class="rsv-main">
-  <!-- Picker bar -->
+  
   <div class="rsv-picker-bar">
     <div class="rsv-picker-inner">
       <div class="rsv-picker-field">
@@ -85,7 +85,7 @@
     </div>
   </div>
 
-  <!-- Floor plan -->
+  
   <div class="rsv-floor-wrap">
     <div class="rsv-floor-header">
       <p class="rsv-floor-hint">Click on an available table to reserve it.</p>
@@ -97,19 +97,19 @@
     </div>
 
     <div class="rsv-floor">
-      <!-- Zone labels -->
+      
       <div *ngFor="let z of zoneLabels" class="rsv-zone-label" [style]="z.style">{{ z.label }}</div>
 
-      <!-- BAR -->
+     
       <div class="rsv-bar"><span>B</span><span>A</span><span>R</span></div>
 
-      <!-- ENTRANCE -->
+     
       <div class="rsv-entrance">ENTRANCE</div>
 
-      <!-- KITCHEN -->
+      
       <div class="rsv-kitchen">🍳 KITCHEN</div>
 
-      <!-- Tables -->
+      
       <div
         *ngFor="let table of tables"
         class="rsv-table"
@@ -132,7 +132,7 @@
     </div>
   </div>
 
-  <!-- Booking form -->
+  
   <div class="rsv-form-section" *ngIf="selectedTable && !bookingSuccess">
     <div class="rsv-form-card">
       <div class="rsv-form-header">
@@ -171,7 +171,7 @@
     </div>
   </div>
 
-  <!-- Success -->
+ 
   <div class="rsv-success" *ngIf="bookingSuccess">
     <div class="rsv-success-icon">✓</div>
     <h3>Reservation Confirmed!</h3>
@@ -186,6 +186,47 @@
     <button class="rsv-submit-btn" (click)="resetBooking()">Make Another Reservation</button>
   </div>
 </main>
+
+
+<div class="rsv-active-card" *ngIf="confirmedTable">
+  <div class="rsv-active-card-inner">
+    <div class="rsv-active-card-left">
+      <span class="rsv-active-badge">✓ Reservation Confirmed</span>
+      <h3>Your Table is Reserved</h3>
+      <div class="rsv-active-details">
+        <div class="rsv-active-detail">
+          <span class="rsv-active-label">Table</span>
+          <span class="rsv-active-value"
+            >{{ confirmedTable.label }} · {{ confirmedTable.zone }}</span
+          >
+        </div>
+        <div class="rsv-active-detail">
+          <span class="rsv-active-label">Guests</span>
+          <span class="rsv-active-value">{{ confirmedTable.capacity }}</span>
+        </div>
+        <div class="rsv-active-detail">
+          <span class="rsv-active-label">Date</span>
+          <span class="rsv-active-value">{{ selectedDate }}</span>
+        </div>
+        <div class="rsv-active-detail">
+          <span class="rsv-active-label">Time</span>
+          <span class="rsv-active-value">{{ selectedTime }}</span>
+        </div>
+        <div class="rsv-active-detail" *ngIf="form.name">
+          <span class="rsv-active-label">Name</span>
+          <span class="rsv-active-value">{{ form.name }}</span>
+        </div>
+        <div class="rsv-active-detail" *ngIf="form.email">
+          <span class="rsv-active-label">Email</span>
+          <span class="rsv-active-value">{{ form.email }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="rsv-active-card-right">
+      <button class="rsv-cancel-btn" (click)="cancelReservation()">Cancel Reservation</button>
+    </div>
+  </div>
+</div>
 
 <footer class="hs-footer">
   <div class="hs-footer-inner">

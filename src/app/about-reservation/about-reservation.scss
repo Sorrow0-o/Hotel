@@ -1126,6 +1126,104 @@ $floor-bg: #1a2230;
   }
 }
 
+
+.rsv-active-card {
+  background: #fff;
+  border-top: 3px solid #c9a96e;
+  padding: 2.5rem 3rem;
+}
+
+.rsv-active-card-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.rsv-active-badge {
+  display: inline-block;
+  background: #eaf7ed;
+  color: #2e7d4f;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  margin-bottom: 0.75rem;
+}
+
+.rsv-active-card-left h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a2332;
+  margin: 0 0 1.25rem;
+}
+
+.rsv-active-details {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 0.5rem 2.5rem;
+}
+
+.rsv-active-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.rsv-active-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9b9590;
+}
+
+.rsv-active-value {
+  font-size: 0.95rem;
+  color: #1a2332;
+  font-weight: 500;
+}
+
+.rsv-cancel-btn {
+  padding: 0.75rem 1.75rem;
+  border: 1.5px solid #e05a5a;
+  background: transparent;
+  color: #e05a5a;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  &:hover {
+    background: #e05a5a;
+    color: #fff;
+  }
+}
+
+@media (max-width: 700px) {
+  .rsv-active-card {
+    padding: 2rem 1.5rem;
+  }
+  .rsv-active-card-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .rsv-active-details {
+    grid-template-columns: repeat(2, auto);
+    gap: 0.5rem 2rem;
+  }
+  .rsv-cancel-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 @media (max-width: 1070px) {
   .hs-header-top,
   .hs-header-main {

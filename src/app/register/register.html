@@ -74,7 +74,7 @@
       </button>
     </div>
 
-    <!-- REGISTER FORM -->
+    
     <div *ngIf="activeTab === 'register'">
       <div class="top-row">
         <div>
@@ -136,7 +136,7 @@
       </form>
     </div>
 
-    <!-- LOGIN FORM -->
+  
     <div *ngIf="activeTab === 'login'">
       <div class="top-row">
         <div>
@@ -156,6 +156,12 @@
           <input id="loginPassword" type="password" formControlName="loginPassword" />
         </div>
 
+        <div class="forgot-row">
+          <button type="button" class="forgot-link" (click)="setTab('forgot')">
+            Forgot password?
+          </button>
+        </div>
+
         <p class="error" *ngIf="loginError">{{ loginError }}</p>
         <p class="success" *ngIf="loginSuccess">{{ loginSuccess }}</p>
 
@@ -169,6 +175,36 @@
             Sign up
           </button>
         </p>
+      </form>
+    </div>
+
+   
+    <div *ngIf="activeTab === 'forgot'">
+      <button type="button" class="back-btn" (click)="setTab('login')">← Back</button>
+      <div class="top-row">
+        <div>
+          <h2>Can't access your account?</h2>
+          <p class="subtitle">Enter your email address and we'll send you a recovery code.</p>
+        </div>
+      </div>
+
+      <form [formGroup]="forgotForm" (ngSubmit)="submitForgot()" novalidate>
+        <div class="field">
+          <label for="forgotEmail">Email address</label>
+          <input
+            id="forgotEmail"
+            type="email"
+            formControlName="forgotEmail"
+            placeholder="your@email.com"
+          />
+        </div>
+
+        <p class="error" *ngIf="forgotError">{{ forgotError }}</p>
+        <p class="success" *ngIf="forgotSuccess">{{ forgotSuccess }}</p>
+
+        <button class="submit-btn" type="submit" [disabled]="isForgotSubmitting">
+          {{ isForgotSubmitting ? 'Sending...' : 'Continue' }}
+        </button>
       </form>
     </div>
   </div>

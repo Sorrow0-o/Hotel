@@ -301,6 +301,18 @@ export class AboutReservation implements OnInit {
     this.cdr.detectChanges();
   }
 
+  cancelReservation() {
+    if (!this.confirmedTable) return;
+    const t = this.tables.find((t) => t.id === this.confirmedTable?.id);
+    if (t) t.status = 'available';
+    this.confirmedTable = null;
+    this.selectedTable = null;
+    this.bookingSuccess = false;
+    this.form = { name: '', email: '', phone: '', notes: '' };
+    this.clearReservationFromStorage();
+    this.cdr.detectChanges();
+  }
+
   resetBooking() {
     this.bookingSuccess = false;
     this.confirmedTable = null;
