@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ChangeDetectorRef,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -151,6 +157,10 @@ export class Reviews implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+  @HostListener('document:closeMenu')
+  onCloseMenu() {
+    this.isMenuOpen = false;
   }
 
   setFilter(filter: string) {

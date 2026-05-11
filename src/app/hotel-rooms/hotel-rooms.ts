@@ -1,9 +1,9 @@
 import {
-  ChangeDetectorRef,
   Component,
-  HostListener,
   OnInit,
   ViewEncapsulation,
+  ChangeDetectorRef,
+  HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
@@ -49,6 +49,11 @@ export class HotelRooms implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  @HostListener('document:closeMenu')
+  onCloseMenu() {
+    this.isMenuOpen = false;
   }
 
   ngOnInit() {

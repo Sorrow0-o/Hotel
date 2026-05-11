@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ChangeDetectorRef,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive, ActivatedRoute } from '@angular/router';
@@ -30,7 +36,6 @@ function makeTables(
   }));
 }
 
-// ── Hotel 1: Window / Main / Centre / Alcove / Private ────────────────────────
 function makeTables1(): RestaurantTable[] {
   return makeTables(
     [2, 5, 7, 11],
@@ -62,18 +67,16 @@ function makeTables1(): RestaurantTable[] {
   );
 }
 
-// ── Hotel 2: Terrace / Garden / Bar Lounge / VIP ─────────────────────────────
 function makeTables2(): RestaurantTable[] {
   return makeTables(
     [1, 4, 8, 12],
     [
-      // Terrace row — round, top
       { id: 1, label: 'T1', capacity: 2, zone: 'Terrace', shape: 'round', x: 55, y: 50 },
       { id: 2, label: 'T2', capacity: 2, zone: 'Terrace', shape: 'round', x: 155, y: 50 },
       { id: 3, label: 'T3', capacity: 4, zone: 'Terrace', shape: 'round', x: 265, y: 50 },
       { id: 4, label: 'T4', capacity: 4, zone: 'Terrace', shape: 'round', x: 375, y: 50 },
       { id: 5, label: 'T5', capacity: 2, zone: 'Terrace', shape: 'round', x: 490, y: 50 },
-      // Garden — square middle-left cluster
+
       { id: 6, label: 'T6', capacity: 4, zone: 'Garden', shape: 'square', x: 55, y: 175 },
       { id: 7, label: 'T7', capacity: 4, zone: 'Garden', shape: 'square', x: 195, y: 175 },
       {
@@ -87,12 +90,12 @@ function makeTables2(): RestaurantTable[] {
         y: 295,
       },
       { id: 9, label: 'T9', capacity: 4, zone: 'Garden', shape: 'square', x: 245, y: 295 },
-      // Bar Lounge — right side round
+
       { id: 10, label: 'T10', capacity: 2, zone: 'Bar Lounge', shape: 'round', x: 370, y: 175 },
       { id: 11, label: 'T11', capacity: 2, zone: 'Bar Lounge', shape: 'round', x: 480, y: 175 },
       { id: 12, label: 'T12', capacity: 2, zone: 'Bar Lounge', shape: 'round', x: 370, y: 285 },
       { id: 13, label: 'T13', capacity: 2, zone: 'Bar Lounge', shape: 'round', x: 480, y: 285 },
-      // VIP — bottom large
+
       {
         id: 14,
         label: 'T14',
@@ -108,18 +111,16 @@ function makeTables2(): RestaurantTable[] {
   );
 }
 
-// ── Hotel 3: Panorama / Classic / Lounge / Suite ──────────────────────────────
 function makeTables3(): RestaurantTable[] {
   return makeTables(
     [3, 6, 10, 14],
     [
-      // Panorama — curved top row
       { id: 1, label: 'T1', capacity: 2, zone: 'Panorama', shape: 'round', x: 40, y: 45 },
       { id: 2, label: 'T2', capacity: 2, zone: 'Panorama', shape: 'round', x: 140, y: 45 },
       { id: 3, label: 'T3', capacity: 4, zone: 'Panorama', shape: 'round', x: 255, y: 45 },
       { id: 4, label: 'T4', capacity: 4, zone: 'Panorama', shape: 'round', x: 375, y: 45 },
       { id: 5, label: 'T5', capacity: 2, zone: 'Panorama', shape: 'round', x: 495, y: 45 },
-      // Classic — square grid
+
       { id: 6, label: 'T6', capacity: 4, zone: 'Classic', shape: 'square', x: 40, y: 170 },
       { id: 7, label: 'T7', capacity: 4, zone: 'Classic', shape: 'square', x: 170, y: 170 },
       { id: 8, label: 'T8', capacity: 4, zone: 'Classic', shape: 'square', x: 300, y: 170 },
@@ -135,10 +136,10 @@ function makeTables3(): RestaurantTable[] {
         y: 290,
       },
       { id: 11, label: 'T11', capacity: 4, zone: 'Classic', shape: 'square', x: 240, y: 290 },
-      // Lounge — round bottom-right
+
       { id: 12, label: 'T12', capacity: 2, zone: 'Lounge', shape: 'round', x: 385, y: 295 },
       { id: 13, label: 'T13', capacity: 2, zone: 'Lounge', shape: 'round', x: 490, y: 295 },
-      // Suite — large private bottom
+
       {
         id: 14,
         label: 'T14',
@@ -237,6 +238,8 @@ export class AboutReservation implements OnInit {
   isSubmitting = false;
   bookingSuccess = false;
 
+  private readonly STORAGE_KEY = 'hotelReservation';
+
   constructor(
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
@@ -246,11 +249,16 @@ export class AboutReservation implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  @HostListener('document:closeMenu')
+  onCloseMenu() {
+    this.isMenuOpen = false;
+  }
   ngOnInit() {
     this.hotelId = this.route.snapshot.paramMap.get('id') ?? '';
     this.tables = makeTablesForHotel(this.hotelId);
     this.zoneLabels = getZoneLabels(this.hotelId);
     this.loadHotel();
+    this.loadReservationFromStorage();
   }
 
   selectTable(table: RestaurantTable) {
@@ -289,6 +297,7 @@ export class AboutReservation implements OnInit {
     this.selectedTable = null;
     this.bookingSuccess = true;
     this.isSubmitting = false;
+    this.saveReservationToStorage();
     this.cdr.detectChanges();
   }
 
@@ -296,6 +305,7 @@ export class AboutReservation implements OnInit {
     this.bookingSuccess = false;
     this.confirmedTable = null;
     this.form = { name: '', email: '', phone: '', notes: '' };
+    this.clearReservationFromStorage();
     this.cdr.detectChanges();
   }
 
@@ -315,5 +325,50 @@ export class AboutReservation implements OnInit {
     } finally {
       this.cdr.detectChanges();
     }
+  }
+
+  private saveReservationToStorage() {
+    const reservationData = {
+      hotelId: this.hotelId,
+      selectedDate: this.selectedDate,
+      selectedTime: this.selectedTime,
+      guests: this.guests,
+      tableId: this.confirmedTable?.id,
+      tableName: this.confirmedTable?.label,
+      form: this.form,
+      timestamp: new Date().toISOString(),
+    };
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(reservationData));
+  }
+
+  private loadReservationFromStorage() {
+    const savedData = localStorage.getItem(this.STORAGE_KEY);
+    if (savedData) {
+      try {
+        const reservation = JSON.parse(savedData);
+        if (String(reservation.hotelId) === String(this.hotelId)) {
+          this.selectedDate = reservation.selectedDate || this.today;
+          this.selectedTime = reservation.selectedTime || '19:00';
+          this.guests = reservation.guests || 2;
+          this.form = reservation.form || { name: '', email: '', phone: '', notes: '' };
+
+          if (reservation.tableId) {
+            const bookedTable = this.tables.find((t) => t.id === reservation.tableId);
+            if (bookedTable) {
+              bookedTable.status = 'occupied';
+              this.confirmedTable = bookedTable;
+              this.bookingSuccess = true;
+              this.cdr.detectChanges();
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Error loading reservation from storage:', e);
+      }
+    }
+  }
+
+  private clearReservationFromStorage() {
+    localStorage.removeItem(this.STORAGE_KEY);
   }
 }

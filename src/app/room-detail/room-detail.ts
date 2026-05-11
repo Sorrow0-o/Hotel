@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ChangeDetectorRef,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -37,7 +43,6 @@ const ROOM_IMAGES = [
   'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900&auto=format&fit=crop',
 ];
 
-
 const EXTRA_IMAGES = [
   'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=900&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=900&auto=format&fit=crop',
@@ -61,7 +66,6 @@ export class RoomDetail implements OnInit {
   carouselImages: string[] = [];
   activeSlide = 0;
 
- 
   checkIn = '';
   checkOut = '';
   customerName = '';
@@ -69,7 +73,6 @@ export class RoomDetail implements OnInit {
   bookingStatus: 'idle' | 'loading' | 'success' | 'error' = 'idle';
   bookingMessage = '';
 
- 
   activeTab: 'overview' | 'facilities' | 'extra' = 'overview';
 
   @HostListener('window:scroll')
@@ -112,7 +115,6 @@ export class RoomDetail implements OnInit {
         image: ROOM_IMAGES[imgIndex],
       };
 
-     
       this.carouselImages = [
         ROOM_IMAGES[imgIndex],
         EXTRA_IMAGES[imgIndex % EXTRA_IMAGES.length],
@@ -120,7 +122,6 @@ export class RoomDetail implements OnInit {
         EXTRA_IMAGES[(imgIndex + 2) % EXTRA_IMAGES.length],
       ];
 
-      
       const otherIds = [1, 2, 3, 4, 5, 6, 7, 8].filter((i) => i !== id).slice(0, 3);
 
       const others = await Promise.allSettled(
@@ -239,5 +240,9 @@ export class RoomDetail implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+  @HostListener('document:closeMenu')
+  onCloseMenu() {
+    this.isMenuOpen = false;
   }
 }

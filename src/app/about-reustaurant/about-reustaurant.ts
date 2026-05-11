@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ChangeDetectorRef,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, ActivatedRoute } from '@angular/router';
 
@@ -13,7 +19,6 @@ interface Dish {
   badges: string[];
   tag?: string;
 }
-
 
 const MENU_1: Dish[] = [
   {
@@ -119,7 +124,6 @@ const MENU_1: Dish[] = [
     badges: ['Georgian Inspired', 'Gluten-Free'],
   },
 ];
-
 
 const MENU_2: Dish[] = [
   {
@@ -228,7 +232,6 @@ const MENU_2: Dish[] = [
     badges: ['Vegetarian'],
   },
 ];
-
 
 const MENU_3: Dish[] = [
   {
@@ -370,6 +373,10 @@ export class AboutReustaurant implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  @HostListener('document:closeMenu')
+  onCloseMenu() {
+    this.isMenuOpen = false;
+  }
   ngOnInit() {
     this.hotelId = this.route.snapshot.paramMap.get('id') ?? '';
     this.allDishes = getMenuForHotel(this.hotelId);

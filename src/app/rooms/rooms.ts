@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ChangeDetectorRef,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -9,7 +15,6 @@ const TYPES_URL = 'https://hotelbooking.stepprojects.ge/api/Rooms/GetRoomTypes';
 const AVAILABLE_URL = 'https://hotelbooking.stepprojects.ge/api/Rooms/GetAvailableRooms';
 const FILTERED_URL = 'https://hotelbooking.stepprojects.ge/api/Rooms/GetFiltered';
 const ROOM_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
 
 type RoomTypeMap = Record<number, string>;
 
@@ -59,7 +64,7 @@ export class Rooms implements OnInit {
 
   ngOnInit() {
     this.isScrolled = window.scrollY > 40;
-    
+
     this.loadRoomTypes().then(() => this.loadRooms());
   }
 
@@ -79,7 +84,7 @@ export class Rooms implements OnInit {
         .map((result, i) => {
           if (result.status === 'fulfilled') {
             const r = result.value;
-           
+
             const typeId = r.roomTypeId ?? r.typeId ?? null;
             const typeName =
               typeId && this.typeMap[typeId]
@@ -102,7 +107,7 @@ export class Rooms implements OnInit {
         .filter(Boolean);
 
       this.allRooms = rooms;
-     
+
       if (!this.roomTypes.length) this.extractTypes();
       this.displayedRooms = [...this.allRooms];
     } catch {
@@ -119,11 +124,10 @@ export class Rooms implements OnInit {
       if (res.ok) {
         const data: { id: number; name: string }[] = await res.json();
         if (Array.isArray(data) && data.length) {
-          
           data.forEach((t) => {
             this.typeMap[t.id] = t.name;
           });
-         
+
           this.roomTypes = data;
         }
       }
@@ -150,19 +154,17 @@ export class Rooms implements OnInit {
   }
 
   async applyFilter() {
-   
     if (this.checkIn && this.checkOut) {
       await this.applyDateFilter();
       return;
     }
-  
+
     this.applyLocalFilter(this.allRooms);
   }
 
   private async applyDateFilter() {
     this.isLoading = true;
     try {
-     
       const body = {
         checkIn: this.checkIn,
         checkOut: this.checkOut,
@@ -189,7 +191,6 @@ export class Rooms implements OnInit {
         }
       }
 
-      
       if (!availableIds) {
         const params = new URLSearchParams({
           checkIn: this.checkIn,
@@ -207,14 +208,12 @@ export class Rooms implements OnInit {
         }
       }
 
-     
       const base = availableIds
         ? this.allRooms.filter((r) => availableIds!.has(r.id))
-        : this.allRooms; 
+        : this.allRooms;
 
       this.applyLocalFilter(base);
     } catch {
-      
       this.applyLocalFilter(this.allRooms);
     } finally {
       this.isLoading = false;
@@ -250,5 +249,9 @@ export class Rooms implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+  @HostListener('document:closeMenu')
+  onCloseMenu() {
+    this.isMenuOpen = false;
   }
 }

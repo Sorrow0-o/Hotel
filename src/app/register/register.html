@@ -56,60 +56,121 @@
 
 <main class="register-main">
   <div class="register-card">
-    <div class="top-row">
-      <div>
-        <p class="eyebrow"></p>
-        <h2>Create Account</h2>
-        <p class="subtitle">Create your account to book and manage reservations.</p>
-      </div>
+    <!-- Tab switcher -->
+    <div class="auth-tabs">
+      <button
+        class="auth-tab"
+        [class.auth-tab--active]="activeTab === 'register'"
+        (click)="setTab('register')"
+      >
+        Sign Up
+      </button>
+      <button
+        class="auth-tab"
+        [class.auth-tab--active]="activeTab === 'login'"
+        (click)="setTab('login')"
+      >
+        Log In
+      </button>
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-      <div class="grid">
-        <div class="field">
-          <label for="firstName">First Name</label>
-          <input id="firstName" type="text" formControlName="firstName" />
-        </div>
-        <div class="field">
-          <label for="lastName">Last Name</label>
-          <input id="lastName" type="text" formControlName="lastName" />
+    <!-- REGISTER FORM -->
+    <div *ngIf="activeTab === 'register'">
+      <div class="top-row">
+        <div>
+          <h2>Create Account</h2>
+          <p class="subtitle">Create your account to book and manage reservations.</p>
         </div>
       </div>
 
-      <div class="field">
-        <label for="email">Email</label>
-        <input id="email" type="email" formControlName="email" />
-      </div>
-
-      <div class="field">
-        <label for="phoneNumber">Phone Number</label>
-        <input
-          id="phoneNumber"
-          type="tel"
-          formControlName="phoneNumber"
-          placeholder="+9955XXXXXXX"
-        />
-      </div>
-
-      <div class="grid">
-        <div class="field">
-          <label for="password">Password</label>
-          <input id="password" type="password" formControlName="password" />
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="grid">
+          <div class="field">
+            <label for="firstName">First Name</label>
+            <input id="firstName" type="text" formControlName="firstName" />
+          </div>
+          <div class="field">
+            <label for="lastName">Last Name</label>
+            <input id="lastName" type="text" formControlName="lastName" />
+          </div>
         </div>
+
         <div class="field">
-          <label for="confirmPassword">Confirm Password</label>
-          <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+          <label for="email">Email</label>
+          <input id="email" type="email" formControlName="email" />
+        </div>
+
+        <div class="field">
+          <label for="phoneNumber">Phone Number</label>
+          <input
+            id="phoneNumber"
+            type="tel"
+            formControlName="phoneNumber"
+            placeholder="+9955XXXXXXX"
+          />
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" formControlName="password" />
+          </div>
+          <div class="field">
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+          </div>
+        </div>
+
+        <p class="error" *ngIf="passwordMismatch">Passwords do not match.</p>
+        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+        <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+
+        <button class="submit-btn" type="submit" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Creating account...' : 'Register' }}
+        </button>
+
+        <p class="auth-switch">
+          Already have an account?
+          <button type="button" class="auth-switch-link" (click)="setTab('login')">Log in</button>
+        </p>
+      </form>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div *ngIf="activeTab === 'login'">
+      <div class="top-row">
+        <div>
+          <h2>Welcome Back</h2>
+          <p class="subtitle">Log in to access your bookings and reservations.</p>
         </div>
       </div>
 
-      <p class="error" *ngIf="passwordMismatch">Passwords do not match.</p>
-      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-      <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+      <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" novalidate>
+        <div class="field">
+          <label for="loginEmail">Email</label>
+          <input id="loginEmail" type="email" formControlName="loginEmail" />
+        </div>
 
-      <button class="submit-btn" type="submit" [disabled]="isSubmitting">
-        {{ isSubmitting ? 'Creating account...' : 'Register' }}
-      </button>
-    </form>
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <input id="loginPassword" type="password" formControlName="loginPassword" />
+        </div>
+
+        <p class="error" *ngIf="loginError">{{ loginError }}</p>
+        <p class="success" *ngIf="loginSuccess">{{ loginSuccess }}</p>
+
+        <button class="submit-btn" type="submit" [disabled]="isLoginSubmitting">
+          {{ isLoginSubmitting ? 'Logging in...' : 'Log In' }}
+        </button>
+
+        <p class="auth-switch">
+          Don't have an account?
+          <button type="button" class="auth-switch-link" (click)="setTab('register')">
+            Sign up
+          </button>
+        </p>
+      </form>
+    </div>
   </div>
 </main>
 

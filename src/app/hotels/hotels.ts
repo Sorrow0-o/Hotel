@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ChangeDetectorRef,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -72,6 +78,10 @@ export class Hotels implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  @HostListener('document:closeMenu')
+  onCloseMenu() {
+    this.isMenuOpen = false;
+  }
   ngOnInit() {
     this.isScrolled = window.scrollY > 40;
 

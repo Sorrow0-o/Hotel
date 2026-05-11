@@ -129,6 +129,17 @@ nav:not(.footer-links) {
     background: $cream;
     transition: all 0.3s;
   }
+  &.open {
+    span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+  }
 }
 
 .register-hero {
@@ -434,5 +445,59 @@ footer {
   }
   h2 {
     font-size: 1.6rem;
+  }
+}
+
+// ─── Auth tabs ────────────────────────────────────────────────────────────────
+.auth-tabs {
+  display: flex;
+  border-bottom: 1px solid #e1dcd2;
+  margin-bottom: 1.8rem;
+}
+
+.auth-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 0.85rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #1a1a1a;
+  }
+
+  &--active {
+    color: #0d0d0d;
+    border-bottom-color: #c9a96e;
+  }
+}
+
+// ─── Switch link ─────────────────────────────────────────────────────────────
+.auth-switch {
+  text-align: center;
+  font-size: 0.84rem;
+  color: #9ca3af;
+  margin: 1rem 0 0;
+}
+
+.auth-switch-link {
+  background: none;
+  border: none;
+  color: #c9a96e;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  &:hover {
+    color: darken(#c9a96e, 10%);
   }
 }

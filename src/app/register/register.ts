@@ -1,4 +1,10 @@
-import { Component, HostListener, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  ChangeDetectorRef,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -8,6 +14,10 @@ const AUTH_REGISTER_API =
   typeof window !== 'undefined' && window.location.hostname === 'localhost'
     ? '/api/auth/register'
     : 'https://restaurantapi.stepacademy.ge/api/auth/register';
+const AUTH_LOGIN_API =
+  typeof window !== 'undefined' && window.location.hostname === 'localhost'
+    ? '/api/auth/login'
+    : 'https://restaurantapi.stepacademy.ge/api/auth/login';
 
 @Component({
   selector: 'app-register',
@@ -23,7 +33,14 @@ export class Register {
   successMessage = '';
   errorMessage = '';
 
+  activeTab: 'register' | 'login' = 'register';
+
+  isLoginSubmitting = false;
+  loginError = '';
+  loginSuccess = '';
+
   readonly form;
+  readonly loginForm;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -34,6 +51,19 @@ export class Register {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
     });
+
+    this.loginForm = this.fb.group({
+      loginEmail: ['', [Validators.required, Validators.email]],
+      loginPassword: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
+
+  setTab(tab: 'register' | 'login') {
+    this.activeTab = tab;
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.loginError = '';
+    this.loginSuccess = '';
   }
 
   @HostListener('window:scroll')
@@ -49,6 +79,10 @@ export class Register {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+  @HostListener('document:closeMenu')
+  onCloseMenu() {
+    this.isMenuOpen = false;
   }
 
   async submit() {
@@ -127,6 +161,53 @@ export class Register {
       this.errorMessage = 'Network error. Please check your connection and retry.';
     } finally {
       this.isSubmitting = false;
+    }
+  }
+
+  async submitLogin() {
+    this.loginError = '';
+    this.loginSuccess = '';
+
+    this.loginForm.markAllAsTouched();
+    if (this.loginForm.invalid) return;
+
+    this.isLoginSubmitting = true;
+
+    try {
+      const response = await fetch(AUTH_LOGIN_API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-KEY': RESTAURANT_API_KEY,
+        },
+        body: JSON.stringify({
+          email: this.loginForm.value.loginEmail?.trim() ?? '',
+          password: this.loginForm.value.loginPassword ?? '',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        this.loginError =
+          data?.message || data?.title || data?.detail || 'Login failed. Please try again.';
+        return;
+      }
+
+      const token =
+        data?.accessToken || data?.token || data?.data?.accessToken || data?.result?.accessToken;
+
+      if (token) {
+        localStorage.setItem('accessToken', token);
+        localStorage.setItem('isRegistered', 'true');
+      }
+
+      this.loginSuccess = 'Logged in successfully!';
+      this.loginForm.reset();
+    } catch {
+      this.loginError = 'Network error. Please check your connection and retry.';
+    } finally {
+      this.isLoginSubmitting = false;
     }
   }
 }
