@@ -1,12 +1,12 @@
 {
   "/api": {
-    "target": "https://restaurantapi.stepacademy.ge",
+    "target": "https://shopapi.stepacademy.ge",
     "secure": true,
     "changeOrigin": true,
     "logLevel": "debug",
     "headers": {
-      "X-API-KEY": "95eb2d55-6818-4bae-b8e1-c9d768c50633",
-      "X-Codeme-Token": "95eb2d55-6818-4bae-b8e1-c9d768c50633"
+      "X-API-KEY": "978a628d-2cd0-455c-acbe-161f048b3977",
+      "X-Codeme-Token": "978a628d-2cd0-455c-acbe-161f048b3977"
     }
   }
 }

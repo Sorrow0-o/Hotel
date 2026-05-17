@@ -1,3 +1,48 @@
+<div
+  class="toast"
+  [class.toast--visible]="toastVisible"
+  [class.toast--error]="toastType === 'error'"
+>
+  <div class="toast-icon">
+    <svg
+      *ngIf="toastType === 'success'"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+    <svg
+      *ngIf="toastType === 'error'"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  </div>
+  <span class="toast-text">{{ toastMessage }}</span>
+  <button class="toast-close" (click)="toastVisible = false">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+    >
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  </button>
+</div>
+
 <nav
   [class.scrolled]="isScrolled"
   style="background: rgba(13, 13, 13, 0.92); backdrop-filter: blur(12px)"
@@ -54,9 +99,123 @@
   </div>
 </section>
 
-<main class="register-main">
+<main class="register-main" *ngIf="isLoggedIn">
+  <div class="register-card profile-card">
+    <div class="profile-header">
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar" (click)="avatarInput.click()">
+          <img *ngIf="profileAvatar" [src]="profileAvatar" alt="Avatar" class="avatar-img" />
+          <span *ngIf="!profileAvatar">{{
+            (profileFirstName[0] ?? '') + (profileLastName[0] ?? '') | uppercase
+          }}</span>
+          <div class="avatar-overlay">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"
+              />
+              <circle cx="12" cy="13" r="4" />
+            </svg>
+          </div>
+        </div>
+        <button
+          *ngIf="profileAvatar"
+          class="avatar-remove-btn"
+          (click)="removeAvatar()"
+          title="Remove photo"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+        <input
+          #avatarInput
+          type="file"
+          accept="image/*"
+          style="display: none"
+          (change)="onAvatarChange($event)"
+        />
+      </div>
+      <div class="profile-header-info">
+        <h2>{{ profileFirstName }} {{ profileLastName }}</h2>
+        <p class="profile-email-display">{{ profileEmail }}</p>
+        <span class="profile-badge">Member</span>
+      </div>
+    </div>
+
+    <div class="profile-divider"></div>
+
+    <!-- Edit form -->
+    <div class="top-row">
+      <h2 class="profile-section-title">Personal Information</h2>
+      <p class="subtitle">Update your name and email address.</p>
+    </div>
+
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" novalidate>
+      <div class="grid">
+        <div class="field">
+          <label for="profileFirstName">First Name</label>
+          <input id="profileFirstName" type="text" formControlName="profileFirstName" />
+        </div>
+        <div class="field">
+          <label for="profileLastName">Last Name</label>
+          <input id="profileLastName" type="text" formControlName="profileLastName" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="profileEmail">Email</label>
+        <input id="profileEmail" type="email" formControlName="profileEmail" />
+      </div>
+
+      <p class="error" *ngIf="profileError">{{ profileError }}</p>
+
+      <button class="submit-btn" type="submit" [disabled]="isProfileSubmitting">
+        {{ isProfileSubmitting ? 'Saving...' : 'Save Changes' }}
+      </button>
+    </form>
+
+    <div class="profile-divider"></div>
+
+    <div class="logout-row">
+      <div class="logout-info">
+        <p class="logout-label">Sign out</p>
+        <p class="logout-sub">You will need to log in again to access your account.</p>
+      </div>
+      <button class="logout-btn" (click)="logout()">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        Log Out
+      </button>
+    </div>
+  </div>
+</main>
+
+<main class="register-main" *ngIf="!isLoggedIn">
   <div class="register-card">
-    <!-- Tab switcher -->
     <div class="auth-tabs">
       <button
         class="auth-tab"
@@ -72,9 +231,15 @@
       >
         Log In
       </button>
+      <button
+        class="auth-tab"
+        *ngIf="activeTab === 'verify'"
+        [class.auth-tab--active]="activeTab === 'verify'"
+      >
+        Verify Email
+      </button>
     </div>
 
-    
     <div *ngIf="activeTab === 'register'">
       <div class="top-row">
         <div>
@@ -98,16 +263,6 @@
         <div class="field">
           <label for="email">Email</label>
           <input id="email" type="email" formControlName="email" />
-        </div>
-
-        <div class="field">
-          <label for="phoneNumber">Phone Number</label>
-          <input
-            id="phoneNumber"
-            type="tel"
-            formControlName="phoneNumber"
-            placeholder="+9955XXXXXXX"
-          />
         </div>
 
         <div class="grid">
@@ -136,7 +291,6 @@
       </form>
     </div>
 
-  
     <div *ngIf="activeTab === 'login'">
       <div class="top-row">
         <div>
@@ -163,7 +317,6 @@
         </div>
 
         <p class="error" *ngIf="loginError">{{ loginError }}</p>
-        <p class="success" *ngIf="loginSuccess">{{ loginSuccess }}</p>
 
         <button class="submit-btn" type="submit" [disabled]="isLoginSubmitting">
           {{ isLoginSubmitting ? 'Logging in...' : 'Log In' }}
@@ -178,7 +331,50 @@
       </form>
     </div>
 
-   
+    <div *ngIf="activeTab === 'verify'">
+      <div class="top-row">
+        <div>
+          <h2>Verify Your Email</h2>
+          <p class="subtitle">
+            We sent a verification code to <strong>{{ pendingVerifyEmail }}</strong
+            >. Enter it below.
+          </p>
+        </div>
+      </div>
+
+      <form [formGroup]="verifyForm" (ngSubmit)="submitVerify()" novalidate>
+        <div class="field">
+          <label for="verifyCode">Verification Code</label>
+          <input
+            id="verifyCode"
+            type="text"
+            formControlName="verifyCode"
+            placeholder="Enter your code"
+            autocomplete="one-time-code"
+          />
+        </div>
+
+        <p class="error" *ngIf="verifyError">{{ verifyError }}</p>
+        <p class="resend-msg" *ngIf="resendMessage">{{ resendMessage }}</p>
+
+        <button class="submit-btn" type="submit" [disabled]="isVerifySubmitting">
+          {{ isVerifySubmitting ? 'Verifying...' : 'Verify Email' }}
+        </button>
+
+        <p class="auth-switch">
+          Didn't receive a code?
+          <button
+            type="button"
+            class="auth-switch-link"
+            (click)="resendVerification()"
+            [disabled]="isResendSubmitting"
+          >
+            {{ isResendSubmitting ? 'Sending...' : 'Resend code' }}
+          </button>
+        </p>
+      </form>
+    </div>
+
     <div *ngIf="activeTab === 'forgot'">
       <button type="button" class="back-btn" (click)="setTab('login')">← Back</button>
       <div class="top-row">
